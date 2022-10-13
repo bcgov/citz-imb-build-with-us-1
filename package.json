@@ -1,0 +1,20 @@
+{
+  "name": "citz-imb-build-with-us-1",
+  "version": "1.0.0",
+  "description": "Citizen Services Hack-a-thon Repository",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bcgov/citz-imb-build-with-us-1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bcgov/citz-imb-build-with-us-1/issues"
+  },
+  "homepage": "https://github.com/bcgov/citz-imb-build-with-us-1#readme"
+}
