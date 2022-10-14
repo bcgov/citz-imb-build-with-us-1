@@ -8,3 +8,9 @@ services:
       - ./backend/.:/app
       - .env:/app/.env
       - /app/node_modules
+  react-frontend:
+    build:
+      target: dev
+    volumes:
+      - ./frontend/.:/app
+      - /app/node_modules
