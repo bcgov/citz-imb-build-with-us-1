@@ -4,7 +4,9 @@
   "description": "Citizen Services Hack-a-thon Repository",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "printf '\\033[95mRunning application in development mode\\033[0m' && echo ... && docker compose up --build",
+    "prod": "printf '\\033[95mRunning application in production mode\\033[0m' && echo ... && docker compose -f docker-compose.yaml up --build",
+    "down": "printf '\\033[95mRemoving docker containers and volumes\\033[0m' && echo ... && docker compose down -v"
   },
   "repository": {
     "type": "git",

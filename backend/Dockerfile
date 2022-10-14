@@ -1,6 +1,9 @@
 FROM node:16-bullseye-slim AS base
 ENV NODE_ENV=production
 
+# Required for running nest in dev stage
+RUN apt-get update && apt-get install -y procps
+
 # Change permissions to non-root user
 RUN mkdir /app && chown -R node:node /app
 
@@ -34,12 +37,13 @@ ENV PATH=/app/node_modules/.bin:$PATH
 # Install dependencies
 RUN npm i
 
-# Run nodemon
+# Run hot loading nest
 CMD ["npm", "run", "start:dev"]
 
 ###################################################
 #                   PROD STAGE                    #
 ###################################################
+# Fallback in case first build stage is skipped
 FROM base AS prod
 
 # Run node directly
