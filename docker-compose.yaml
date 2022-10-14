@@ -11,7 +11,7 @@ services:
     networks:
       - bwu-network
     ports:
-      - ${API_PORT:-5000}:${API_PORT:-5000}
+      - ${API_PORT:-3000}:${API_PORT:-3000}
   
   ##### REACT FRONTEND #####
   # react-frontend:

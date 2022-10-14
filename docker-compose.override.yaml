@@ -1,0 +1,10 @@
+# Override runs in development
+# Use `docker compose -f docker-compose.yaml up --build` to run in prod.
+services:
+  nest-api:
+    build:
+      target: dev
+    volumes:
+      - ./backend/.:/app
+      - .env:/app/.env
+      - /app/node_modules
