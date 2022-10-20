@@ -1,16 +1,18 @@
 {
   "name": "citz-imb-build-with-us-1",
+  "title": "S1E1 - Onboarding",
   "version": "1.0.0",
   "description": "Citizen Services Hack-a-thon Repository",
   "main": "index.js",
   "scripts": {
-    "dev": "printf '\\033[95mRunning application in development mode\\033[0m' && echo ... && docker compose up --build",
-    "prod": "printf '\\033[95mRunning application in production mode\\033[0m' && echo ... && docker compose -f docker-compose.yaml up --build",
-    "down": "printf '\\033[95mRemoving docker containers and volumes\\033[0m' && echo ... && docker compose down -v",
-    "npm-refresh": "printf '\\033[95mReinstalling node_modules in backend\\033[0m' && echo ... && cd backend && rm -rf node_modules && npm i && printf '\\033[95mReinstalling node_modules in frontend\\033[0m' && echo ... && cd ../frontend && rm -rf node_modules && npm i",
-    "npm-refresh-b": "printf '\\033[95mReinstalling node_modules in backend\\033[0m' && echo ... && cd backend && rm -rf node_modules && npm i",
-    "npm-refresh-f": "printf '\\033[95mReinstalling node_modules in frontend\\033[0m' && echo ... && cd frontend && rm -rf node_modules && npm i",
-    "help": "printf '\\033[95mnpm run dev \\033[0m' && echo - Start the application in development mode (Watches for changes to the code). && printf '\\033[95mnpm run prod \\033[0m' && echo - Start the application in production mode. && printf '\\033[95mnpm run down \\033[0m' && echo - Remove docker containers and volumes. && printf '\\033[95mnpm run npm-refresh \\033[0m' && echo - Reinstall frontend and backend node_modules. && printf '\\033[95mnpm run npm-refresh-f \\033[0m' && echo - Reinstall frontend node_modules. && printf '\\033[95mnpm run npm-refresh-b \\033[0m' && echo - Reinstall backend node_modules."
+    "dev": "node ./npm-scripts/up.mjs dev",
+    "prod": "node ./npm-scripts/up.mjs prod",
+    "down": "node ./npm-scripts/down.mjs",
+    "clean": "npm run clean:b && npm run clean:f",
+    "clean:b": "node ./npm-scripts/clean.mjs backend",
+    "clean:f": "node ./npm-scripts/clean.mjs frontend",
+    "help": "node --no-warnings ./npm-scripts/help.mjs",
+    "init": "node --no-warnings ./npm-scripts/init.mjs"
   },
   "repository": {
     "type": "git",
@@ -22,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/bcgov/citz-imb-build-with-us-1/issues"
   },
-  "homepage": "https://github.com/bcgov/citz-imb-build-with-us-1#readme"
+  "homepage": "https://github.com/bcgov/citz-imb-build-with-us-1#readme",
+  "dependencies": {
+    "dotenv": "16.0.3"
+  }
 }

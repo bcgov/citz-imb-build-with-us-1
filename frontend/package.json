@@ -1,29 +1,45 @@
 {
   "name": "frontend",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --open",
-    "prod": "webpack --mode=production && npx serve ./dist -l 8080"
+    "build": "vite build",
+    "serve": "npx serve ./dist -l 8080",
+    "dev": "vite",
+    "prod": "npm run clean:build && npm run build && npm run serve",
+    "clean": "npm run clean:npm && npm run clean:build",
+    "clean:npm": "rm -rf node_modules",
+    "clean:build": "rm -rf dist",
+    "help": "cd .. && node --no-warnings ../npm-scripts/help.mjs"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
+    "@emotion/react": "11.10.4",
+    "@emotion/styled": "11.10.4",
+    "@mui/icons-material": "5.10.9",
+    "@mui/material": "5.10.10",
+    "@vitejs/plugin-react": "2.1.0",
+    "dotenv": "16.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "serve": "14.0.1"
+    "react-router": "6.4.2",
+    "react-router-dom": "6.4.2",
+    "vite": "3.1.0"
   },
   "devDependencies": {
-    "@babel/core": "7.19.3",
-    "@babel/preset-env": "7.19.4",
-    "@babel/preset-react": "7.18.6",
-    "babel-loader": "8.2.5",
-    "css-loader": "6.7.1",
-    "html-webpack-plugin": "5.5.0",
-    "style-loader": "3.3.1",
-    "webpack": "5.74.0",
-    "webpack-cli": "4.10.0",
-    "webpack-dev-server": "4.11.1"
+    "@types/react": "18.0.17",
+    "@types/react-dom": "18.0.6",
+    "@types/react-router": "5.1.19",
+    "@types/react-router-dom": "5.3.3",
+    "@typescript-eslint/eslint-plugin": "5.40.1",
+    "@typescript-eslint/parser": "5.40.1",
+    "eslint": "8.25.0",
+    "eslint-config-standard-with-typescript": "23.0.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-n": "15.3.0",
+    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-react": "7.31.10",
+    "prettier": "2.7.1",
+    "typescript": "4.8.4"
   }
 }
