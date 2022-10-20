@@ -11,22 +11,22 @@ services:
     networks:
       - bwu-network
     ports:
-      - ${API_PORT:-5000}:${API_PORT:-5000}
+      - ${API_PORT:-3000}:${API_PORT:-3000}
   
   ##### REACT FRONTEND #####
-  # react-frontend:
-  #   container_name: react-frontend
-  #   tty: true
-  #   build:
-  #     context: .
-  #     dockerfile: ./frontend/Dockerfile
-  #     args:
-  #       env: ./frontend/.env
-  #       nginx_port: ${FRONTEND_PORT:-8080}
-  #   networks:
-  #     - bwu-network
-  #   ports:
-  #     - ${FRONTEND_PORT:-8080}:${FRONTEND_PORT:-8080}
+  react-frontend:
+    container_name: react-frontend
+    tty: true
+    build:
+      target: prod
+      context: .
+      dockerfile: ./frontend/Dockerfile
+      args:
+        env: ./frontend/.env
+    networks:
+      - bwu-network
+    ports:
+      - ${FRONTEND_PORT:-8080}:8080
 
 networks:
   bwu-network:

@@ -4,7 +4,13 @@
   "description": "Citizen Services Hack-a-thon Repository",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "printf '\\033[95mRunning application in development mode\\033[0m' && echo ... && docker compose up --build",
+    "prod": "printf '\\033[95mRunning application in production mode\\033[0m' && echo ... && docker compose -f docker-compose.yaml up --build",
+    "down": "printf '\\033[95mRemoving docker containers and volumes\\033[0m' && echo ... && docker compose down -v",
+    "npm-refresh": "printf '\\033[95mReinstalling node_modules in backend\\033[0m' && echo ... && cd backend && rm -rf node_modules && npm i && printf '\\033[95mReinstalling node_modules in frontend\\033[0m' && echo ... && cd ../frontend && rm -rf node_modules && npm i",
+    "npm-refresh-b": "printf '\\033[95mReinstalling node_modules in backend\\033[0m' && echo ... && cd backend && rm -rf node_modules && npm i",
+    "npm-refresh-f": "printf '\\033[95mReinstalling node_modules in frontend\\033[0m' && echo ... && cd frontend && rm -rf node_modules && npm i",
+    "help": "printf '\\033[95mnpm run dev \\033[0m' && echo - Start the application in development mode (Watches for changes to the code). && printf '\\033[95mnpm run prod \\033[0m' && echo - Start the application in production mode. && printf '\\033[95mnpm run down \\033[0m' && echo - Remove docker containers and volumes. && printf '\\033[95mnpm run npm-refresh \\033[0m' && echo - Reinstall frontend and backend node_modules. && printf '\\033[95mnpm run npm-refresh-f \\033[0m' && echo - Reinstall frontend node_modules. && printf '\\033[95mnpm run npm-refresh-b \\033[0m' && echo - Reinstall backend node_modules."
   },
   "repository": {
     "type": "git",

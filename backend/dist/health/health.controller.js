@@ -9,15 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
+exports.HealthController = void 0;
 const common_1 = require("@nestjs/common");
-const app_service_1 = require("./app.service");
-let AppController = class AppController {
-    constructor(appService) {
-        this.appService = appService;
-    }
-    getServer() {
-        return this.appService.getServer();
+const swagger_1 = require("@nestjs/swagger");
+let HealthController = class HealthController {
+    health() {
+        return 'API Running!';
     }
 };
 __decorate([
@@ -25,10 +22,10 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", String)
-], AppController.prototype, "getServer", null);
-AppController = __decorate([
-    (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.AppService])
-], AppController);
-exports.AppController = AppController;
-//# sourceMappingURL=app.controller.js.map
+], HealthController.prototype, "health", null);
+HealthController = __decorate([
+    (0, swagger_1.ApiTags)('Health'),
+    (0, common_1.Controller)('health')
+], HealthController);
+exports.HealthController = HealthController;
+//# sourceMappingURL=health.controller.js.map

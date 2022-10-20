@@ -8,7 +8,9 @@
     "start": "webpack-dev-server .",
     "build": "webpack .",
     "lint": "eslint . --fix --max-warnings=0",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "dev": "webpack-dev-server --mode development --open",
+    "prod": "webpack --mode=production && npx serve ./dist -l 8080"
   },
   "keywords": [],
   "author": "",
