@@ -1,10 +1,6 @@
-import React from 'react'
-import PageLayout from '../Layout/PageLayout'
+import React from 'react';
+import PageLayout from '../Layout/PageLayout';
 
-const TeamB = () => {
-    return (
-        <PageLayout>TeamB</PageLayout>
-    )
-}
+const TeamB = () => <PageLayout>TeamB</PageLayout>;
 
-export default TeamB
+export default TeamB;

@@ -1,10 +1,9 @@
-import { Container } from '@mui/system'
-import React from 'react'
+import { Container } from '@mui/system';
 
-const WidthLayout = (props) => {
-    return (
-        <Container sx={{ maxWidth: "1096px", width: "1096px", }}>{props.children}</Container>
-    )
-}
+const WidthLayout = (props) => (
+	<Container sx={{ maxWidth: '1096px', width: '1096px' }}>
+		{props.children}
+	</Container>
+);
 
-export default WidthLayout
+export default WidthLayout;
