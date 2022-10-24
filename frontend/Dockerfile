@@ -1,4 +1,4 @@
-FROM node:16-bullseye-slim AS base
+FROM node:18.9-alpine AS base
 
 # Change permissions to non-root user
 #RUN mkdir /app && chown -R node:node /app
