@@ -22,12 +22,12 @@ const Footer = () => (
 				display: 'flex',
 				justifyContent: 'space-between',
 				alignItems: 'center',
-				maxWidth: '1096px',
-				paddingLeft: '2rem',
-				paddingRight: '2rem',
+				maxWidth: '1048px',
+				paddingLeft: '24px',
+				paddingRight: '24px',
 			}}
 		>
-			<Typography variant="h6">
+			<Typography variant="body1">
 				Ministry of Citizens&apos; Services, OCIO-ES, IMB
 			</Typography>
 			<a

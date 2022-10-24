@@ -4,6 +4,7 @@ services:
     container_name: nest-api
     tty: true
     build:
+      target: prod
       context: .
       dockerfile: ./backend/Dockerfile
       args:
@@ -26,7 +27,7 @@ services:
     networks:
       - bwu-network
     ports:
-      - ${FRONTEND_PORT:-8080}:8080
+      - ${FRONTEND_PORT:-8081}:8080
 
 networks:
   bwu-network:

@@ -27,6 +27,7 @@ const Header = (props) => {
 				border: 'solid',
 				borderColor: 'header.border',
 				borderWidth: '0px 0px 2px 0px',
+				minHeight: "6.5vh"
 			}}
 		>
 			<AppBar
@@ -39,7 +40,7 @@ const Header = (props) => {
 				}}
 			>
 				<Toolbar>
-					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
 						<Box
 							sx={{
 								backgroundColor: 'header.border',
@@ -114,6 +115,7 @@ const Header = (props) => {
 						sx={{
 							flexGrow: 1,
 							display: { xs: 'none', md: 'flex' },
+							alignItems: 'center'
 						}}
 					>
 						<Box
