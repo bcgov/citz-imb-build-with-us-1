@@ -9,11 +9,13 @@ WORKDIR /app
 #USER node
 
 # Copy files from frontend to working directory, excluding node_modules
-COPY --chown=node:node frontend/. .
+#COPY --chown=node:node frontend/. .
+COPY frontend/. .
 
 # Copy env file to working directory
 ARG env
-COPY --chown=node:node $env .env
+#COPY --chown=node:node $env .env
+COPY $env .env
 
 EXPOSE 8080
 
