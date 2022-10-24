@@ -52,6 +52,10 @@ jobs:
         run : |
           docker login ${{ secrets.OPENSHIFT4_PUBLIC_IMAGE_REPOSITORY_BASE_URL }} -u ${{ secrets.OPENSHIFT4_TOOLS_SA_USERNAME }} -p ${{ secrets.OPENSHIFT4_TOOLS_SA_PASSWORD }}
       
+      - name: touch ./frontend/.env
+        run: |
+          touch ./frontend/.env
+          
       # Build the BWU Frontend Application Image via docker-compose
       - name: Build the Docker image
         run: |
