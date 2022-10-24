@@ -1,5 +1,5 @@
-#FROM node:18.9-alpine AS base
-FROM node:16-bullseye-slim
+FROM node:18.9-alpine AS base
+#FROM node:16-bullseye-slim
 
 # Change permissions to non-root user
 RUN npm cache clean --force
