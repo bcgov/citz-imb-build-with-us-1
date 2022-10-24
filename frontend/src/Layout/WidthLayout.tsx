@@ -1,4 +1,4 @@
-import { Container } from '@mui/system';
+import { Container } from '@mui/material';
 
 const WidthLayout = (props: { children: any; }) => {
   return (

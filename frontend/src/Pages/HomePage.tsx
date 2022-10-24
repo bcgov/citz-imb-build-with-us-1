@@ -1,5 +1,4 @@
-import { Grid, Typography } from '@mui/material';
-import { Stack } from "@mui/system";
+import { Grid, Stack, Typography } from '@mui/material';
 import PageLayout from '../Layout/PageLayout';
 
 const HomePage = () => {

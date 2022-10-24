@@ -1,6 +1,5 @@
-import { Stack, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import GitHubIcon from '@mui/icons-material/GitHub';
+import { Stack, Typography, Box } from '@mui/material';
+import { GitHub as GitHubIcon } from '@mui/icons-material';
 import WidthLayout from './WidthLayout';
 
 const footerSX = { backgroundColor: "footer.main", color: "#fff", height: "6.5vh", display: "flex", alignItems: "center" };

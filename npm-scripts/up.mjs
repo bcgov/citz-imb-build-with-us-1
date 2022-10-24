@@ -17,5 +17,7 @@ const child = exec(dockerCmd);
 // Listens for and logs output from child process
 child.stdout.setEncoding('utf8');
 child.stdout.on('data', function(data) {
+  data = data.toString().replaceAll('[citz-imb-build-with-us-1-react-frontend', `[${Log.fg.cyan}frontend container${Log.reset}`);
+  data = data.toString().replaceAll('[citz-imb-build-with-us-1-nest-api', `[${Log.fg.cyan}backend container${Log.reset}`);
   console.log(data.trim());
 });
