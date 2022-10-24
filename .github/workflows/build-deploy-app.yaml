@@ -52,10 +52,15 @@ jobs:
         run : |
           docker login ${{ secrets.OPENSHIFT4_PUBLIC_IMAGE_REPOSITORY_BASE_URL }} -u ${{ secrets.OPENSHIFT4_TOOLS_SA_USERNAME }} -p ${{ secrets.OPENSHIFT4_TOOLS_SA_PASSWORD }}
       
+      # Run npm run init from repository root directory
+      - name: Run npm run init
+        run: | 
+          npm run init
+      
       # Build the BWU Frontend Application Image via docker-compose
       - name: Build the Docker image
         run: |
-          sudo docker-compose build 
+          sudo docker-compose build react-frontend
       
       # TROUBLESHOOTING - view images present in github action run
       - name: Docker List Images
