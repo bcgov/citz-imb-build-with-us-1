@@ -60,7 +60,7 @@ jobs:
       # Build the BWU Frontend Application Image via docker-compose
       - name: Build the Docker image
         run: |
-          sudo docker compose react-frontend
+          sudo docker compose build react-frontend
       
       # TROUBLESHOOTING - view images present in github action run
       - name: Docker List Images
