@@ -1,4 +1,4 @@
-name: Github Environment - DPIA Web App
+name: Github Environment - Build With Us 1 Frontend Web App
 
 on:
   push:
@@ -8,12 +8,12 @@ on:
   workflow_dispatch:
   
 jobs:
-  DPIA-App-Build-Tag-Push:
+  BWU-App-Build-Tag-Push:
     runs-on: ubuntu-latest
     environment: APP-Dev
     steps:
     
-      # Checkout CIRMO-DPIA Github Repository
+      # Checkout Citz Build With Us 1 Github Repository
       - name: Checkout Repository
         uses: actions/checkout@v2
 
@@ -38,7 +38,7 @@ jobs:
           name: hash.json
           path: hash.json
       
-      # Login the BC Gov Openshift (DPIA TOOLS Namespace)
+      # Login the BC Gov Openshift (CITZ Sandbox TOOLS Namespace)
       - name: Cluster Login -> TOOLS Namespace
         uses: redhat-developer/openshift-actions@v1.1
         with:
@@ -52,10 +52,10 @@ jobs:
         run : |
           docker login ${{ secrets.OPENSHIFT4_PUBLIC_IMAGE_REPOSITORY_BASE_URL }} -u ${{ secrets.OPENSHIFT4_TOOLS_SA_USERNAME }} -p ${{ secrets.OPENSHIFT4_TOOLS_SA_PASSWORD }}
       
-      # Build the DPIA Frontend Application Image via docker-compose
+      # Build the BWU Frontend Application Image via docker-compose
       - name: Build the Docker image
         run: |
-          sudo docker-compose build dpia-webapp
+          sudo docker-compose build 
       
       # TROUBLESHOOTING - view images present in github action run
       - name: Docker List Images
@@ -65,7 +65,7 @@ jobs:
       # Tag Docker Image built with latest commit hash (ex// $HASH-dev)
       - name: Docker Tag Version
         run: |
-          docker tag cirmo-dpia_dpia-webapp ${{ secrets.OPENSHIFT4_APP_PUBLIC_IMAGE_REPOSITORY }}:${{ env.pull_request_hash }}-${{ secrets.ENVIRONMENT }}
+          docker tag citz-imb-build-with-us-1_react-frontend ${{ secrets.OPENSHIFT4_APP_PUBLIC_IMAGE_REPOSITORY }}:${{ env.pull_request_hash }}-${{ secrets.ENVIRONMENT }}
       
       # TROUBLESHOOTING - view images present in github action run
       - name: Docker List Images
@@ -79,14 +79,14 @@ jobs:
   DEV-deploy:
     runs-on: ubuntu-latest
     environment: APP-Dev
-    needs: [DPIA-App-Build-Tag-Push]
+    needs: [BWU-App-Build-Tag-Push]
     steps:
     
       # Checkout Repository
       - name: Checkout Repository
         uses: actions/checkout@v2
       
-      # Login to BC Gov Openshift (DPIA DEV Namespace)
+      # Login to BC Gov Openshift (CITZ Sandbox DEV Namespace)
       - name: Cluster Login -> DEV Namespace
         uses: redhat-developer/openshift-actions@v1.1
         with:
@@ -115,7 +115,7 @@ jobs:
           commit_hash=$(echo ${{ steps.json-file.outputs.prop }})
           echo "pull_request_hash=$commit_hash" >> $GITHUB_ENV
             
-      # Use deploy helper script to process and apply DPIA Frontend Application template into DEV namespace
+      # Use deploy helper script to process and apply BWU Frontend Application template into DEV namespace
       - name: Process and Apply APP DeploymentConfig, Service, Route templates
         env:
           NAMESPACE: "${{ secrets.OPENSHIFT_DEV_NAMESPACE }}"
@@ -133,14 +133,14 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: APP-Dev
-      url: https://dpia-webapp-b996e6-dev.apps.silver.devops.gov.bc.ca
+      # url: https://dpia-webapp-b996e6-dev.apps.silver.devops.gov.bc.ca
     needs: [DEV-deploy]
     steps:
     
       # Checkout Repository
       - uses: actions/checkout@v2
     
-      # Login to BC Gov Openshift (DPIA DEV Namespace)
+      # Login to BC Gov Openshift (CITZ Sandbox DEV Namespace)
       - name: Cluster Login -> DEV Namespace
         uses: redhat-developer/openshift-actions@v1.1
         with:
@@ -165,7 +165,7 @@ jobs:
       # Checkout Repository
       - uses: actions/checkout@v2
 
-      # Login to BC Gov Openshift (DPIA DEV Namespace)
+      # Login to BC Gov Openshift (CITZ Sandbox DEV Namespace)
       - name: Cluster Login
         uses: redhat-developer/openshift-actions@v1.1
         with:
