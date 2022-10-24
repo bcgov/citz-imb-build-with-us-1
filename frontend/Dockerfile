@@ -1,21 +1,19 @@
 FROM node:16-bullseye-slim AS base
 
 # Change permissions to non-root user
-#RUN mkdir /app && chown -R node:node /app
+RUN mkdir /app && chown -R node:node /app
 
 # Create app directory
 WORKDIR /app
-#RUN chown -R node:node /app
-#USER node
+RUN chown -R node:node /app
+USER node
 
 # Copy files from frontend to working directory, excluding node_modules
-#COPY --chown=node:node frontend/. .
-COPY frontend/. .
+COPY --chown=node:node frontend/. .
 
 # Copy env file to working directory
 ARG env
-#COPY --chown=node:node $env .env
-COPY $env .env
+COPY --chown=node:node $env .env
 
 EXPOSE 8080
 
@@ -40,9 +38,9 @@ FROM base AS prod
 ENV NODE_ENV=production
 
 # Install dependencies
-RUN npm i --omit=dev && npm cache clean --force
+RUN npm i --omit=dev
 # Install serve for serving the production build
-RUN npm i serve@14.0.1
+RUN npm i serve@14.0.1 && npm cache clean --force
 
 # Build and serve prod
 CMD ["npm", "run", "prod"]
