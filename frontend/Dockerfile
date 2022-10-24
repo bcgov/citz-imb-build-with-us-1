@@ -3,6 +3,8 @@ FROM node:18.9-alpine AS base
 # Change permissions to non-root user
 #RUN mkdir /app && chown -R node:node /app
 
+RUN npm cache clean --force
+
 # Create app directory
 WORKDIR /app
 #RUN chown -R node:node /app
