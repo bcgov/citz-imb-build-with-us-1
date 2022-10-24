@@ -46,7 +46,6 @@ const Timer = () => {
   const timer = async (minutes: number, seconds?: number) => {
     const waitSecond = () => new Promise(res => setTimeout(res, 1000));
     for (let secondsInTimer = 0; secondsInTimer < ((minutes * 60) + (seconds || 0)); secondsInTimer++) {
-      // TODO: hours
       let minutesLeft = Math.floor((((minutes * 60) + (seconds || 0)) - secondsInTimer) / 60);
       if (minutesLeft < 0) minutesLeft = 0;
       const secondsLeft = (((minutes * 60) + (seconds || 0)) - secondsInTimer) % 60;
@@ -60,8 +59,8 @@ const Timer = () => {
       const secondsLeftString = secondsLeft > 9 ? `${secondsLeft}` : `0${secondsLeft}`;
       setTimeLeft(`${minutesLeftString}:${secondsLeftString}`);
       await waitSecond();
-    }
-  }
+    };
+  };
 
   // Controls timer and agenda state
   const startAgenda = async (minutesSinceStart: number) => {
@@ -143,8 +142,8 @@ const Timer = () => {
         // Wait before moving on to the next task
         await waitDuration(timerAgenda.agenda[task].durationMinutes);
       }
-    }
-  }
+    };
+  };
 
   return (
     <>
@@ -160,15 +159,23 @@ const Timer = () => {
           <Grid item xs={5} sx={{ height: '100%' }}>
             <Stack sx={{ height: '100%', display: 'flex', justifyContent: 'center' }}>
               {/* Timer Circle */}
-              <Box className='timerCircle'>
-                <Stack sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <Typography className='typography' sx={{ fontSize: '4em', fontWeight: 700 }}>
-                    {timeLeft}
-                  </Typography>
-                  <Typography className='typography' sx={{ fontSize: '2.5em', fontWeight: 700 }}>
-                    Left
-                  </Typography>
-                </Stack>
+              <Box className='timerCircles'>
+                <Box className='timerCircleContent'>
+                  <Stack sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Typography className='typography' sx={{ fontSize: '4em', fontWeight: 700 }}>
+                      {timeLeft}
+                    </Typography>
+                    <Typography className='typography' sx={{ fontSize: '2.5em', fontWeight: 700 }}>
+                      Left
+                    </Typography>
+                  </Stack>
+                </Box>
+                <Box className='timerCircleOuter'></Box>
+                <Box className='timerCircleInner'></Box>
+                <Box className='timerCircleAccent'></Box>
+                <Box id='timerCircleProgressFirst'></Box>
+                <Box id='timerCircleProgressSecond'></Box>
+                <Box id='timerCircleProgressFiller'></Box>
               </Box>
               {/* <Box sx={{ width: '76%', height: '24%', display: 'flex', alignItems: 'end', justifyContent: 'center' }}>
                 <Button sx={{ 
