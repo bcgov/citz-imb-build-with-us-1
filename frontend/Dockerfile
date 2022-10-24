@@ -5,8 +5,8 @@ FROM node:16-bullseye-slim AS base
 
 # Create app directory
 WORKDIR /app
-RUN chown -R node:node /app
-USER node
+#RUN chown -R node:node /app
+#USER node
 
 # Copy files from frontend to working directory, excluding node_modules
 COPY --chown=node:node frontend/. .
