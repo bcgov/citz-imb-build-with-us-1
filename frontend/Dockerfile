@@ -2,7 +2,6 @@ FROM node:16-bullseye-slim AS base
 
 # Change permissions to non-root user
 #RUN mkdir /app && chown -R node:node /app
-RUN mkdir /app
 
 # Create app directory
 WORKDIR /app
