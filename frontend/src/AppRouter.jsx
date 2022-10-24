@@ -7,7 +7,6 @@ import TeamC from './Pages/TeamC';
 import TeamD from './Pages/TeamD';
 import Footer from './Layout/Footer';
 import Header from './Layout/Header';
-import Timer from './Pages/Timer';
 
 const AppRouter = () => (
 	<Router>
@@ -18,7 +17,6 @@ const AppRouter = () => (
 			<Route path="/team-b" element={<TeamB />} />
 			<Route path="/team-c" element={<TeamC />} />
 			<Route path="/team-d" element={<TeamD />} />
-			<Route path="/timer" element={<Timer />} />
 		</Routes>
 		<Footer />
 	</Router>

@@ -11,6 +11,7 @@ const footerSX = {
 	alignItems: 'center',
 	justifyContent: 'center',
 	width: '100vw',
+	fontSize: '12px',
 };
 
 const Footer = () => (
@@ -26,7 +27,7 @@ const Footer = () => (
 				paddingRight: '24px',
 			}}
 		>
-			<Typography variant="body1">
+			<Typography variant="h6">
 				Ministry of Citizens&apos; Services, OCIO-ES, IMB
 			</Typography>
 			<a
