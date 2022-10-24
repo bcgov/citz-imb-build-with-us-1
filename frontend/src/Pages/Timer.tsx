@@ -153,7 +153,7 @@ const Timer = () => {
         {currentDateTime}
       </Typography>
     </Box>
-    <PageLayout>
+    <PageLayout customHeight='62vh'>
       <Stack sx={{ height: '60vh', width: '100%' }}>
         <Grid container sx={{ height: '100%' }}>
           <Grid item xs={5} sx={{ height: '100%' }}>

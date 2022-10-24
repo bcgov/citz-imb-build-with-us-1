@@ -30,7 +30,7 @@ const timerAgenda = {
       durationMinutes: 60
     },
     {
-      title: 'Team Retrospective',
+      title: 'Retrospective',
       durationMinutes: 10
     },
     {
@@ -46,7 +46,7 @@ const timerAgenda = {
       durationMinutes: 30
     },
     {
-      title: 'Team Retrospective',
+      title: 'Retrospective',
       durationMinutes: 20
     },
     {
