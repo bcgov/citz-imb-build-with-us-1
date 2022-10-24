@@ -12,6 +12,8 @@ COPY --chown=node:node frontend/package*.json ./
 
 # Install dependencies
 RUN npm i --only=production && npm cache clean --force
+RUN npm install webpack
+RUN npm install webpack-cli
 
 # Copy files from frontend to working directory
 COPY --chown=node:node frontend/. .
