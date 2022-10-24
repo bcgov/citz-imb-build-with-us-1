@@ -2,7 +2,6 @@ FROM node:18.9-alpine AS base
 #FROM node:16-bullseye-slim
 
 # Change permissions to non-root user
-RUN npm cache clean --force
 RUN mkdir /app && chown -R node:node /app
 
 # Create app directory
@@ -17,6 +16,7 @@ COPY --chown=node:node frontend/. .
 # Copy env file to working directory
 ARG env
 COPY --chown=node:node $env .env
+RUN npm cache clean --force
 #COPY $env .env
 
 EXPOSE 8080
@@ -31,6 +31,7 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 # Install dependencies
 RUN npm i
+RUN npm cache clean --force
 
 # Run dev
 CMD ["npm", "run", "dev"]
