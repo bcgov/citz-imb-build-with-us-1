@@ -19,11 +19,100 @@
   align-items: center;
 }
 
-.timerCircle {
-  width: 40vh;
-  height: 40vh;
-  border: solid 13px var(--red);
+.timerCircles {
+  width: 300px;
+  height: 300px;
+  border: solid 13px transparent;
   border-radius: 50%;
+}
+
+.timerCircleContent {
+  width: 300px;
+  height: 300px;
+  border: solid 13px transparent;
+  position: relative;
+  right: 13px;
+  bottom: 13px;
+  z-index: 100;
+}
+
+.timerCircleOuter {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  right: 13px;
+  bottom: 340px;
+  border: solid 13px var(--grey);
+  border-radius: 50%;
+  z-index: 30;
+}
+
+.timerCircleInner {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  bottom: 653px;
+  border-radius: 50%;
+  background: white;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.timerCircleAccent {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  right: 13px;
+  bottom: 969px;
+  border: solid 13px var(--red);
+  background: transparent;
+  border-radius: 50%;
+  z-index: 20;
+}
+
+#timerCircleProgressFirst {
+  width: 150px;
+  height: 300px;
+  position: absolute;
+  left: 237px;
+  bottom: 149px;
+  border-top: solid 13px var(--red);
+  border-bottom: solid 13px var(--red);
+  border-left: solid 13px var(--red);
+  border-radius: 175px 0 0 175px;
+  background: transparent;
+  z-index: 35;
+  transform-origin: right center;
+}
+
+#timerCircleProgressSecond {
+  width: 150px;
+  height: 300px;
+  position: absolute;
+  left: 237px;
+  bottom: 149px;
+  border-top: solid 13px var(--red);
+  border-bottom: solid 13px var(--red);
+  border-left: solid 13px var(--red);
+  border-radius: 175px 0 0 175px;
+  background: transparent;
+  z-index: 35;
+  transform-origin: right center;
+}
+
+#timerCircleProgressFiller {
+  width: 150px;
+  height: 300px;
+  position: absolute;
+  left: 237px;
+  bottom: 148.5px;
+  border-top: solid 13px var(--grey);
+  border-bottom: solid 13px var(--grey);
+  border-left: solid 13px var(--grey);
+  border-radius: 165px 0 0 165px;
+  background: transparent;
+  z-index: 36;
+  transform-origin: right center;
 }
 
 .arrowIcon {
