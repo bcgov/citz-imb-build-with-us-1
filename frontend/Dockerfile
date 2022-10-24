@@ -1,4 +1,5 @@
-FROM node:16-bullseye-slim AS base
+FROM node:18.9-alpine AS base
+#FROM node:16-bullseye-slim
 
 # Change permissions to non-root user
 RUN mkdir /app && chown -R node:node /app
@@ -27,6 +28,7 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 # Install dependencies
 RUN npm i
+RUN npm cache clean --force
 
 # Run dev
 CMD ["npm", "run", "dev"]
@@ -39,6 +41,7 @@ ENV NODE_ENV=production
 
 # Install dependencies
 RUN npm i --omit=dev
+
 # Install serve for serving the production build
 RUN npm i serve@14.0.1 && npm cache clean --force
 
