@@ -26,7 +26,7 @@ const Header = (props) => {
 			sx={{
 				border: 'solid',
 				borderColor: 'header.border',
-				borderWidth: '0px 0px 2px 0px',
+				borderWidth: '0px 0px .2vh 0px',
 				minHeight: "6.5vh"
 			}}
 		>
@@ -40,7 +40,7 @@ const Header = (props) => {
 				}}
 			>
 				<Toolbar>
-					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
+					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, alignItems: "center"}}>
 						<Box
 							sx={{
 								backgroundColor: 'header.border',
@@ -135,7 +135,7 @@ const Header = (props) => {
 						>
 							<img
 								src="/BCGovLogo.png"
-								style={{ maxHeight: '23px' }}
+								style={{ maxHeight: '23px', paddingLeft: "3px" }}
 								alt="Logo for the Government of British Columbia"
 							/>
 						</Box>

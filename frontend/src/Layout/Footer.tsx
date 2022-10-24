@@ -11,7 +11,6 @@ const footerSX = {
 	alignItems: 'center',
 	justifyContent: 'center',
 	width: '100vw',
-	fontSize: '12px',
 };
 
 const Footer = () => (
