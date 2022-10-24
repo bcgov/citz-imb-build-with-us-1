@@ -43,6 +43,7 @@ ENV NODE_ENV=production
 RUN npm i --omit=dev && npm cache clean --force
 # Install serve for serving the production build
 RUN npm i serve@14.0.1
+RUN sudo chown -R 1013750000:0 "/.npm"
 
 # Build and serve prod
 CMD ["npm", "run", "prod"]
