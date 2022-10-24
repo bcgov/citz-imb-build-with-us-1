@@ -2,7 +2,7 @@ FROM node:18.9-alpine AS base
 #FROM node:16-bullseye-slim
 
 # Change permissions to non-root user
-RUN mkdir /app && chown -R node:node /app
+#RUN mkdir /app && chown -R node:node /app
 
 # Create app directory
 WORKDIR /app
@@ -10,14 +10,14 @@ WORKDIR /app
 #USER node
 
 # Copy files from frontend to working directory, excluding node_modules
-COPY --chown=node:node frontend/. .
-#COPY frontend/. .
+#COPY --chown=node:node frontend/. .
+COPY frontend/. .
 
 # Copy env file to working directory
 ARG env
-COPY --chown=node:node $env .env
-RUN npm cache clean --force
-#COPY $env .env
+#COPY --chown=node:node $env .env
+#RUN npm cache clean --force
+COPY $env .env
 
 EXPOSE 8080
 
