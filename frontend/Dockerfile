@@ -31,7 +31,7 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 # Install dependencies
 RUN npm i
-RUN sudo npm cache clean --force
+RUN npm cache clean --force
 
 # Run dev
 CMD ["npm", "run", "dev"]
@@ -44,7 +44,7 @@ ENV NODE_ENV=production
 
 # Install dependencies
 RUN npm i --omit=dev
-RUN sudo npm cache clean --force
+RUN npm cache clean --force
 # Install serve for serving the production build
 RUN npm i serve@14.0.1
 #RUN sudo chown -R 1013750000:0 "/.npm"
