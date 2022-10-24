@@ -4,8 +4,7 @@ import React from 'react';
 const PageLayout = ({ children }) => (
 	<Container
 		sx={{
-			maxWidth: '1096px',
-			width: '1096px',
+			maxWidth: '1096px !important',
 			minHeight: '87vh',
 			paddingLeft: '2rem',
 			paddingRight: '2rem',

@@ -12,7 +12,7 @@ const HomePage = () => (
 			justifyContent="center"
 			sx={{ width: '100%' }}
 		>
-			<Grid item xs={6}>
+			<Grid item xs={12} md={6}>
 				<Stack>
 					<Typography variant="h3" fontWeight="bold">
 						Welcome to
@@ -33,7 +33,7 @@ const HomePage = () => (
 					</Stack>
 				</Stack>
 			</Grid>
-			<Grid item xs={6}>
+			<Grid item xs={12} md={6}>
 				<img
 					src="/diversity.jpg"
 					style={{ maxWidth: '100%', borderRadius: '25px' }}
