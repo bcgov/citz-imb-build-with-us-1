@@ -5,7 +5,26 @@ metadata:
 labels:
   template: ${APPLICATION_NAME}-template
 objects:
-- 
+- kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: ${APPLICATION_NAME}-route
+    namespace: ${LICENSE_PLATE}-${ENVIRONMENT}
+    labels:
+      app: b${APPLICATION_NAME}
+      app.kubernetes.io/part-of: ${APPLICATION_NAME}-app
+  spec:
+    host: build-with-us.apps.silver.devops.gov.bc.ca
+    to:
+      kind: Service
+      name: ${APPLICATION_NAME}
+      weight: 100
+    port:
+      targetPort: 8080-tcp
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: None
+    wildcardPolicy: None
 
 parameters:
   - description: Application Name
