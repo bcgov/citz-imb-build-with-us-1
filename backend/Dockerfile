@@ -5,7 +5,7 @@ FROM node:18
 WORKDIR /app
 
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY backend/package*.json ./
+COPY backend/. ./
 
 # Install app dependencies
 RUN npm ci
