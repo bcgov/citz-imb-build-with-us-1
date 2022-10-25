@@ -1,4 +1,4 @@
-name: Github Environment - Build With Us 1 Frontend Web App
+name: Github Environment - Build With Us 1 Nestjs API
 
 on:
   push:
