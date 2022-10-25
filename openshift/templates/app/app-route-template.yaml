@@ -8,19 +8,18 @@ objects:
 - kind: Route
   apiVersion: route.openshift.io/v1
   metadata:
-    name: ${APPLICATION_NAME}-route
+    name: dpia-${ENVIRONMENT}-route
     namespace: ${LICENSE_PLATE}-${ENVIRONMENT}
     labels:
-      app: ${APPLICATION_NAME}
-      app.kubernetes.io/part-of: ${APPLICATION_NAME}-app
+      hash: ${IMAGE_TAG}
   spec:
     host: build-with-us.apps.silver.devops.gov.bc.ca
     to:
       kind: Service
-      name: ${APPLICATION_NAME}
+      name: dpia-webapp
       weight: 100
     port:
-      targetPort: 8080-tcp
+      targetPort: 8080
     tls:
       termination: edge
       insecureEdgeTerminationPolicy: None
@@ -31,7 +30,7 @@ parameters:
     displayName: AppName
     name: APPLICATION_NAME
     required: true
-    value: build-with-us-1-frontend
+    value: build-with-us-frontend
   - description: Environment
     displayName: Environment
     name: ENVIRONMENT
