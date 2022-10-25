@@ -1,53 +1,45 @@
-#############################################################################################
-###                                 BUILD ARTIFACT                                        ###
-#############################################################################################
-FROM node:18.9.0-alpine3.14 as build
-WORKDIR /usr/src/app/client
+FROM node:16-bullseye-slim AS base
+ENV NODE_ENV=production
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+# Change permissions to non-root user
+RUN mkdir /app && chown -R node:node /app
 
-COPY app/client/package*.json ./
-RUN npm ci
-COPY app/client/. .
+# Create app directory
+WORKDIR /app
+USER node
 
-RUN npm run build
+COPY --chown=node:node frontend/package*.json ./
 
-#############################################################################################
-###                                 PRODUCTION IMAGE                                      ###
-#############################################################################################
-FROM nginx:1.19-alpine
-# Stage 2 - serve with nginx
+# Install dependencies
+RUN npm i --only=production
+RUN npm install webpack
+RUN npm install webpack-cli
 
-RUN apk add --update nodejs && apk add npm 
-RUN npm i -g nodemon
+# Copy files from frontend to working directory
+COPY --chown=node:node frontend/. .
 
-WORKDIR /usr/share/nginx/html
-
+# Copy env file to working directory
 ARG env
+COPY --chown=node:node $env .env
 
-# Removes the default static files
-RUN rm -rf /usr/share/nginx/html/
-COPY --from=build /usr/src/app/client/build .
+###################################################
+#                   DEV STAGE                     #
+###################################################
+FROM base AS dev
+ENV NODE_ENV=development
 
-RUN rm /etc/nginx/conf.d/default.conf
-COPY app/client/nginx.conf /etc/nginx/conf.d/default.conf
+ENV PATH=/app/node_modules/.bin:$PATH
 
-COPY app/client/env.sh .
+# Install dependencies
+RUN npm i
 
-# Copy env file, default .env-template
-COPY $env .env
+# Run dev
+CMD ["npm", "run", "dev"]
 
-#Elevate!
-RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx
-RUN chmod g+rwx /usr/share/nginx/html
+###################################################
+#                   PROD STAGE                    #
+###################################################
+FROM base AS prod
 
-# Add bash
-RUN apk add --no-cache bash
-
-#RUN chgrp -R 0 /etc/nginx && chmod -R g=u /etc/nginx
-
-# Make our shell script executable
-RUN chmod g+rwx env.sh
-
-# Start Nginx server
-CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\" "]
+# Build and serve prod
+CMD ["npm", "run", "prod"]
