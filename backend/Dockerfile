@@ -11,7 +11,7 @@ COPY backend/. .
 RUN npm install
 
 # Bundle app source
-COPY . .
+COPY backend/. .
 
 # Creates a "dist" folder with the production build
 RUN npm run build
