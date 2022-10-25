@@ -5,14 +5,79 @@ metadata:
 labels:
   template: ${APPLICATION_NAME}-template
 objects:
-- 
+- kind: DeploymentConfig
+  apiVersion: apps.openshift.io/v1
+  metadata:
+    annotations:
+      app.openshift.io/route-disabled: 'false'
+      openshift.io/generated-by: OpenShiftWebConsole
+    name: ${APPLICATION_NAME}
+    namespace: ${LICENSE_PLATE}-${ENVIRONMENT}
+    labels:
+      app: ${APPLICATION_NAME}
+      app.kubernetes.io/part-of: build-with-us
+  spec:
+    strategy:
+      type: Rolling
+      rollingParams:
+        updatePeriodSeconds: 1
+        intervalSeconds: 1
+        timeoutSeconds: 600
+        maxUnavailable: 25%
+        maxSurge: 25%
+      resources: {}
+      activeDeadlineSeconds: 21600
+    triggers:
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - ${APPLICATION_NAME}
+          from:
+            kind: ImageStreamTag
+            namespace: ${LICENSE_PLATE}-tools
+            name: 'build-with-us-1-frontend:8a4d1a1-dev'
+          lastTriggeredImage: >-
+            image-registry.openshift-image-registry.svc:5000/ec1236-tools/build-with-us-1-frontend@sha256:8e0beb89788bea470b4085939ed11e20d05d7a1cafbe3e137c171c7ac51781fa
+      - type: ConfigChange
+    replicas: 1
+    revisionHistoryLimit: 10
+    test: false
+    selector:
+      app: ${APPLICATION_NAME}
+      deploymentconfig: ${APPLICATION_NAME}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: ${APPLICATION_NAME}
+          deploymentconfig: ${APPLICATION_NAME}
+        annotations:
+          openshift.io/generated-by: OpenShiftWebConsole
+      spec:
+        containers:
+          - name: ${APPLICATION_NAME}
+            image: >-
+              image-registry.openshift-image-registry.svc:5000/ec1236-tools/build-with-us-1-frontend@sha256:8e0beb89788bea470b4085939ed11e20d05d7a1cafbe3e137c171c7ac51781fa
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            imagePullPolicy: IfNotPresent
+        restartPolicy: Always
+        terminationGracePeriodSeconds: 30
+        dnsPolicy: ClusterFirst
+        securityContext: {}
+        schedulerName: default-scheduler
 
 parameters:
   - description: Application Name
     displayName: AppName
     name: APPLICATION_NAME
     required: true
-    value: dpia-webapp
+    value: build-with-us-1-frontend
   - description: Environment
     displayName: Environment
     name: ENVIRONMENT
@@ -22,7 +87,7 @@ parameters:
     displayName: License Plate
     name: LICENSE_PLATE
     required: true
-    value: b996e6
+    value: ec1236
   - description: Image Tag
     displayName: Image Tag
     required: true
