@@ -55,7 +55,7 @@ jobs:
       # Build the BWU API Application Image via docker-compose
       - name: Build the Docker image
         run: |
-          docker-compose -f docker-compose.yaml nest-api
+          docker-compose -f docker-compose.yaml build nest-api
       
       # TROUBLESHOOTING - view images present in github action run
       - name: Docker List Images
