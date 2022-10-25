@@ -6,14 +6,38 @@ metadata:
 labels:
   template: ${APPLICATION_NAME}-template
 objects:
-- 
+- kind: Service
+apiVersion: v1
+metadata:
+  name: ${APPLICATION_NAME}
+  namespace: ${LICENSE_PLATE}-${ENVIRONMENT}
+  labels:
+    app: ${APPLICATION_NAME}
+    app.kubernetes.io/part-of: ${APPLICATION_NAME}-app
+spec:
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: ${APPLICATION_NAME}
+    deploymentconfig: ${APPLICATION_NAME}
+status:
+  loadBalancer: {}
 
 parameters:
   - description: Application Name
     displayName: AppName
     name: APPLICATION_NAME
     required: true
-    value: dpia-webapp
+    value: build-with-us-1-frontend
   - description: Environment
     displayName: Environment
     name: ENVIRONMENT
@@ -23,7 +47,7 @@ parameters:
     displayName: License Plate
     name: LICENSE_PLATE
     required: true
-    value: b996e6
+    value: ec1236
   - description: Image Tag
     displayName: Image Tag
     required: true
