@@ -1,44 +1,36 @@
-FROM node:16-bullseye-slim AS base
+###############################################################################
+###                             Pre-Build                                   ###
+###############################################################################
 
-# Required for running nest in dev stage
-RUN apt-get update && apt-get install -y procps
+FROM node:17.5.0-alpine3.14 as build
 
-# Change permissions to non-root user
-RUN mkdir /app && chown -R node:node /app
-
-# Create app directory
 WORKDIR /app
-USER node
 
-# Copy files from api to working directory
-COPY --chown=node:node backend/. .
+COPY package.json package-lock.json ./
 
-# Copy env file to working directory
-ARG env
-COPY --chown=node:node $env .env
+RUN npm install
 
-###################################################
-#                   DEV STAGE                     #
-###################################################
-FROM base AS dev
-ENV NODE_ENV=development
+COPY . .
 
-ENV PATH=/app/node_modules/.bin:$PATH
+RUN npm run build
 
-# Install dependencies
-RUN npm i
+###############################################################################
+###                             Build                                       ###
+###############################################################################
 
-# Run hot loading nest
-CMD ["npm", "run", "start:dev"]
+FROM node:17.5.0-alpine3.14
 
-###################################################
-#                   PROD STAGE                    #
-###################################################
-FROM base AS prod
-ENV NODE_ENV=production
+ARG NODE_ENV=Production
+ENV NODE_ENV=${NODE_ENV}
 
-# Install dependencies
-RUN npm i --omit=dev && npm cache clean --force
+WORKDIR /app
 
-# Run node directly
+COPY package.json package-lock.json ./
+
+RUN npm install
+
+COPY . .
+
+COPY --from=build /app/dist ./dist
+
 CMD ["npm", "run", "start"]
