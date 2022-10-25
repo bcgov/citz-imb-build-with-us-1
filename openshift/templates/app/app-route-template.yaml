@@ -31,7 +31,7 @@ parameters:
     displayName: AppName
     name: APPLICATION_NAME
     required: true
-    value: dpia-webapp
+    value: build-with-us-1-frontend
   - description: Environment
     displayName: Environment
     name: ENVIRONMENT
@@ -41,7 +41,7 @@ parameters:
     displayName: License Plate
     name: LICENSE_PLATE
     required: true
-    value: b996e6
+    value: ec1236
   - description: Image Tag
     displayName: Image Tag
     required: true
