@@ -7,30 +7,30 @@ labels:
   template: ${APPLICATION_NAME}-template
 objects:
 - kind: Service
-apiVersion: v1
-metadata:
-  name: ${APPLICATION_NAME}
-  namespace: ${LICENSE_PLATE}-${ENVIRONMENT}
-  labels:
-    app: ${APPLICATION_NAME}
-    app.kubernetes.io/part-of: ${APPLICATION_NAME}-app
-spec:
-  ipFamilies:
-    - IPv4
-  ports:
-    - name: 8080-tcp
-      protocol: TCP
-      port: 8080
-      targetPort: 8080
-  internalTrafficPolicy: Cluster
-  type: ClusterIP
-  ipFamilyPolicy: SingleStack
-  sessionAffinity: None
-  selector:
-    app: ${APPLICATION_NAME}
-    deploymentconfig: ${APPLICATION_NAME}
-status:
-  loadBalancer: {}
+  apiVersion: v1
+  metadata:
+    name: ${APPLICATION_NAME}
+    namespace: ${LICENSE_PLATE}-${ENVIRONMENT}
+    labels:
+      app: ${APPLICATION_NAME}
+      app.kubernetes.io/part-of: ${APPLICATION_NAME}-app
+  spec:
+    ipFamilies:
+      - IPv4
+    ports:
+      - name: 8080-tcp
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+    internalTrafficPolicy: Cluster
+    type: ClusterIP
+    ipFamilyPolicy: SingleStack
+    sessionAffinity: None
+    selector:
+      app: ${APPLICATION_NAME}
+      deploymentconfig: ${APPLICATION_NAME}
+  status:
+    loadBalancer: {}
 
 parameters:
   - description: Application Name
