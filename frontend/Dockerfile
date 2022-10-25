@@ -13,6 +13,7 @@ COPY frontend/package*.json ./
 # Install dependencies
 RUN npm ci
 RUN npm install -g webpack
+RUN npm isntall -g webpack-cli
 
 # Copy files from frontend to working directory
 COPY frontend/. .
