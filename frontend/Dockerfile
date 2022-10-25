@@ -1,45 +1,27 @@
-FROM node:16-bullseye-slim AS base
-ENV NODE_ENV=production
+FROM node:18.9-alpine as build
 
-# Change permissions to non-root user
-#RUN mkdir /app && chown -R node:node /app
-
-# Create app directory
 WORKDIR /app
-#USER node
 
-COPY frontend/package*.json ./
+# creating diff
+RUN apk update
+RUN apk add curl
 
-# Install dependencies
-RUN npm ci
-RUN npm install -g webpack
-RUN npm isntall -g webpack-cli
+# Copy in build artifacts, build project dependencies
 
-# Copy files from frontend to working directory
-COPY frontend/. .
+COPY src/frontend/package*.json ./
 
-# Copy env file to working directory
-ARG env
-COPY $env .env
+RUN npm install
 
-###################################################
-#                   DEV STAGE                     #
-###################################################
-FROM base AS dev
-ENV NODE_ENV=development
+# Needed for sass to be available within the container
+RUN npm install -D sass
 
-ENV PATH=/app/node_modules/.bin:$PATH
+# Needed for serve to be available within the container
+RUN npm install -g serve
 
-# Install dependencies
-RUN npm ci
+COPY src/frontend/. .
 
-# Run dev
-CMD ["npm", "run", "dev"]
+RUN npm run build
 
-###################################################
-#                   PROD STAGE                    #
-###################################################
-FROM base AS prod
+WORKDIR /app/dist
 
-# Build and serve prod
-CMD ["npm", "run", "prod"]
+CMD ["serve", "-p", "8080"]
