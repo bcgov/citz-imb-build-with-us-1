@@ -2,23 +2,24 @@ FROM node:16-bullseye-slim AS base
 ENV NODE_ENV=production
 
 # Change permissions to non-root user
-RUN mkdir /app && chown -R node:node /app
+#RUN mkdir /app && chown -R node:node /app
 
 # Create app directory
 WORKDIR /app
-USER node
+#USER node
 
-COPY --chown=node:node frontend/package*.json ./
+COPY frontend/package*.json ./
 
 # Install dependencies
 RUN npm ci
+RUN npm install -g webpack
 
 # Copy files from frontend to working directory
-COPY --chown=node:node frontend/. .
+COPY frontend/. .
 
 # Copy env file to working directory
 ARG env
-COPY --chown=node:node $env .env
+COPY $env .env
 
 ###################################################
 #                   DEV STAGE                     #
@@ -29,7 +30,7 @@ ENV NODE_ENV=development
 ENV PATH=/app/node_modules/.bin:$PATH
 
 # Install dependencies
-RUN npm i
+RUN npm ci
 
 # Run dev
 CMD ["npm", "run", "dev"]
