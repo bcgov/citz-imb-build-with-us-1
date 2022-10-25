@@ -4,7 +4,7 @@ services:
     container_name: nest-api
     tty: true
     build:
-      target: prod
+      #target: prod
       context: .
       dockerfile: ./backend/Dockerfile
     networks:
