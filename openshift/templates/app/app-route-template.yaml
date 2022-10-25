@@ -11,7 +11,7 @@ objects:
     name: ${APPLICATION_NAME}-route
     namespace: ${LICENSE_PLATE}-${ENVIRONMENT}
     labels:
-      app: b${APPLICATION_NAME}
+      app: ${APPLICATION_NAME}
       app.kubernetes.io/part-of: ${APPLICATION_NAME}-app
   spec:
     host: build-with-us.apps.silver.devops.gov.bc.ca
