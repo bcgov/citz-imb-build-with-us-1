@@ -33,24 +33,24 @@ const MemberList = () => {
 
   return (
       <>
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '90vh',
-          width: '314px',
-          backgroundColor: '#FCBA19'
-        }}>
-          <Link textAlign='center' fontWeight='bold'>Dashboard</Link>
-          <Link textAlign='center' fontWeight='bold'>Mentor Match</Link>
-          <Link textAlign='center' fontWeight='bold'>Personal Board</Link>
-          <Link textAlign='center' fontWeight='bold'>Calendar</Link>
-          <Link textAlign='center' fontWeight='bold'>History</Link>
-          <Link textAlign='center' fontWeight='bold'>Settings</Link>
-        </Box>
+        <Typography variant='h1' component='h1'>Connect with us!</Typography>
         <Box sx={{
           display: 'flex',
         }}>
-          <Typography variant='h1' component='h1'>Connect with us!</Typography>
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '90vh',
+            width: '314px',
+            backgroundColor: '#FCBA19'
+          }}>
+            <Link textAlign='center' fontWeight='bold'>Dashboard</Link>
+            <Link textAlign='center' fontWeight='bold'>Mentor Match</Link>
+            <Link textAlign='center' fontWeight='bold'>Personal Board</Link>
+            <Link textAlign='center' fontWeight='bold'>Calendar</Link>
+            <Link textAlign='center' fontWeight='bold'>History</Link>
+            <Link textAlign='center' fontWeight='bold'>Settings</Link>
+          </Box>
           <Box sx={{ height: '100vh', width: '100%' }}>
             <DataGrid
             rows={rows}
