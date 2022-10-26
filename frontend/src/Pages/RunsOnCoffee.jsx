@@ -9,7 +9,7 @@ const RunsOnCoffee = () => {
         <MUIAccordian>
             <MUIAccordianSummary Title='my title' />
             <MUIAccordianDetail>
-                This is my text
+                This is my text!
             </MUIAccordianDetail>
         </MUIAccordian>
     </PageLayout>
