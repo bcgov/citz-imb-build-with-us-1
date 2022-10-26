@@ -179,6 +179,13 @@ const Header = (props) => {
 							>
 								Team D
 							</Button>
+              <Button
+								color="inherit"
+								sx={{ textTransform: 'none' }}
+								onClick={() => navigate('/timer')}
+							>
+								Timer
+							</Button>
 						</Stack>
 					</Box>
 				</Toolbar>
