@@ -101,6 +101,9 @@ const Header = (props) => {
 							<MenuItem onClick={() => navigate('/team-a')}>
 								<Typography textAlign="center">Team A</Typography>
 							</MenuItem>
+							<MenuItem onClick={() => navigate('/RunsOnCoffee')}>
+								<Typography textAlign="center">Runs On Coffee</Typography>
+							</MenuItem>
 							<MenuItem onClick={() => navigate('/team-b')}>
 								<Typography textAlign="center">Team B</Typography>
 							</MenuItem>
@@ -151,12 +154,19 @@ const Header = (props) => {
 							IMB Onboarding(Beta)
 						</Typography>
 						<Stack direction="row" spacing={3}>
-							<Button
+						<Button
 								color="inherit"
 								sx={{ textTransform: 'none' }}
 								onClick={() => navigate('/team-a')}
 							>
 								Team A
+							</Button>
+							<Button
+								color="inherit"
+								sx={{ textTransform: 'none' }}
+								onClick={() => navigate('/RunsOnCoffee')}
+							>
+								Runs On Coffee
 							</Button>
 							<Button
 								color="inherit"

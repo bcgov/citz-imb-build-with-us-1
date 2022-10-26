@@ -6,11 +6,13 @@ import TeamB from './Pages/TeamB';
 import TeamC from './Pages/TeamC';
 import TeamD from './Pages/TeamD';
 import Timer from './Pages/Timer';
+import RunsOnCoffee from './Pages/RunsOnCoffee';
 
 const AppRouter = () => {
   return (
     <Routes>
       <Route path="/team-a" element={<TeamA />} />
+      <Route path="/RunsOnCoffee" element={<RunsOnCoffee />} />
       <Route path="/team-b" element={<TeamB />} />
       <Route path="/team-c" element={<TeamC />} />
       <Route path="/team-d" element={<TeamD />} />
