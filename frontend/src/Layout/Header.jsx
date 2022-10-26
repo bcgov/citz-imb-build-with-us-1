@@ -1,13 +1,7 @@
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { Stack } from '@mui/system';
 import { useNavigate } from 'react-router';
-import { IconButton, Menu, MenuItem } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Toolbar, Box, Typography, Button, Stack, IconButton, Menu, MenuItem } from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 import BCGovLogo from '../../public/BCGovLogo.png';
 
 const Header = (props) => {

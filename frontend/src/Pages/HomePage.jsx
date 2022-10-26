@@ -1,7 +1,5 @@
-import { Grid } from '@mui/material';
-import { Stack } from '@mui/system';
+import { Grid, Stack, Typography } from '@mui/material';
 import React from 'react';
-import Typography from '@mui/material/Typography';
 import PageLayout from '../Layout/PageLayout';
 import heartImage from '../../public/heart.png';
 import diversityImage from '../../public/diversity.jpg';

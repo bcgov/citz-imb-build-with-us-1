@@ -1,5 +1,5 @@
 const timerAgenda = {
-  start: '8:30 am',
+  start: '8:00 pm',
   agenda: [
     {
       title: 'Coffee/Ice Breaker',
