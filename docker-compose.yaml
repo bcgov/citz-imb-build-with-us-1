@@ -17,7 +17,7 @@ services:
     tty: true
     build:
       context: .
-      dockerfile: ./frontend/react-fe/Dockerfile
+      dockerfile: ./frontend/Dockerfile
     networks:
       - bwu-network
     ports:

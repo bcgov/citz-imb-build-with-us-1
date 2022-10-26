@@ -1,12 +1,20 @@
-import React from 'react';
-import { ThemeProvider } from '@mui/material';
-import AppRouter from './AppRouter';
-import theme from '../theme';
+import BCGovLogo from '../public/BCGovLogo.png'
+import Diversity from '../public/diversity.jpg'
+import Heart from '../public/heart.png'
+import './App.css'
 
-const App = () => (
-	<ThemeProvider theme={theme}>
-		<AppRouter />
-	</ThemeProvider>
-);
+function App() {
 
-export default App;
+  return (
+    <div className="App">
+      <div className='imgs'>
+        <img src={BCGovLogo} alt="BC Government Logo" />
+        <img src={Diversity} alt="Diversity" />
+        <img src={Heart} alt="Heart" />
+      </div>
+      <h1>Build with us!</h1>
+    </div>
+  )
+}
+
+export default App
