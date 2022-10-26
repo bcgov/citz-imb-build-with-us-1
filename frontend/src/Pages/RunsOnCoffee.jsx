@@ -1,17 +1,19 @@
 import React from 'react';
-import { MUIAccordian } from '../Layout/MUI/Accordian/MUI-Accordian';
-import { MUIAccordianDetail } from '../Layout/MUI/Accordian/MUI-Accordian-Details';
-import { MUIAccordianSummary } from '../Layout/MUI/Accordian/MUI-Accordian-Summary';
+import { useNavigate } from 'react-router';
 import PageLayout from '../Layout/PageLayout';
+import { AppBar, Toolbar, Box, Typography, Button, Stack, IconButton, Menu, MenuItem } from '@mui/material';
 
 const RunsOnCoffee = () => {
+    const navigate = useNavigate();
+
     return <PageLayout>
-        <MUIAccordian>
-            <MUIAccordianSummary Title='my title' />
-            <MUIAccordianDetail>
-                This is my text!
-            </MUIAccordianDetail>
-        </MUIAccordian>
+        <Button
+            color="inherit"
+            sx={{ textTransform: 'none' }}
+            onClick={() => navigate('/MemoryGame')}
+        >
+            Runs On Coffee
+        </Button>
     </PageLayout>
 }
 
