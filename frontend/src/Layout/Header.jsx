@@ -110,6 +110,9 @@ const Header = (props) => {
 							<MenuItem onClick={() => navigate('/team-d')}>
 								<Typography textAlign="center">Team D</Typography>
 							</MenuItem>
+              <MenuItem onClick={() => navigate('/gamify')}>
+								<Typography textAlign="center">Gamify</Typography>
+							</MenuItem>
               <MenuItem onClick={() => navigate('/timer')}>
 								<Typography textAlign="center">Timer</Typography>
 							</MenuItem>
@@ -185,6 +188,13 @@ const Header = (props) => {
 								onClick={() => navigate('/timer')}
 							>
 								Timer
+							</Button>
+              <Button
+								color="inherit"
+								sx={{ textTransform: 'none' }}
+								onClick={() => navigate('/gamify')}
+							>
+								Gamify
 							</Button>
 						</Stack>
 					</Box>

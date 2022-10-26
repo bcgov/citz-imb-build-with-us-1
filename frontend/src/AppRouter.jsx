@@ -6,6 +6,7 @@ import TeamB from './Pages/TeamB';
 import TeamC from './Pages/TeamC';
 import TeamD from './Pages/TeamD';
 import Timer from './Pages/Timer';
+import Gamify from './Pages/Gamify';
 
 const AppRouter = () => {
   return (
@@ -14,6 +15,7 @@ const AppRouter = () => {
       <Route path="/team-b" element={<TeamB />} />
       <Route path="/team-c" element={<TeamC />} />
       <Route path="/team-d" element={<TeamD />} />
+      <Route path="/gamify" element={<Gamify />} />
       <Route path="/timer" element={<Timer />} />
       <Route path="/" element={<HomePage />} />
     </Routes>
