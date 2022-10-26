@@ -8,16 +8,16 @@ import TeamD from './Pages/TeamD';
 import Timer from './Pages/Timer';
 
 const AppRouter = () => {
-	return (
-		<Routes>
-			<Route path="/team-a" element={<TeamA />} />
-			<Route path="/team-b" element={<TeamB />} />
-			<Route path="/team-c" element={<TeamC />} />
-			<Route path="/team-d" element={<TeamD />} />
+  return (
+    <Routes>
+      <Route path="/team-a" element={<TeamA />} />
+      <Route path="/team-b" element={<TeamB />} />
+      <Route path="/team-c" element={<TeamC />} />
+      <Route path="/team-d" element={<TeamD />} />
       <Route path="/timer" element={<Timer />} />
-			<Route path="/" element={<HomePage />} />
-		</Routes>
-	)
+      <Route path="/" element={<HomePage />} />
+    </Routes>
+  );
 };
 
 export default AppRouter;

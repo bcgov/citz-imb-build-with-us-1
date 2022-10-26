@@ -9,7 +9,7 @@ import Footer from './Layout/Footer';
 const App = () => (
 	<ThemeProvider theme={theme}>
     <Header />
-    <AppRouter />
+      <AppRouter />
     <Footer />
 	</ThemeProvider>
 );
