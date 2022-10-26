@@ -2,5 +2,9 @@
 ## S1E1 - Onboarding
 
 ### Getting Started
-Run `npm run init` to get started.  
-Run `npm run help` for a list of commands.  
+```
+cd frontend
+npm i
+cd ..
+docker compose up --build react-frontend
+```
