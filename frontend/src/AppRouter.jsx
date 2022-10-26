@@ -18,7 +18,7 @@ const AppRouter = () => (
 			<Route path="/team-b" element={<TeamB />} />
 			<Route path="/team-c" element={<TeamC />} />
 			<Route path="/team-d" element={<TeamD />} />
-      <Route path="/timer" element={<Timer />} />
+      			<Route path="/timer" element={<Timer />} />
 		</Routes>
 		<Footer />
 	</Router>
