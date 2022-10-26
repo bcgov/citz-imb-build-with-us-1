@@ -17,11 +17,11 @@ services:
     tty: true
     build:
       context: .
-      dockerfile: ./frontend/Dockerfile
+      dockerfile: ./frontend/react-fe/Dockerfile
     networks:
       - bwu-network
     ports:
-      - ${FRONTEND_PORT:-8081}:8080
+      - ${FRONTEND_PORT:-8080}:8080
 
 networks:
   bwu-network:
