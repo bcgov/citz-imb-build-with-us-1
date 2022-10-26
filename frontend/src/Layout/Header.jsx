@@ -108,7 +108,7 @@ const Header = (props) => {
 								<Typography textAlign="center">Team C</Typography>
 							</MenuItem>
 							<MenuItem onClick={() => navigate('/team-d')}>
-								<Typography textAlign="center">Team D</Typography>
+								<Typography textAlign="center">Leaderboard</Typography>
 							</MenuItem>
               <MenuItem onClick={() => navigate('/timer')}>
 								<Typography textAlign="center">Timer</Typography>

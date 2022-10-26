@@ -11,6 +11,7 @@ const PageLayout = (props) => (
 			display: 'flex',
 			justifyContent: 'center',
 		}}
+		style={props.style}
 	>
 		{props.children}
 	</Container>
