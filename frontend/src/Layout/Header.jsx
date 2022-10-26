@@ -179,6 +179,13 @@ const Header = (props) => {
 							>
 								Team D
 							</Button>
+							<Button
+								color="inherit"
+								sx={{ textTransform: 'none' }}
+								onClick={() => navigate('/member-list')}
+							>
+								Member List	
+							</Button>
               <Button
 								color="inherit"
 								sx={{ textTransform: 'none' }}
