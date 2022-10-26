@@ -56,7 +56,7 @@ export default function Leaderboard() {
   return (
     <TableContainer
       component={Paper}
-      sx={{ height: "fit-content", marginTop: "20px" }}
+      sx={{ height: "fit-content", marginTop: "24px" }}
     >
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -98,15 +98,15 @@ export default function Leaderboard() {
                   title={row.name}
                 />
               </TableCell>
-              <TableCell align="center">{row.points}</TableCell>
-              <TableCell align="center">{row.timesHelped}</TableCell>
+              <TableCell align="left">{row.points}</TableCell>
+              <TableCell align="left">{row.timesHelped}</TableCell>
               <TableCell align="center">
                 <Stack direction="row">
                   {row.badges?.map?.((badge) => (
                     <Tooltip
                       title={
                         <div>
-                          {badge.name}
+                          <b>{badge.name}</b>
                           <br />
                           {badge.description}
                         </div>
