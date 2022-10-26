@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 import React from 'react';
 
-const PageLayout = ({ children }) => (
+const PageLayout = (props) => (
 	<Container
 		sx={{
 			maxWidth: '1096px !important',
@@ -12,7 +12,7 @@ const PageLayout = ({ children }) => (
 			justifyContent: 'center',
 		}}
 	>
-		{children}
+		{props.children}
 	</Container>
 );
 
