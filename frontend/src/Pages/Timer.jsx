@@ -173,9 +173,9 @@ const Timer = () => {
                 <Box className='timerCircleOuter'></Box>
                 <Box className='timerCircleInner'></Box>
                 <Box className='timerCircleAccent'></Box>
-                <Box id='timerCircleProgressFirst'></Box>
+{/* <Box id='timerCircleProgressFirst'></Box>
                 <Box id='timerCircleProgressSecond'></Box>
-                <Box id='timerCircleProgressFiller'></Box>
+                <Box id='timerCircleProgressFiller'></Box> */}
               </Box>
               {/* <Box sx={{ width: '76%', height: '24%', display: 'flex', alignItems: 'end', justifyContent: 'center' }}>
                 <Button sx={{ 
