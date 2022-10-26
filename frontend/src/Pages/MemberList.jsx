@@ -37,19 +37,19 @@ const MemberList = () => {
         <Box sx={{
           display: 'flex',
         }}>
-          <Box sx={{
+          <Box p={5} sx={{
             display: 'flex',
             flexDirection: 'column',
             height: '90vh',
             width: '314px',
             backgroundColor: '#FCBA19'
           }}>
-            <Link textAlign='center' fontWeight='bold'>Dashboard</Link>
-            <Link textAlign='center' fontWeight='bold'>Mentor Match</Link>
-            <Link textAlign='center' fontWeight='bold'>Personal Board</Link>
-            <Link textAlign='center' fontWeight='bold'>Calendar</Link>
-            <Link textAlign='center' fontWeight='bold'>History</Link>
-            <Link textAlign='center' fontWeight='bold'>Settings</Link>
+            <Link p={1} textAlign='center' fontWeight='bold'>Dashboard</Link>
+            <Link p={1} textAlign='center' fontWeight='bold'>Mentor Match</Link>
+            <Link p={1} textAlign='center' fontWeight='bold'>Personal Board</Link>
+            <Link p={1} textAlign='center' fontWeight='bold'>Calendar</Link>
+            <Link p={1} textAlign='center' fontWeight='bold'>History</Link>
+            <Link p={1} textAlign='center' fontWeight='bold'>Settings</Link>
           </Box>
           <Box sx={{ height: '100vh', width: '100%' }}>
             <DataGrid
