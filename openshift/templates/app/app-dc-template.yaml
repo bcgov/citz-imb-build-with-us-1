@@ -36,7 +36,7 @@ objects:
           from:
             kind: ImageStreamTag
             namespace: ${LICENSE_PLATE}-tools
-            name: 'build-with-us-1-frontend:8a4d1a1-dev'
+            name: 'build-with-us-1-frontend:${IMAGE_TAG}-${ENVIRONMENT}'
           lastTriggeredImage: >-
             image-registry.openshift-image-registry.svc:5000/ec1236-tools/build-with-us-1-frontend@sha256:8e0beb89788bea470b4085939ed11e20d05d7a1cafbe3e137c171c7ac51781fa
       - type: ConfigChange
