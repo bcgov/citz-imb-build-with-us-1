@@ -7,6 +7,7 @@ import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import { ThemeProvider } from "@mui/material";
 import theme from "./theme";
+import './css/common.css';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
