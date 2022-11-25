@@ -1,0 +1,37 @@
+.memory-card {
+    height: 100px;
+    width: 100px;
+    background-color: var(--memory-card-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    border-radius: 15px;
+    flex-direction: column;
+}
+
+.memory-card__unrevealed {
+    --memory-card-bg-color: #eee;
+}
+
+.memory-card__points {
+    --memory-card-bg-color: #BDA5F2;
+}
+
+.memory-card__person {
+    background: brightness(20%);
+    color: white;
+    justify-content: flex-end;
+    text-align: center;
+    gap: .2rem;
+}
+
+/* .memory-card__person--image {
+    filter: grayscale(var(--memory-card-grayscale));
+    height: calc(100% + 2rem);
+    width: calc(100% + 2rem);
+} */
+
+.memory-card__points--text {
+    align-self: auto;
+}
