@@ -1,5 +1,5 @@
 import React from "react";
-import PageLayout from "../../../../frontend/src/Layout/PageLayout";
+import PageLayout from "../layout/PageLayout";
 import MemoryCard from "../components/MemoryCard";
 import profile_picture from "../assets/profile_picture.svg";
 
