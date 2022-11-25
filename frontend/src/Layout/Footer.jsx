@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import GitHubIcon from '@mui/icons-material/GitHub';

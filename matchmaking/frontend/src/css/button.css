@@ -1,0 +1,23 @@
+.btn {
+  background-color: var(--btn-bg-color);
+  color: var(--btn-txt-color);
+  border-radius: 50%;
+  position: relative;
+}
+
+.btn::after {
+  content: '';
+  border-radius: 50%;
+  position: absolute;
+  top: 110%;
+}
+
+.btn__primary {
+  --btn-bg-color: #9EC66A;
+  --btn-txt-color: #fff;
+}
+
+.btn__secondary {
+  --btn-bg-color: #FBC399;
+  --btn-txt-color: #A6674D;
+}
