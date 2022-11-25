@@ -32,6 +32,6 @@
     width: calc(100% + 2rem);
 } */
 
-.memory-card__points-text {
+.memory-card__points--text {
     align-self: auto;
 }
