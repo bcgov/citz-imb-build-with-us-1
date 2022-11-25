@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import MemberList from "./MemberList";
+import MemberList from "./pages/MemberList";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MemoryGame from "./MemoryGame";
+import MemoryGame from "./pages/MemoryGame";
 import Header from "../../../frontend/src/Layout/Header";
 import Footer from "../../../frontend/src/Layout/Footer";
 import { ThemeProvider } from "@mui/material";
