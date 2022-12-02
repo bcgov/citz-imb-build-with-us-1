@@ -33,7 +33,19 @@ services:
     networks:
       - bwu-network
     ports:
-      - ${FRONTEND_PORT:-8080}:8080
+      - ${MATCHMAKING_FRONTEND_PORT:-7000}:7000
+
+  ##### MATCHMAKING SERVICE BACKEND #####
+  matchmaking-backend:
+    container_name: matchmaking-backend
+    tty: true
+    build:
+      context: .
+      dockerfile: ./matchmaking/backend/Dockerfile
+    networks:
+      - bwu-network
+    ports:
+      - ${MATCHMAKING_BACKEND_PORT:-5005}:5005
 
 networks:
   bwu-network:
