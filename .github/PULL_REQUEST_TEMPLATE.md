@@ -16,12 +16,12 @@
 - [ ] Dependency updates (may include refactoring of a dependencies functionality).
 - [ ] New feature (non-breaking change which adds functionality).
 
-# How Has This Been Tested?
+## How Has This Been Tested?
 <!-- Please describe the tests that you ran to verify your changes. -->
 
 
 
-# Checklist:
+## Checklist:
 <!--
 - I have performed a self-review of my code.
 - I have commented my code, particularly in hard-to-understand areas.
