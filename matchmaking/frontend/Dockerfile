@@ -17,4 +17,4 @@ RUN npm run build
 
 WORKDIR /app/dist
 
-CMD ["serve", "-p", "8080"]
+CMD ["serve", "-p", "7000"]
