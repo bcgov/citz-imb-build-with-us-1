@@ -15,7 +15,7 @@ const HomePage = () => (
 			<Grid item xs={12} md={6}>
 				<Stack>
 					<Typography variant="h3" fontWeight="bold">
-						Welcome to
+						Welcome 2
 					</Typography>
 					<Stack direction="row" alignItems="center" spacing={2}>
 						<Typography
