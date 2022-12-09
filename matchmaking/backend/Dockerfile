@@ -6,5 +6,10 @@ WORKDIR /app
 COPY matchmaking/backend/. .
 RUN npm i
 
+# Provide access to node for adding logs
+RUN mkdir -p /.npm && chown -R 1001:0 /.npm && chmod -R ug+rwx /.npm
+
+USER 1001
+
 # Entrypoint
 CMD ["npm", "run", "start"]
