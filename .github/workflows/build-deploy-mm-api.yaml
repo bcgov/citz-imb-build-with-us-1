@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
   
 jobs:
-  DPIA-API-Build-Tag-Push:
-    environment: API-Dev
+  MM-API-Build-Tag-Push:
+    environment: MM-API-Dev
     runs-on: ubuntu-latest
     steps:
     
@@ -55,8 +55,8 @@ jobs:
           
   DEV-deploy:
     runs-on: ubuntu-latest
-    environment: API-Dev
-    needs: [ DPIA-API-Build-Tag-Push ]
+    environment: MM-API-Dev
+    needs: [ MM-API-Build-Tag-Push ]
     steps:
     
       # Checkout Repository
@@ -93,7 +93,7 @@ jobs:
   DEV-health-check:
     runs-on: ubuntu-latest
     environment:
-      name: API-Dev
+      name: MM-API-Dev
     needs: [ DEV-deploy ]
     steps:
     
@@ -121,7 +121,7 @@ jobs:
           ./.github/helpers/application-health.sh
   DEV-cleanup:
     runs-on: ubuntu-latest
-    environment: API-Dev
+    environment: MM-API-Dev
     needs: [ DEV-health-check ]
     steps:
 
