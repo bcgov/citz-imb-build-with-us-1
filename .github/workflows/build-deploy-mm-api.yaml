@@ -47,7 +47,7 @@ jobs:
       # Tag Docker Image built with latest
       - name: Docker Tag Version
         run: |
-          docker tag citz-imb-build-with-us-1_matchmaking-api image-registry.apps.silver.devops.gov.bc.ca/b996e6-tools/match-making-api:latest
+          docker tag citz-imb-build-with-us-1_matchmaking-backend image-registry.apps.silver.devops.gov.bc.ca/b996e6-tools/match-making-api:latest
       # Push docker image to BC Gov Repository  
       - name: Docker Push Version
         run: |
