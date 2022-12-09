@@ -23,11 +23,11 @@ jobs:
         uses: redhat-actions/oc-login@v1
         env:
           OPENSHIFT_USER: github-actions
-          OPENSHIFT_NAMESPACE: b996e6-tools
+          OPENSHIFT_NAMESPACE: ec1236-tools
         with: 
           openshift_server_url: ${{ secrets.OPENSHIFT4_SERVER_URL }}
           openshift_token: ${{ secrets.OPENSHIFT4_TOOLS_SA_PASSWORD }}
-          namespace: b996e6-tools
+          namespace: ec1236-tools
             
       # Login to BC Gov Docker Image Repository
       - name: Login to Openshift Docker
@@ -47,11 +47,11 @@ jobs:
       # Tag Docker Image built with latest
       - name: Docker Tag Version
         run: |
-          docker tag citz-imb-build-with-us-1_matchmaking-backend image-registry.apps.silver.devops.gov.bc.ca/b996e6-tools/match-making-api:latest
+          docker tag citz-imb-build-with-us-1_matchmaking-backend image-registry.apps.silver.devops.gov.bc.ca/ec1236-tools/match-making-api:latest
       # Push docker image to BC Gov Repository  
       - name: Docker Push Version
         run: |
-          docker push image-registry.apps.silver.devops.gov.bc.ca/b996e6-tools/match-making-api:latest
+          docker push image-registry.apps.silver.devops.gov.bc.ca/ec1236-tools/match-making-api:latest
           
   DEV-deploy:
     runs-on: ubuntu-latest
@@ -69,11 +69,11 @@ jobs:
         uses: redhat-actions/oc-login@v1
         env:
           OPENSHIFT_USER: github-actions
-          OPENSHIFT_NAMESPACE: b996e6-dev
+          OPENSHIFT_NAMESPACE: ec1236-dev
         with: 
           openshift_server_url: ${{ secrets.OPENSHIFT4_SERVER_URL }}
           openshift_token: ${{ secrets.OPENSHIFT4_DEV_SA_PASSWORD }}
-          namespace: b996e6-dev
+          namespace: ec1236-dev
 
       # Use deploy helper script to process and apply DPIA API Application template into DEV namespace
       - name: Process and Apply API DeploymentConfig, Service, Route templates
@@ -106,11 +106,11 @@ jobs:
         uses: redhat-actions/oc-login@v1
         env:
           OPENSHIFT_USER: github-actions
-          OPENSHIFT_NAMESPACE: b996e6-dev
+          OPENSHIFT_NAMESPACE: ec1236-dev
         with: 
           openshift_server_url: ${{ secrets.OPENSHIFT4_SERVER_URL }}
           openshift_token: ${{ secrets.OPENSHIFT4_DEV_SA_PASSWORD }}
-          namespace: b996e6-dev
+          namespace: ec1236-dev
             
       # Use application health helper script to monitor readiness/liveness probe response post deployment  
       - name: Health Check DEV deployment
@@ -134,11 +134,11 @@ jobs:
         uses: redhat-actions/oc-login@v1
         env:
           OPENSHIFT_USER: github-actions
-          OPENSHIFT_NAMESPACE: b996e6-dev
+          OPENSHIFT_NAMESPACE: ec1236-dev
         with: 
           openshift_server_url: ${{ secrets.OPENSHIFT4_SERVER_URL }}
           openshift_token: ${{ secrets.OPENSHIFT4_DEV_SA_PASSWORD }}
-          namespace: b996e6-dev
+          namespace: ec1236-dev
 
       # Use cleanup helper script to remove any leftover deployment pod objects from previous deployment
       - name: Cleanup previous deployment pod objects
