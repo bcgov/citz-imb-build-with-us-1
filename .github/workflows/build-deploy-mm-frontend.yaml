@@ -89,3 +89,68 @@ jobs:
           IMAGESTREAM: "match-making-frontend"
         run: |
           ./.github/helpers/deploy.sh 
+          
+  DEV-health-check:
+    runs-on: ubuntu-latest
+    environment:
+      name: MM-API-Dev
+    needs: [ DEV-deploy ]
+    steps:
+    
+      # Checkout Repository
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Login to Openshift Silver Cluster
+        uses: redhat-actions/oc-login@v1
+        env:
+          OPENSHIFT_USER: github-actions
+          OPENSHIFT_NAMESPACE: ec1236-dev
+        with: 
+          openshift_server_url: ${{ secrets.OPENSHIFT4_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT4_DEV_SA_PASSWORD }}
+          namespace: ec1236-dev
+            
+      # Use application health helper script to monitor readiness/liveness probe response post deployment  
+      - name: Health Check DEV deployment
+        env:
+          NAMESPACE: "${{ secrets.OPENSHIFT_DEV_NAMESPACE }}"
+          APPLICATION_NAME: "${{ secrets.APPLICATION_NAME }}"
+        run: |
+          ./.github/helpers/application-health.sh
+          
+  DEV-cleanup:
+    runs-on: ubuntu-latest
+    environment: MM-API-Dev
+    needs: [ DEV-health-check ]
+    steps:
+
+      # Checkout Repository
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Login to Openshift Silver Cluster
+        uses: redhat-actions/oc-login@v1
+        env:
+          OPENSHIFT_USER: github-actions
+          OPENSHIFT_NAMESPACE: ec1236-dev
+        with: 
+          openshift_server_url: ${{ secrets.OPENSHIFT4_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT4_DEV_SA_PASSWORD }}
+          namespace: ec1236-dev
+
+      # Use cleanup helper script to remove any leftover deployment pod objects from previous deployment
+      - name: Cleanup previous deployment pod objects
+        env:
+          NAMESPACE: "${{ secrets.OPENSHIFT_DEV_NAMESPACE }}"
+        run: |
+          ./.github/helpers/cleanup-pods.sh
+          
+      # Use cleanup helper script to remove any leftover deployment pod objects from previous deployment
+      - name: Cleanup previous replication controller objects
+        env:
+          NAMESPACE: "${{ secrets.OPENSHIFT_DEV_NAMESPACE }}"
+        run: |
+          ./.github/helpers/cleanup-rc.sh
