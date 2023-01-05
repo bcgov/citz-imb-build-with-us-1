@@ -4,7 +4,6 @@ const rateLimit = require('express-rate-limit');
 
 // Import routers
 const { usersRouter, healthRouter } = require('./routes');
-const { healthRouter } = require('./routes');
 
 // Define Express App
 const app = express();
