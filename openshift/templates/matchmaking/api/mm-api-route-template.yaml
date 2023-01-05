@@ -22,7 +22,7 @@ objects:
       name: ${APPLICATION_NAME}
       weight: 100
     port:
-      targetPort: 8080-tcp
+      targetPort: 5005-tcp
     tls:
       termination: edge
       insecureEdgeTerminationPolicy: Redirect
