@@ -1,1 +1,51 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: ${APPLICATION_NAME}-template
+labels:
+  template: ${APPLICATION_NAME}-template
+objects:
+- kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: ${APPLICATION_NAME}
+    namespace: ${LICENSE_PLATE}-${ENVIRONMENT}
+    labels:
+      app: ${APPLICATION_NAME}
+      app.kubernetes.io/part-of: match-making
+    annotations:
+      openshift.io/host.generated: 'true'
+  spec:
+    host: ${APPLICATION_NAME}-${LICENSE_PLATE}-${ENVIRONMENT}.apps.silver.devops.gov.bc.ca
+    to:
+      kind: Service
+      name: ${APPLICATION_NAME}
+      weight: 100
+    port:
+      targetPort: 8080-tcp
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+    wildcardPolicy: None
 
+parameters:
+  - description: Application Name
+    displayName: AppName
+    name: APPLICATION_NAME
+    required: true
+    value: match-making-api
+  - description: Environment
+    displayName: Environment
+    name: ENVIRONMENT
+    required: true
+    value: dev
+  - description: License Plate
+    displayName: License Plate
+    name: LICENSE_PLATE
+    required: true
+    value: ec1236
+  - description: Imagestream
+    displayName: Imagestream
+    name: IMAGESTREAM
+    required: true
+    value: 'match-making-api'
