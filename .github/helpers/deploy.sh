@@ -10,6 +10,6 @@ do
         -p APPLICATION_NAME=$APPLICATION_NAME \
         -p LICENSE_PLATE=$LICENSE_PLATE \
         -p ENVIRONMENT=$ENVIRONMENT \
-        -p IMAGE_TAG=$IMAGE_TAG | \
+        -p IMAGESTREAM=$IMAGESTREAM | \
         oc apply -f -
 done
