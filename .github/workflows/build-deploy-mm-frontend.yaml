@@ -52,3 +52,40 @@ jobs:
       - name: Docker Push Version
         run: |
           docker push image-registry.apps.silver.devops.gov.bc.ca/ec1236-tools/match-making-frontend:latest
+          
+  DEV-deploy:
+    runs-on: ubuntu-latest
+    environment: MM-Frontend-Dev
+    needs: [ MM-Frontend-Build-Tag-Push ]
+    steps:
+    
+      # Checkout Repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Login to Openshift Silver Cluster
+        uses: redhat-actions/oc-login@v1
+        env:
+          OPENSHIFT_USER: github-actions
+          OPENSHIFT_NAMESPACE: ec1236-dev
+        with: 
+          openshift_server_url: ${{ secrets.OPENSHIFT4_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT4_DEV_SA_PASSWORD }}
+          namespace: ec1236-dev
+
+      # Use deploy helper script to process and apply MM API Application template into DEV namespace
+      - name: Process and Apply API DeploymentConfig, Service, Route templates
+        env:
+          NAMESPACE: "${{ secrets.OPENSHIFT_DEV_NAMESPACE }}"
+          APPLICATION_NAME: "${{ secrets.APPLICATION_NAME }}"
+          LICENSE_PLATE: "${{ secrets.LICENSE_PLATE }}"
+          ENVIRONMENT: "${{ secrets.ENVIRONMENT }}"
+          DC_TEMPLATE: "mm-frontend-dc-template.yaml"
+          SERVICE_TEMPLATE: "mm-frontend-service-template.yaml"
+          ROUTE_TEMPLATE: "mm-frontend-route-template.yaml"
+          DIR: "matchmaking/frontend"
+          IMAGESTREAM: "match-making-frontend"
+        run: |
+          ./.github/helpers/deploy.sh 
