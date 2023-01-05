@@ -20,10 +20,10 @@ objects:
     ipFamilies:
       - IPv4
     ports:
-      - name: 8080-tcp
+      - name: 5005-tcp
         protocol: TCP
-        port: 8080
-        targetPort: 8080
+        port: 5005
+        targetPort: 5005
     internalTrafficPolicy: Cluster
     clusterIPs:
       - 10.98.235.174
