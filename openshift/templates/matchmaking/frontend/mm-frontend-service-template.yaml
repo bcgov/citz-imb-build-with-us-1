@@ -19,10 +19,10 @@ objects:
     ipFamilies:
       - IPv4
     ports:
-      - name: 5005-tcp
+      - name: 7000-tcp
         protocol: TCP
-        port: 5005
-        targetPort: 5005
+        port: 7000
+        targetPort: 7000
     internalTrafficPolicy: Cluster
     type: ClusterIP
     ipFamilyPolicy: SingleStack
@@ -30,13 +30,15 @@ objects:
     selector:
       app: ${APPLICATION_NAME}
       deploymentconfig: ${APPLICATION_NAME}
+  status:
+    loadBalancer: {}
 
 parameters:
   - description: Application Name
     displayName: AppName
     name: APPLICATION_NAME
     required: true
-    value: match-making-api
+    value: match-making-frontend
   - description: Environment
     displayName: Environment
     name: ENVIRONMENT
@@ -51,4 +53,5 @@ parameters:
     displayName: Imagestream
     name: IMAGESTREAM
     required: true
-    value: 'match-making-api'
+    value: 'match-making-frontend'
+
