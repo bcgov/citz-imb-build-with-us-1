@@ -37,7 +37,7 @@ objects:
           from:
             kind: ImageStreamTag
             namespace: ${LICENSE_PLATE}-tools
-            name: '{IMAGESTREAM}:latest'
+            name: '${IMAGESTREAM}:latest'
           lastTriggeredImage: >-
             image-registry.openshift-image-registry.svc:5000/ec1236-tools/match-making-frontend@sha256:fe045ab2ad49f0db900f12bb53700403d3110c2ee091d861d9f82c83428aecd8
       - type: ConfigChange
