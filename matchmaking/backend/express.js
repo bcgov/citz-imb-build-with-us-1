@@ -3,7 +3,7 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 
 // Import routers
-const { usersRouter } = require('./routes');
+const { usersRouter, healthRouter } = require('./routes');
 const { healthRouter } = require('./routes');
 
 // Define Express App
