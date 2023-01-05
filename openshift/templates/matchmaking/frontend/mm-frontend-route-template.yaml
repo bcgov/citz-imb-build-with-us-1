@@ -5,38 +5,35 @@ metadata:
 labels:
   template: ${APPLICATION_NAME}-template
 objects:
-- kind: Service
-  apiVersion: v1
+- kind: Route
+  apiVersion: route.openshift.io/v1
   metadata:
     name: ${APPLICATION_NAME}
     namespace: ${LICENSE_PLATE}-${ENVIRONMENT}
     labels:
-      app: ${APPLICATION_NAME}
+      app:  ${APPLICATION_NAME}
       app.kubernetes.io/part-of: match-making
     annotations:
-      openshift.io/generated-by: OpenShiftWebConsole
+      openshift.io/host.generated: 'true'
   spec:
-    ipFamilies:
-      - IPv4
-    ports:
-      - name: 5005-tcp
-        protocol: TCP
-        port: 5005
-        targetPort: 5005
-    internalTrafficPolicy: Cluster
-    type: ClusterIP
-    ipFamilyPolicy: SingleStack
-    sessionAffinity: None
-    selector:
-      app: ${APPLICATION_NAME}
-      deploymentconfig: ${APPLICATION_NAME}
+    host: ${APPLICATION_NAME}-${LICENSE_PLATE}-${ENVIRONMENT}.apps.silver.devops.gov.bc.ca
+    to:
+      kind: Service
+      name: ${APPLICATION_NAME}
+      weight: 100
+    port:
+      targetPort: 7000-tcp
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+    wildcardPolicy: None
 
 parameters:
   - description: Application Name
     displayName: AppName
     name: APPLICATION_NAME
     required: true
-    value: match-making-api
+    value: match-making-frontend
   - description: Environment
     displayName: Environment
     name: ENVIRONMENT
@@ -51,4 +48,4 @@ parameters:
     displayName: Imagestream
     name: IMAGESTREAM
     required: true
-    value: 'match-making-api'
+    value: 'match-making-frontend'
