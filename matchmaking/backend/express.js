@@ -4,6 +4,7 @@ const rateLimit = require('express-rate-limit');
 
 // Import routers
 const { usersRouter } = require('./routes');
+const { healthRouter } = require('./routes');
 
 // Define Express App
 const app = express();
@@ -27,5 +28,6 @@ const corsOrigin = process.env.MATCHMAKING_NODE_ENV === 'production'
 // Routing
 app.get('/', (req, res) => res.send('Express Server is live!'));
 app.use('/users', usersRouter);
+app.use('/health', healthRouter);
 
 module.exports = app;
