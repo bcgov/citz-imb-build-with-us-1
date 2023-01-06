@@ -12,8 +12,13 @@ const themeConfig = {
         fontColor: {
             white: "#fff",
             black: "#000"
-        }
+        },
     },
+    typography: {
+        fontFamily: [
+            'BC Sans'
+        ]
+    }
 }
 
 const theme = createTheme(themeConfig)
