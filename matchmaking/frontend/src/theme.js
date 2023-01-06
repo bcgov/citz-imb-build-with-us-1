@@ -16,7 +16,7 @@ const themeConfig = {
     },
     typography: {
         fontFamily: [
-            'BC Sans'
+            'BCSans'
         ]
     }
 }
