@@ -10,7 +10,7 @@ const footerSX = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "100vw",
+  width: "100%",
   fontSize: "12px",
 };
 

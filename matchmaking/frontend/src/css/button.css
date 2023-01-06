@@ -10,7 +10,7 @@
   padding-block: 1rem;
   font-size: 1em;
   font-weight: 700;
-  border: none;
+  border: 3px solid var(--btn-txt-color);
   box-shadow: 0em 0.5em var(--btn-shadow-color);
 }
 
@@ -20,13 +20,13 @@
 }
 
 .btn__primary {
-  --btn-bg-color: #9EC66A;
-  --btn-txt-color: #fff;
-  --btn-shadow-color: #74AD2C;
+  --btn-bg-color: var(--yellow);
+  --btn-txt-color: var(--fc-dark);
+  --btn-shadow-color: var(--red);
 }
 
 .btn__secondary {
-  --btn-bg-color: #FBC399;
-  --btn-txt-color: #A6674D;
-  --btn-shadow-color: #F1AB85;
+  --btn-bg-color: var(--purple);
+  --btn-txt-color: var(--fc-dark);
+  --btn-shadow-color: var(--yellow);
 }
