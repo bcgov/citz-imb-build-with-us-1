@@ -13,7 +13,6 @@ import { useAuth, useKeycloak } from "../providers/AuthProvider";
 
 const LandingPage = () => {
   const keycloak = useKeycloak();
-  const user = useAuth();
   const handleLoginClick = () => {
     keycloak.login();
   };
