@@ -9,8 +9,14 @@ import ComputerMan from "../assets/computer_man.svg";
 import ComputerWoman from "../assets/computer_woman.svg";
 import React from "react";
 import PageLayout from "../layout/PageLayout";
+import { useAuth, useKeycloak } from "../providers/AuthProvider";
 
 const LandingPage = () => {
+  const keycloak = useKeycloak();
+  const user = useAuth();
+  const handleLoginClick = () => {
+    keycloak.login();
+  };
   return (
     <Stack className="landing-page">
       <div className="landing-page__section">
@@ -37,7 +43,13 @@ const LandingPage = () => {
                 <Typography variant="body1">
                   Interactive IMB Onboarding Platform
                 </Typography>
-                <Button sx={{ width: "150px" }}>Login with IDIR</Button>
+                <button
+                  className="btn btn__primary"
+                  style={{ maxWidth: "150px" }}
+                  onClick={handleLoginClick}
+                >
+                  Login with IDIR
+                </button>
               </Stack>
             </Grid>
             <Grid item xs={12} sm={5}>

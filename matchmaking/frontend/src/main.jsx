@@ -9,6 +9,7 @@ import { ThemeProvider } from "@mui/material";
 import theme from "./theme";
 import "./css/common.css";
 import { AuthProvider } from "./providers/AuthProvider";
+import LandingPage from "./pages/LandingPage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -17,7 +18,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Router>
           <Header />
           <Routes>
-            <Route path="/" element={<MemberList />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/members" element={<MemberList />} />
             <Route path="/memory" element={<MemoryGame />} />
           </Routes>
           <Footer />

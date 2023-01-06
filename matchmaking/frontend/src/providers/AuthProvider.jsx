@@ -7,8 +7,9 @@ import React, {
 } from "react";
 import Keycloak from "keycloak-js";
 
-// Create a context to share the Keycloak instance
-const AuthContext = createContext();
+// Create a context to share the Keycloak adapter
+const KeycloakContext = createContext();
+
 const keycloakConfig = {
   url: "https://dev.loginproxy.gov.bc.ca/auth",
   realm: "standard",
@@ -21,36 +22,47 @@ function AuthProvider({ children, config = keycloakConfig }) {
 
   // Initialize Keycloak instance asynchronously
   useEffect(() => {
-    const initializeKeycloak = async () => {
-      const kc = Keycloak(keycloakConfig);
-      await kc.init();
+    (async () => {
+      const kc = new Keycloak(keycloakConfig);
+      await kc.init({
+        pkceMethod: "S256",
+        redirectUri: location.href,
+      });
       setKeycloak(kc);
-    };
-    initializeKeycloak();
+    })();
   }, []);
 
   // Provide the Keycloak instance to the context
   return (
-    <AuthContext.Provider value={keycloak}>{children}</AuthContext.Provider>
+    <KeycloakContext.Provider value={keycloak}>
+      {/* TODO: Add a spinner icon if keycloak is not initialized */}
+      {keycloak ? children : ""}
+    </KeycloakContext.Provider>
   );
 }
 
-// Hook that returns the Keycloak instance from the context
+/**
+ * @description Provides children of the AuthProvider with the Keycloak instance
+ *
+ * @returns The current Keycloak adapter instance
+ */
 function useKeycloak() {
-  const keycloak = useContext(AuthContext);
+  const keycloak = useContext(KeycloakContext);
   if (!keycloak) {
     throw new Error("Keycloak instance not found in context");
   }
-  console.log(keycloak);
   return keycloak;
 }
 
+/**
+ * @description Allows children of the AuthProvider to use the currently logged in user's data
+ *
+ * @returns DecodedJWT | undefined
+ */
 function useAuth() {
-  const keycloak = useContext(AuthContext);
-  if (!keycloak) {
-    throw new Error("Keycloak instance not found in context");
-  }
-  return keycloak;
+  const { tokenParsed } = useContext(KeycloakContext);
+
+  return tokenParsed;
 }
 
-export { AuthProvider, useKeycloak };
+export { AuthProvider, useAuth, useKeycloak };
