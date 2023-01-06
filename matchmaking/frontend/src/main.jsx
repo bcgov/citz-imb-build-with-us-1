@@ -7,19 +7,22 @@ import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import { ThemeProvider } from "@mui/material";
 import theme from "./theme";
-import './css/common.css';
+import "./css/common.css";
+import { AuthProvider } from "./providers/AuthProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<MemberList />} />
-          <Route path="/memory" element={<MemoryGame />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<MemberList />} />
+            <Route path="/memory" element={<MemoryGame />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </ThemeProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
