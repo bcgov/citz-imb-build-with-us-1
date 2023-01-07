@@ -59,7 +59,6 @@ const Header = (props) => {
   const [anchorElUserDropdown, setAnchorElUserDropdown] = useState(null);
 
   const user = useAuth();
-  console.log(user);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
