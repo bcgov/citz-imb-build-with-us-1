@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import {
   AppBar,
@@ -10,13 +10,56 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Divider,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
-import { Menu as MenuIcon } from "@mui/icons-material";
+import { Logout, Menu as MenuIcon } from "@mui/icons-material";
 import BCGovLogo from "../../public/BCGovLogo.png";
+import { useAuth } from "../providers/AuthProvider";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import Avatar from "@mui/material/Avatar";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import LogoutIcon from "@mui/icons-material/Logout";
+
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = "#";
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+
+function stringAvatar(name) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+      height: "35px",
+      width: "35px",
+    },
+    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+  };
+}
 
 const Header = (props) => {
   const navigate = useNavigate();
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUserDropdown, setAnchorElUserDropdown] = useState(null);
+
+  const user = useAuth();
+  console.log(user);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -24,6 +67,10 @@ const Header = (props) => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleLinkClick = (link) => () => {
+    navigate(link);
   };
 
   return (
@@ -80,50 +127,57 @@ const Header = (props) => {
             >
               IMB Onboarding(Beta)
             </Typography>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              <MenuItem onClick={() => navigate("/team-a")}>
-                <Typography textAlign="center">Team A</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => navigate("/team-b")}>
-                <Typography textAlign="center">Team B</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => navigate("/team-c")}>
-                <Typography textAlign="center">Team C</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => navigate("/team-d")}>
-                <Typography textAlign="center">Team D</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => navigate("/timer")}>
-                <Typography textAlign="center">Timer</Typography>
-              </MenuItem>
-            </Menu>
+            {user ? (
+              <>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: "block", md: "none" },
+                  }}
+                >
+                  <MenuItem onClick={handleLinkClick("/journey")}>
+                    <Typography textAlign="center">My Journey</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleLinkClick("/dashboard")}>
+                    <Typography textAlign="center">Dashboard</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleLinkClick("/leaderboard")}>
+                    <Typography textAlign="center">Leaderboard</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={() => {}}>
+                    <Typography textAlign="center">
+                      {user.given_name}
+                      &nbsp;
+                      {user.family_name}
+                    </Typography>
+                  </MenuItem>
+                </Menu>
+              </>
+            ) : (
+              ""
+            )}
           </Box>
           <Box
             sx={{
@@ -160,43 +214,75 @@ const Header = (props) => {
             >
               IMB Onboarding(Beta)
             </Typography>
-            <Stack direction="row" spacing={3}>
-              <Button
-                color="inherit"
-                sx={{ textTransform: "none" }}
-                onClick={() => navigate("/team-a")}
-              >
-                Team A
-              </Button>
-              <Button
-                color="inherit"
-                sx={{ textTransform: "none" }}
-                onClick={() => navigate("/team-b")}
-              >
-                Team B
-              </Button>
-              <Button
-                color="inherit"
-                sx={{ textTransform: "none" }}
-                onClick={() => navigate("/team-c")}
-              >
-                Team C
-              </Button>
-              <Button
-                color="inherit"
-                sx={{ textTransform: "none" }}
-                onClick={() => navigate("/team-d")}
-              >
-                Team D
-              </Button>
-              <Button
-                color="inherit"
-                sx={{ textTransform: "none" }}
-                onClick={() => navigate("/timer")}
-              >
-                Timer
-              </Button>
-            </Stack>
+            {user ? (
+              <Stack direction="row" spacing={3}>
+                <Button
+                  color="inherit"
+                  sx={{ textTransform: "none" }}
+                  onClick={handleLinkClick("/journey")}
+                >
+                  My&nbsp;Journey
+                </Button>
+                <Button
+                  color="inherit"
+                  sx={{ textTransform: "none" }}
+                  onClick={handleLinkClick("/dashboard")}
+                >
+                  Dashboard
+                </Button>
+                <Button
+                  color="inherit"
+                  sx={{ textTransform: "none" }}
+                  onClick={handleLinkClick("/leaderboard")}
+                >
+                  Leaderboard
+                </Button>
+                <Button
+                  color="inherit"
+                  sx={{
+                    textTransform: "none",
+                    backgroundColor: "transparent !important",
+                  }}
+                  onClick={(e) => setAnchorElUserDropdown(e.currentTarget)}
+                  endIcon={<KeyboardArrowDownIcon />}
+                  disableRipple
+                  disableFocusRipple
+                  disableTouchRipple
+                >
+                  <Avatar
+                    {...stringAvatar(user.given_name + " " + user.family_name)}
+                  />
+                  &nbsp; &nbsp;
+                  {user.given_name}
+                  &nbsp;
+                  {user.family_name}
+                </Button>
+              </Stack>
+            ) : (
+              ""
+            )}
+            <Menu
+              anchorEl={anchorElUserDropdown}
+              open={!!anchorElUserDropdown}
+              onClose={() => {
+                setAnchorElUserDropdown(null);
+              }}
+              anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+            >
+              <MenuItem>
+                <ListItemIcon>
+                  <AccountBoxIcon />
+                </ListItemIcon>
+                <ListItemText>Profile</ListItemText>
+              </MenuItem>
+              <Divider />
+              <MenuItem>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText>Logout</ListItemText>
+              </MenuItem>
+            </Menu>
           </Box>
         </Toolbar>
       </AppBar>
