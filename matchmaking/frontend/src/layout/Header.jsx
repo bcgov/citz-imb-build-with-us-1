@@ -166,7 +166,7 @@ const Header = (props) => {
                   <MenuItem onClick={handleLinkClick("/leaderboard")}>
                     <Typography textAlign="center">Leaderboard</Typography>
                   </MenuItem>
-                  <MenuItem onClick={() => {}}>
+                  <MenuItem onClick={handleLinkClick("/profile")}>
                     <Typography textAlign="center">
                       {user.given_name}
                       &nbsp;
@@ -269,14 +269,14 @@ const Header = (props) => {
               }}
               anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
             >
-              <MenuItem>
+              <MenuItem onClick={handleLinkClick("/profile")}>
                 <ListItemIcon>
                   <AccountBoxIcon />
                 </ListItemIcon>
                 <ListItemText>Profile</ListItemText>
               </MenuItem>
               <Divider />
-              <MenuItem>
+              <MenuItem onClick={handleLinkClick("/logout")}>
                 <ListItemIcon>
                   <LogoutIcon />
                 </ListItemIcon>
