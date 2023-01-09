@@ -39,13 +39,46 @@ services:
   matchmaking-backend:
     container_name: matchmaking-backend
     tty: true
+    restart: on-failure
     build:
       context: .
+      target: prod
       dockerfile: ./matchmaking/backend/Dockerfile
+    environment:
+      - PGHOST=matchmaking-database
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PGDATABASE=matchmaking
+      - PGPORT=5432
+      - PORT=${MATCHMAKING_BACKEND_PORT:-5005}
     networks:
       - bwu-network
     ports:
       - ${MATCHMAKING_BACKEND_PORT:-5005}:5005
+    depends_on:
+      - matchmaking-database
+
+  ##### MATCHMAKING SERVICE DATABASE #####
+  matchmaking-database:
+    container_name: matchmaking-database
+    tty: true
+    image: postgres:14.5-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=${MATCHMAKING_DATABASE_USER:-postgres}
+      - POSTGRES_PASSWORD=${MATCHMAKING_DATABASE_PASSWORD:-postgres}
+      - POSTGRES_DB=matchmaking
+    networks:
+      - bwu-network
+    ports:
+      - ${MATCHMAKING_DATABASE_PORT:-5009}:5432
+    volumes:
+      - matchmaking-database-data:/var/lib/postgresql/data
+      - ./matchmaking/database/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+volumes:
+  matchmaking-database-data:
+    driver: local
 
 networks:
   bwu-network:

@@ -1,8 +1,7 @@
-// Dotenv from root dir
-require('dotenv').config({ path: '../../' });
+require('dotenv').config();
 const app = require("./express");
 
-const port = process.env.MATCHMAKING_BACKEND_PORT || 5005;
+const port = process.env.PORT ?? 5005;
 
 app.listen(port, (err) => {
   if (err) console.error(err);

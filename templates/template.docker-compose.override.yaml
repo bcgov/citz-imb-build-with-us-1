@@ -1,0 +1,12 @@
+# TEMPLATE for use in root directory.
+# - Create a docker-compose.override.yaml with the following config.
+### File starts below ###
+
+# For use in development.
+# Overrides default docker-compose configurations.
+
+services:
+  ##### MATCHMAKING SERVICE BACKEND #####
+  matchmaking-backend:
+    build:
+      target: dev
