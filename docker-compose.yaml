@@ -74,7 +74,7 @@ services:
       - ${MATCHMAKING_DATABASE_PORT:-5009}:5432
     volumes:
       - matchmaking-database-data:/var/lib/postgresql/data
-      - ./matchmaking/database/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./matchmaking/database/init:/docker-entrypoint-initdb.d
 
 volumes:
   matchmaking-database-data:
