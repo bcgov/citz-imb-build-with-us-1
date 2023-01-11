@@ -5,7 +5,7 @@ const connect = async () => {
   try {
     await pool.connect();
   } catch (error) {
-    console.error(error);
+    console.error('PG: Error in pool connection', error);
   }
 };
 connect();
@@ -13,8 +13,8 @@ connect();
 module.exports = {
   async query(queryString, params) {
     try {
-      const results = await pool.query(queryString, params);
-      return results;
+      const { rows } = await pool.query(queryString, params);
+      return rows;
     } catch (error) {
       console.error('PG: Error in query', {queryString}, error);
     }

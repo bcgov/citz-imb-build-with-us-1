@@ -5,9 +5,9 @@ const { usersQueries } = require('../queries');
  * Get all users.
  * @method GET
  */
-exports.get_all_users = (req, res) => {
+exports.get_all_users = async (req, res) => {
   try {
-    const users = usersQueries.getUsers().rows;
+    const users = await usersQueries.getUsers();
 
     if (users) res.status(200).json(users); // Success, return users.
     else res.status(404).send('Users not found.'); // Users not found.
@@ -19,12 +19,13 @@ exports.get_all_users = (req, res) => {
 /**
  * Get user by id.
  * @method GET
+ * @param {string} id - User GUID, a unique identifier for a user.
  */
-exports.get_user = (req, res) => {
+exports.get_user = async (req, res) => {
   try {
-    const user = usersQueries.getUserById(req.params.id).rows[0];
+    const users = await usersQueries.getUserById(req.params.id);
 
-    if (user) res.status(200).json(user); // Success, return user.
+    if (users[0]) res.status(200).json(users[0]); // Success, return user.
     else res.status(404).send('User not found.'); // User not found.
   } catch (error) {
     console.error('Controller: Error in get_user', error);
@@ -34,18 +35,20 @@ exports.get_user = (req, res) => {
 /**
  * Create user.
  * @method POST
+ * @body Request body requires group_id and job_role.
  */
-exports.create_user = (req, res) => {
+exports.create_user = async (req, res) => {
   try {
     if (!req.body.group_id || !req.body.job_role) 
       res.status(400).send('Must include group_id and job_role in request body.'); // Bad request.
     const { group_id, job_role } = req.body;
 
     // Generate guid and make sure its not already in use.
+    // TODO: Get guid from keycloak.
     const guid = crypto.randomUUID();
-    const user = usersQueries.createUser(guid, group_id, job_role).rows[0];
+    const users = await usersQueries.createUser(guid, group_id, job_role);
 
-    if (user) res.status(201).json(user); // Success, return user.
+    if (users[0]) res.status(201).json(users[0]); // Success, return user.
     else res.status(400).send('User could not be created.'); // Bad request.
   } catch (error) {
     console.error('Controller: Error in create_user', error);
