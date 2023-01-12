@@ -26,7 +26,11 @@ backend/
 > routes/ // Exported as routers, which are used in the main express.js file.
 | > index.js // Allows all routers to be exported from the routes directory.
 |
-> db-connection.js // Where the API connects to the Postgres Database.
+> database/
+| > connection.js // Where the API connects to the Postgres Database.
+| > migrations.js // Controls database migrations.
+| > migrations.json // Keeps track of database migrations.
+| > migrations/ // Where migration scripts are located.
 |
 > Dockerfile // Configuration for the Backend container.
 |

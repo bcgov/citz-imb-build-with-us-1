@@ -33,6 +33,6 @@ exports.getUserById = async (id) => await db.query('SELECT * FROM "user" WHERE g
 
 ## Creating Query Files
 1. Create a new file in the `queries` directory like `users.js`.
-2. Ensure it imports `const db = require('../db-connection');` at the top of the file.
+2. Ensure it imports `const db = require('../database/connection');` at the top of the file.
 3. Export the queries in `backend/queries/index.js` like `exports.usersQueries = require('./users');`.
 3. When you need to use the queries in a controller, import it like `const { usersQueries } = require('../queries');`.

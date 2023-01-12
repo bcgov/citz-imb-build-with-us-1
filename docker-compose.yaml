@@ -46,8 +46,8 @@ services:
       dockerfile: ./matchmaking/backend/Dockerfile
     environment:
       - PGHOST=matchmaking-database
-      - PGUSER=postgres
-      - PGPASSWORD=postgres
+      - PGUSER=${MATCHMAKING_DATABASE_USER:-postgres}
+      - PGPASSWORD=${MATCHMAKING_DATABASE_PASSWORD:-postgres}
       - PGDATABASE=matchmaking
       - PGPORT=5432
       - PORT=${MATCHMAKING_BACKEND_PORT:-5005}
@@ -56,7 +56,8 @@ services:
     ports:
       - ${MATCHMAKING_BACKEND_PORT:-5005}:5005
     depends_on:
-      - matchmaking-database
+      matchmaking-database:
+        condition: service_healthy
 
   ##### MATCHMAKING SERVICE DATABASE #####
   matchmaking-database:
@@ -64,6 +65,12 @@ services:
     tty: true
     image: postgres:14.5-alpine
     restart: always
+    # You will need to change this if you change MATCHMAKING_DATABASE_USER.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     environment:
       - POSTGRES_USER=${MATCHMAKING_DATABASE_USER:-postgres}
       - POSTGRES_PASSWORD=${MATCHMAKING_DATABASE_PASSWORD:-postgres}

@@ -1,7 +1,8 @@
-const db = require('../db-connection');
+const db = require('../database/connection');
 
 /**
  * Get all users.
+ * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
  * @method GET
  * @returns all rows from user table.
  */
@@ -9,6 +10,7 @@ exports.getUsers = async () => await db.query('SELECT * FROM "user"');
 
 /**
  * Get user by id.
+ * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
  * @method GET
  * @param {string} id - User GUID, a unique identifier for a user.
  * @returns first row matching specified id to guid column in user table.
@@ -17,6 +19,7 @@ exports.getUserById = async (id) => await db.query('SELECT * FROM "user" WHERE g
 
 /**
  * Create user.
+ * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
  * @method POST
  * @param {string} guid - User GUID, a unique identifier for a user.
  * @param {number} group_id - A unique identifier for a group. Look at database/init/02-create_groups.sql

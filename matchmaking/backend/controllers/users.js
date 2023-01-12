@@ -3,6 +3,7 @@ const { usersQueries } = require('../queries');
 
 /**
  * Get all users.
+ * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
  * @method GET
  */
 exports.get_all_users = async (req, res) => {
@@ -18,6 +19,7 @@ exports.get_all_users = async (req, res) => {
 
 /**
  * Get user by id.
+ * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
  * @method GET
  * @param {string} id - User GUID, a unique identifier for a user.
  */
@@ -34,6 +36,7 @@ exports.get_user = async (req, res) => {
 
 /**
  * Create user.
+ * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
  * @method POST
  * @body Request body requires group_id and job_role.
  */

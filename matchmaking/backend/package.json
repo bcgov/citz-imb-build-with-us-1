@@ -4,7 +4,7 @@
   "description": "NodeJS Express API",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -L index.js",
+    "dev": "nodemon -L index.js --ignore ./database/migrations.json",
     "start": "node index.js"
   },
   "keywords": [],
