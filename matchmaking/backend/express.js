@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
+const bodyParser = require('body-parser');
 
 // Import routers
 const { usersRouter, healthRouter } = require('./routes');
@@ -8,8 +9,20 @@ const { usersRouter, healthRouter } = require('./routes');
 // Define Express App
 const app = express();
 
+// Cors origin
+const corsOrigin = process.env.NODE_ENV === 'production'
+  ? process.env.MATCHMAKING_FRONTEND_REF
+  : `http://${process.env.MATCHMAKING_FRONTEND_REF}:${process.env.MATCHMAKING_FRONTEND_PORT}`;
+
 // Middleware
-app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(
+  cors({
+    origin: corsOrigin,
+    credentials: true,
+  })
+);
 app.use(
   rateLimit({
     windowMs: 2 * 1000, // 2 seconds
@@ -18,11 +31,6 @@ app.use(
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   })
 );
-
-// Cors origin
-const corsOrigin = process.env.MATCHMAKING_NODE_ENV === 'production'
-  ? process.env.MATCHMAKING_FRONTEND_REF
-  : `http://${process.env.MATCHMAKING_FRONTEND_REF}:${process.env.MATCHMAKING_FRONTEND_PORT}`;
 
 // Routing
 app.get('/', (req, res) => res.send('Express Server is live!'));

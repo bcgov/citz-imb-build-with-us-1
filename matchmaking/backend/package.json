@@ -1,18 +1,24 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "NodeJS Express API",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon -L index.js --ignore ./database/migrations.json",
     "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "1.20.1",
     "cors": "2.8.5",
     "dotenv": "16.0.3",
     "express": "4.18.2",
-    "express-rate-limit": "6.7.0"
+    "express-rate-limit": "6.7.0",
+    "pg": "8.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.20"
   }
 }
