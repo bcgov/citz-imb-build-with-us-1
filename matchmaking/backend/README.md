@@ -8,39 +8,39 @@
 - [Making a Request to the API](#making-a-request-to-the-api)
 
 ## General Information
-- Running on Node-18 and docker image [node:18.12.1-bullseye-slim](https://hub.docker.com/layers/library/node/18.12.1-bullseye-slim/images/sha256-0c3ea57b6c560f83120801e222691d9bd187c605605185810752a19225b5e4d9?context=explore).
-- [REST API](https://www.redhat.com/en/topics/api/what-is-a-rest-api) through the use of [Express](http://expressjs.com/) Framework.
-- Using [node-postgres](https://node-postgres.com/) to interface the connection between the Backend and Postgres Database.
-- Using [nodemon](https://nodemon.io/) in local development to hot-reload (refresh the Backend when changes are made to the code).
+- Running on Node-18 and docker image [node:18.12.1-bullseye-slim].
+- [REST API] through the use of [Express] Framework.
+- Using [node-postgres] to interface the connection between the Backend and Postgres Database.
+- Using [nodemon] in local development to hot-reload (refresh the Backend when changes are made to the code).
 
 ## Directory Structure
 
 ``` JavaScript
 backend/
-> controllers/ // Used by routes. Most of an endpoint's functionality happens here.
-| > index.js // Allows all controllers to be exported from the controllers directory.
+|─ controllers/ // Used by routes. Most of an endpoint's functionality happens here.
+|  └─ index.js // Allows all controllers to be exported from the controllers directory.
 |
-> queries/ // Used by controllers. Functions that run database queries.
-| > index.js // Allows all queries to be exported from the queries directory.
+|─ queries/ // Used by controllers. Functions that run database queries.
+|  └─ index.js // Allows all queries to be exported from the queries directory.
 |
-> routes/ // Exported as routers, which are used in the main express.js file.
-| > index.js // Allows all routers to be exported from the routes directory.
+|─ routes/ // Exported as routers, which are used in the main express.js file.
+|  └─ index.js // Allows all routers to be exported from the routes directory.
 |
-> database/
-| > connection.js // Where the API connects to the Postgres Database.
-| > migrations.js // Controls database migrations.
-| > migrations.json // Keeps track of database migrations.
-| > migrations/ // Where migration scripts are located.
+|─ database/
+|  └─ connection.js // Where the API connects to the Postgres Database.
+|  └─ migrations.js // Controls database migrations.
+|  └─ migrations.json // Keeps track of database migrations.
+|  └─ migrations/ // Where migration scripts are located.
 |
-> Dockerfile // Configuration for the Backend container.
+|─ Dockerfile // Configuration for the Backend container.
 |
-> express.js // Where the API is created and configured. Controls middleware and routers.
+|─ express.js // Where the API is created and configured. Controls middleware and routers.
 |
-> index.js // Where the server is started from.
+|─ index.js // Where the server is started from.
 ```
 
 ## Making a Request to the API
-There are many ways to interact with the API, but one of the easiest is through a VSCode Extension called [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client).
+There are many ways to interact with the API, but one of the easiest is through a VSCode Extension called [Thunder Client].
 
 ### Installing Thunder Client in VSCode
 
@@ -62,3 +62,11 @@ There are many ways to interact with the API, but one of the easiest is through 
 5. Add the endpoint to the address that you are trying to reach, such as `users`, as in `http://localhost:5005/users`.
 6. If you are making a `POST` request that requires a request body, add the JSON object under the **Body** tab.
 7. Click **Send**. The response and status code will show up on the right side of the window.
+
+<!-- Link References -->
+[node:18.12.1-bullseye-slim]: https://hub.docker.com/layers/library/node/18.12.1-bullseye-slim/images/sha256-0c3ea57b6c560f83120801e222691d9bd187c605605185810752a19225b5e4d9?context=explore
+[REST API]: https://www.redhat.com/en/topics/api/what-is-a-rest-api
+[Express]: http://expressjs.com/
+[node-postgres]: https://node-postgres.com/
+[nodemon]: https://nodemon.io/
+[Thunder Client]: https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client

@@ -8,7 +8,7 @@
 - [Connecting with PG Admin](#connecting-with-pg-admin)
 
 ## General Information
-- Running on docker image [postgres:14.5-alpine](https://hub.docker.com/layers/library/postgres/14.5-alpine/images/sha256-db802f226b620fc0b8adbeca7859eb203c8d3c9ce5d84870fadee05dea8f50ce?context=explore).
+- Running on docker image [postgres:14.5-alpine].
 - Locally configured within `./docker-compose.yaml` under service `matchmaking-database`.
 - Locally, data is persisted with docker volume `matchmaking-database-data`.
 - Locally, initialized with sql scripts found in `./matchmaking/database/init`.
@@ -22,7 +22,7 @@ PG Admin is a GUI tool used to interact with Postgres database sessions.
 
 ### Connecting to Local Database on PG Admin
 
-1. Download [PG Admin 4](https://www.pgadmin.org/download/).
+1. Download [PG Admin 4].
 2. Right click on **Servers**, select **Register** > **Server**.
 3. Name it `IMBoarding`.
 4. Click on the **connection** tab.
@@ -35,3 +35,7 @@ PG Admin is a GUI tool used to interact with Postgres database sessions.
 
 - Find tables under **IMBoarding** > **Databases** > **matchmaking** > **Schemas** > **public** > **Tables**.
 - View a tables rows by right clicking a table and selecting **View/Edit Data** > **All Rows**.
+
+<!-- Link References -->
+[postgres:14.5-alpine]: https://hub.docker.com/layers/library/postgres/14.5-alpine/images/sha256-db802f226b620fc0b8adbeca7859eb203c8d3c9ce5d84870fadee05dea8f50ce?context=explore
+[PG Admin 4]: https://www.pgadmin.org/download/

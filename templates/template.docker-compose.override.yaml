@@ -12,4 +12,3 @@ services:
       target: dev
     volumes:
       - ./matchmaking/backend:/app
-      - /app/node_modules
