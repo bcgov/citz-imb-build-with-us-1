@@ -50,7 +50,8 @@ backend/database/migrations/
 2. Create a `scripts` directory inside the directory you just created.
 3. Place all your `sql` scripts inside the `scripts` directory. They will not execute in order, but statements within each file will execute in order. Only include sql statements in these files, end each statement with a semi-colon, and comments and newlines are allowed.
 4. Increment the `lastAddedMigration` property of `backend/database/migrations.json` by 1.
-5. Restart the backend container to run the migration.
+5. Restart the backend container to test and run the migration.
+6. Decrement the `currentMigration` property of `backend/database/migrations.json` by 1 before pushing your migration to prod.
 
 ### Rules for Writing A Migration Script
 _**Example:**_
