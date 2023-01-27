@@ -4,7 +4,7 @@ const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
 
 // Import routers
-const { usersRouter, healthRouter } = require('./routes');
+const { usersRouter, healthRouter, journeyRouter } = require('./routes');
 
 // Define Express App
 const app = express();
@@ -36,5 +36,6 @@ app.use(
 app.get('/', (req, res) => res.send('Express Server is live!'));
 app.use('/users', usersRouter);
 app.use('/health', healthRouter);
+app.use('/journey', journeyRouter);
 
 module.exports = app;
