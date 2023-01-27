@@ -12,10 +12,6 @@ import PageLayout from "../layout/PageLayout";
 import { useAuth, useKeycloak } from "../providers/AuthProvider";
 
 const LandingPage = () => {
-  const keycloak = useKeycloak();
-  const handleLoginClick = () => {
-    keycloak.login();
-  };
   return (
     <Stack className="landing-page">
       <div className="landing-page__section">
@@ -45,7 +41,6 @@ const LandingPage = () => {
                 <button
                   className="btn btn__primary"
                   style={{ maxWidth: "150px" }}
-                  onClick={handleLoginClick}
                 >
                   Login with IDIR
                 </button>
