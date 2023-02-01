@@ -1,4 +1,5 @@
 // Route exports
-exports.usersRouter = require('./users');
-exports.healthRouter = require('./health');
-exports.journeyRouter = require('./journey');
+exports.usersRouter = require("./users");
+exports.journeyRouter = require("./journey");
+exports.authRouter = require("./auth");
+exports.healthRouter = require("./health");
