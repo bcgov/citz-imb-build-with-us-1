@@ -3,3 +3,4 @@
 **/dist
 **/package-lock.json
 docker-compose.override.yaml
+-docker-compose.override.yaml

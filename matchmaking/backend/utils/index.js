@@ -1,2 +1,2 @@
 // Util exports
-exports.colors = require('./colors');
+exports.colors = require("./colors");
