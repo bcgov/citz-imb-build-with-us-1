@@ -10,7 +10,7 @@ services:
       - bwu-network
     ports:
       - ${API_PORT:-3000}:${API_PORT:-3000}
-  
+
   ##### REACT FRONTEND #####
   react-frontend:
     container_name: react-frontend
@@ -47,6 +47,9 @@ services:
       target: prod
       dockerfile: ./matchmaking/backend/Dockerfile
     environment:
+      - ENVIRONMENT=${MATCHMAKING_ENVIRONMENT:-local}
+      - FRONTEND_REF=${MATCHMAKING_FRONTEND_REF:-localhost}
+      - FRONTEND_PORT=${MATCHMAKING_FRONTEND_PORT:-7000}
       - PGHOST=matchmaking-database
       - PGUSER=${MATCHMAKING_DATABASE_USER:-postgres}
       - PGPASSWORD=${MATCHMAKING_DATABASE_PASSWORD:-postgres}
@@ -55,6 +58,11 @@ services:
       - PORT=${MATCHMAKING_BACKEND_PORT:-5005}
       - MATCHMAKING_FRONTEND_REF=${MATCHMAKING_FRONTEND_REF:-localhost}
       - MATCHMAKING_FRONTEND_PORT=${MATCHMAKING_FRONTEND_PORT:-7000}
+      - SSO_SESSION_SECRET=${MATCHMAKING_SSO_SESSION_SECRET}
+      - SSO_AUTH_SERVER_URL=${MATCHMAKING_SSO_AUTH_SERVER_URL}
+      - SSO_REALM=${MATCHMAKING_SSO_REALM}
+      - SSO_CLIENT_ID=${MATCHMAKING_SSO_CLIENT_ID}
+      - SSO_CLIENT_SECRET=${MATCHMAKING_SSO_CLIENT_SECRET}
     networks:
       - bwu-network
     ports:

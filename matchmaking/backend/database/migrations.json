@@ -1,4 +1,7 @@
 {
-  "currentMigration": 0,
+  "currentMigrationLocal": 0,
+  "currentMigrationDev": 0,
+  "currentMigrationTest": 0,
+  "currentMigrationProd": 0,
   "lastAddedMigration": 0
 }
