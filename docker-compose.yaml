@@ -30,6 +30,8 @@ services:
     build:
       context: .
       dockerfile: ./matchmaking/frontend/Dockerfile
+      args:
+        VITE_BASE_API_URL: ${VITE_BASE_API_URL}
     networks:
       - bwu-network
     ports:

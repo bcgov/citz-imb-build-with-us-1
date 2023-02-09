@@ -10,21 +10,24 @@ import theme from "./theme";
 import "./css/common.css";
 import { AuthProvider } from "./providers/AuthProvider";
 import LandingPage from "./pages/LandingPage";
+import UserProvider from "./providers/UserProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/members" element={<MemberList />} />
-            <Route path="/memory" element={<MemoryGame />} />
-          </Routes>
-          <Footer />
-        </Router>
-      </ThemeProvider>
-    </AuthProvider>
+    <UserProvider>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <Router>
+            <Header />
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/members" element={<MemberList />} />
+              <Route path="/memory" element={<MemoryGame />} />
+            </Routes>
+            <Footer />
+          </Router>
+        </ThemeProvider>
+      </AuthProvider>
+    </UserProvider>
   </React.StrictMode>
 );

@@ -1,0 +1,1 @@
+export const GET_USERS_JOURNEYS = "GET_USERS_JOURNEYS";
