@@ -7,11 +7,20 @@ import LaptopGirls from "../assets/laptop_girls.svg";
 import IpadGirl from "../assets/ipad_girl.svg";
 import ComputerMan from "../assets/computer_man.svg";
 import ComputerWoman from "../assets/computer_woman.svg";
-import React from "react";
+import React, { useEffect } from "react";
 import PageLayout from "../layout/PageLayout";
 import { useAuth, useKeycloak } from "../providers/AuthProvider";
+import useUserService from "../services/users/useUserService";
+import useJourneyService from "../services/journey/useJourneyService";
 
 const LandingPage = () => {
+  // Example of how to fetch users from the API
+  const { getUsers, state } = useUserService();
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <Stack className="landing-page">
       <div className="landing-page__section">

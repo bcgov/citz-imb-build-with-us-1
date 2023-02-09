@@ -7,6 +7,10 @@ WORKDIR /app
 COPY matchmaking/frontend/ .
 RUN npm i
 
+# Using ARG to retrieve env variables
+ARG VITE_BASE_API_URL
+ENV VITE_BASE_API_URL=${VITE_BASE_API_URL}
+
 # Needed for serve to be available within the container
 RUN npm install -g serve
 

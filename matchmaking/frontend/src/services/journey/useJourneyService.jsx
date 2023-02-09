@@ -1,18 +1,19 @@
 import { useContext, useMemo } from "react";
 import { JourneyContext } from "../../providers/JourneyProvider";
-import { api } from "../../utils/requestWrapper";
 import { GET_USERS_JOURNEYS } from "./journeyActions";
 
 export default function useJourneyService() {
   const { state, dispatch } = useContext(JourneyContext);
 
   return useMemo(() => {
-    const getUsersJourneys = () => {
+    const getUsersJourneys = async () => {
       try {
-        //TODO: Add username/guid to end of this api call once keycloak is in place.
-        const res = api.get(`/journeys/`);
-        dispatch({ type: GET_USERS_JOURNEYS, payload: res.data });
-      } catch (e) {}
+        const res = await fetch(`${process.env.VITE_BASE_API_URL}/journeys`);
+        const data = await res.json();
+        dispatch({ type: GET_USERS_JOURNEYS, payload: data });
+      } catch (e) {
+        console.error(e);
+      }
     };
 
     return {

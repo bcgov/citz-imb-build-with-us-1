@@ -30,6 +30,8 @@ services:
     build:
       context: .
       dockerfile: ./matchmaking/frontend/Dockerfile
+      args:
+        VITE_BASE_API_URL: ${VITE_BASE_API_URL}
     networks:
       - bwu-network
     ports:
@@ -51,6 +53,8 @@ services:
       - PGDATABASE=matchmaking
       - PGPORT=5432
       - PORT=${MATCHMAKING_BACKEND_PORT:-5005}
+      - MATCHMAKING_FRONTEND_REF=${MATCHMAKING_FRONTEND_REF:-localhost}
+      - MATCHMAKING_FRONTEND_PORT=${MATCHMAKING_FRONTEND_PORT:-7000}
     networks:
       - bwu-network
     ports:
