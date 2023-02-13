@@ -1,34 +1,37 @@
 const express = require("express");
-const router = express.Router();
 const { authController } = require("../controllers");
+const router = express.Router();
 
 /**
- * Keycloak authenticate. Activate user (create user if they dont exist).
- * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
+ * Prompts the user to login.
+ * @author Zach Bourque <Zachary.Bourque@gov.bc.ca>
  * @method GET
- * @route /auth/autenticate
+ * @route /oauth/login
  */
-router.get(
-  "/authenticate",
-  authController.authenticate,
-  authController.activate
-);
+router.get("/login", authController.login);
 
 /**
- * Keycloak logout.
- * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
+ *
+ * @author Zach Bourque <Zachary.Bourque@gov.bc.ca>
  * @method GET
- * @route /auth/logout
+ * @route /oauth/login/callback
+ */
+router.get("/login/callback", authController.callback);
+
+/**
+ *
+ * @author Zach Bourque <Zachary.Bourque@gov.bc.ca>
+ * @method GET
+ * @route /oauth/logout
  */
 router.get("/logout", authController.logout);
 
 /**
- * Activate user (create user if they dont exist).
- * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
+ *
+ * @author Zach Bourque <Zachary.Bourque@gov.bc.ca>
  * @method GET
- * @route /auth/activate
+ * @route /oauth/logout/callback
  */
-router.get("activate", authController.activate);
+router.get("/logout/callback", authController.logoutCallback);
 
 module.exports = router;
-
