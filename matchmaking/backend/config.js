@@ -1,5 +1,3 @@
-require("dotenv").config({ path: __dirname + "/../../.env" });
-
 /*
 Keycloak allows us to define all endpoint urls with a suffix to
 a base URL.  The queries and params following the url are common
