@@ -1,71 +1,76 @@
-const { usersQueries } = require("../queries");
-const { passport } = require("../keycloak");
+const { FRONTEND_URL } = require("../config");
+const {
+  getAccessToken,
+  getAuthorizationUrl,
+  getLogoutUrl,
+} = require("../utils/keycloak");
 
 /**
- * Keycloak authenticate.
- * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
+ * Prompts the user to login.
+ * @author Zach Bourque <Zachary.Bourque@gov.bc.ca>
  * @method GET
- * @route /auth/authenticate
+ * @route /oauth/login
  */
-exports.authenticate = (req, res, next) => {
+exports.login = async (req, res) => {
   try {
-    passport.authenticate("oidc")(req, res, next);
-  } catch (error) {
-    console.error("Controller: Error in authenticate", error);
+    if (req.token) {
+      res.redirect(``);
+    } else {
+      const baseURL = `${req.protocol}://${req.get("host")}`;
+      const authUrl = await getAuthorizationUrl(baseURL);
+      res.redirect(authUrl);
+    }
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, error: err.message || err });
   }
 };
 
 /**
- * Keycloak logout.
- * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
+ * Redirects user to the frontend, with an access and refresh token.
+ * @author Zach Bourque <Zachary.Bourque@gov.bc.ca>
  * @method GET
- * @route /auth/logout
+ * @route /oauth/login/callback
+ */
+exports.callback = async (req, res) => {
+  try {
+    const { code } = req.query;
+    const baseURL = `${req.protocol}://${req.get("host")}`;
+    const tokens = await getAccessToken({ code, baseURL });
+    const redirectUrl = new URL(FRONTEND_URL);
+    redirectUrl.searchParams.set("token", tokens.access_token);
+    res
+      .cookie("refresh_token", tokens.refresh_token, { httpOnly: true })
+      .redirect(redirectUrl);
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, error: err.message || err });
+  }
+};
+
+/**
+ * Logs out the user and, once finished, redirects them to /oauth/logout/callback
+ * @author Zach Bourque <Zachary.Bourque@gov.bc.ca>
+ * @method GET
+ * @route /oauth/logout
  */
 exports.logout = (req, res) => {
   try {
-    req.session.destroy();
-    const retUrl = `${process.env.SSO_AUTH_SERVER_URL}/realms/${
-      process.env.SSO_REALM
-    }/protocol/openid-connect/logout?post_logout_redirect_uri=${encodeURIComponent(
-      process.env.SSO_LOGOUT_REDIRECT_URI
-    )}&id_token_hint=${tokenset.id_token}`;
-    res.redirect(
-      `https://logon7.gov.bc.ca/clp-cgi/logoff.cgi?retnow=1&returl=${encodeURIComponent(
-        retUrl
-      )}`
-    );
-  } catch (error) {
-    console.error("Controller: Error in logout", error);
+    const baseURL = `${req.protocol}://${req.get("host")}`;
+    const logoutUrl = getLogoutUrl(baseURL);
+    res.redirect(logoutUrl);
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, error: err.message || err });
   }
 };
 
 /**
- * Activate user (create user if they dont exist).
- * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
+ * Removes the user's httpOnly refresh token, and redirects back to the frontend.
+ * @author Zach Bourque <Zachary.Bourque@gov.bc.ca>
  * @method GET
- * @route /auth/activate
+ * @route /oauth/logout/callback
  */
-exports.activate = async (req, res) => {
-  try {
-    const decoded = req.session.passport.user;
-
-    // Get user from database matching the user guid on the keycloak jwt.
-    const user = await usersQueries.getUserById(decoded.idir_user_guid)[0];
-
-    if (!user) {
-      // No such user exists, create new user.
-      const createdUser = await usersQueries.createUser(
-        decoded.idir_user_guid,
-        null,
-        null
-      )[0];
-
-      if (!createdUser) res.status(400).send("User could not be created."); // Bad request.
-    }
-
-    res.status(200).send("User activated.");
-  } catch (error) {
-    console.error("Controller: Error in activate", error);
-  }
+exports.logoutCallback = (req, res) => {
+  res.cookie("refresh_token", "", { httpOnly: true }).redirect(FRONTEND_URL);
 };
-
