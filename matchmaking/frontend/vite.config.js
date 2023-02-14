@@ -7,5 +7,9 @@ export default ({ command, mode }) => {
     define: {
       "process.env": process.env,
     },
+    server: {
+      port: 7000,
+      host: true,
+    },
   });
 };

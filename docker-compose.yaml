@@ -29,6 +29,7 @@ services:
     tty: true
     build:
       context: .
+      target: prod
       dockerfile: ./matchmaking/frontend/Dockerfile
       args:
         VITE_BASE_API_URL: ${VITE_BASE_API_URL}
