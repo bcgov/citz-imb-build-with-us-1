@@ -40,38 +40,45 @@ exports.query = async (queryString, params) => {
  * @param {string} sqlFileData - Data read from an sql file using fs module.
  */
 exports.querySQLScript = async (sqlFileData) => {
-  let currentStatement = "";
-  let statements = sqlFileData.split(/\r?\n/); // Both LF and CRLF line endings.
-  // Parse statements out of sql file.
-  const parsedStatements = statements.reduce((parsedStatements, statement) => {
-    // Ignore empty lines and comments.
-    if (
-      statement.trim() === "" ||
-      statement.trim().startsWith("--") ||
-      statement.trim().toUpperCase().startsWith("BEGIN;") ||
-      statement.trim().toUpperCase().startsWith("END;")
-    ) {
-      return parsedStatements;
+  try {
+    let currentStatement = "";
+    let statements = sqlFileData.split("\n");
+    // Parse statements out of sql file.
+    const parsedStatements = statements.reduce(
+      (parsedStatements, statement) => {
+        // Ignore empty lines and comments.
+        if (
+          statement.trim() === "" ||
+          statement.trim().startsWith("--") ||
+          statement.trim().toUpperCase().startsWith("BEGIN;") ||
+          statement.trim().toUpperCase().startsWith("END;")
+        )
+          return parsedStatements;
+        currentStatement += statement;
+        if (statement.endsWith(";")) {
+          parsedStatements.push(currentStatement);
+          currentStatement = "";
+        }
+        return parsedStatements;
+      },
+      []
+    );
+    // Execute statements.
+    for (let i = 0; i < parsedStatements.length; i++) {
+      try {
+        console.log(
+          `${colors.LBlue}PG: ${colors.Reset}Executing statement`,
+          parsedStatements[i]
+        );
+        exports.query(parsedStatements[i]);
+      } catch (error) {
+        console.error(
+          `${colors.LBlue}PG: ${colors.Pink}Error executing SQL statement: ${colors.Reset}${parsedStatements[i]}`,
+          error
+        );
+      }
     }
-    currentStatement += statement;
-    if (statement.endsWith(";")) {
-      parsedStatements.push(currentStatement);
-      currentStatement = "";
-    }
-    return parsedStatements;
-  }, []);
-  // Execute statements.
-  for (let i = 0; i < parsedStatements.length; i++) {
-    try {
-      console.log(
-        `${colors.LBlue}PG: ${colors.Reset}Executing statement ${parsedStatements[i]}`
-      );
-      this.query(parsedStatements[i]);
-    } catch (error) {
-      console.error(
-        `${colors.LBlue}PG: ${colors.Pink}Error executing SQL statement: ${colors.Reset}${parsedStatements[i]}`,
-        error
-      );
-    }
+  } catch (error) {
+    console.error(error);
   }
 };
