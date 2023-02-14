@@ -10,5 +10,10 @@ services:
   matchmaking-backend:
     build:
       target: dev
+  ##### MATCHMAKING SERVICE FRONTEND #####
+  matchmaking-frontend:
+    build:
+      target: dev
     volumes:
-      - ./matchmaking/backend:/app
+      - ./matchmaking/frontend/src:/app/src
+
