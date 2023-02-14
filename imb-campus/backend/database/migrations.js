@@ -1,44 +1,29 @@
 const fs = require("fs");
-const util = require("util");
 const path = require("path");
 const { colors } = require("../utils");
-const {
-  currentMigrationLocal,
-  currentMigrationDev,
-  currentMigrationTest,
-  currentMigrationProd,
-  lastAddedMigration,
-} = require("./migrations.json");
+const { migrationsQueries } = require("../queries");
 const { querySQLScript } = require("./connection");
-
-const readFile = util.promisify(fs.readFile);
-const writeFile = util.promisify(fs.writeFile);
-
-// Check openshift environment/local development.
-let currentMigration;
-if ((process.env.ENVIRONMENT = "dev")) currentMigration = currentMigrationDev;
-else if ((process.env.ENVIRONMENT = "test"))
-  currentMigration = currentMigrationTest;
-else if ((process.env.ENVIRONMENT = "prod"))
-  currentMigration = currentMigrationProd;
-else currentMigration = currentMigrationLocal;
 
 /**
  * Calls runMigrations if new migrations have been added since the last time the server started.
  * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
  */
 exports.checkForNewMigrations = async () => {
+  const { currentMigration, lastAddedMigration } = await setupMigrationTable();
   console.log(
     `${colors.Yellow}DB Migrations: ${colors.Reset}Checking for new migrations...`
   );
-  if (currentMigration < lastAddedMigration) await runMigrations();
+  if (currentMigration < lastAddedMigration)
+    await runMigrations(currentMigration, lastAddedMigration);
 };
 
 /**
  * Calls readMigrationFiles for every new migration since the last time the server started.
  * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
+ * @param {number} currentMigration - Comes from setupMigrationTable().
+ * @param {number} lastAddedMigration - Comes from setupMigrationTable().
  */
-const runMigrations = async () => {
+const runMigrations = async (currentMigration, lastAddedMigration) => {
   const numMigrations = lastAddedMigration - currentMigration;
   console.log(
     `${colors.Yellow}DB Migrations: ${
@@ -54,28 +39,49 @@ const runMigrations = async () => {
       `${colors.Yellow}DB Migrations: ${colors.Reset}Running migration ${migration} of ${numMigrations}...`
     );
     await readMigrationFiles(currentMigration + migration);
-    // Update the migrations.json.
-    if ((process.env.ENVIRONMENT = "dev")) {
-      await updateJsonProperty(
-        "currentMigrationDev",
-        currentMigrationDev + migration
+    // Update the current migration number.
+    const newCurrentMigrationValue = currentMigration + migration;
+    await migrationsQueries.update("current", newCurrentMigrationValue);
+  }
+};
+
+/**
+ * Calls readMigrationFiles for every new migration since the last time the server started.
+ * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
+ */
+const setupMigrationTable = async () => {
+  try {
+    console.log(
+      `${colors.Yellow}DB Migrations: ${colors.Reset}Checking if migrations are set up...`
+    );
+    const totalMigrationsInProject = await countTotalMigrationsInProject();
+    const tableExists = await migrationsQueries.tableExists();
+    if (tableExists) {
+      // Migration table already exists.
+      console.log(
+        `${colors.Yellow}DB Migrations: ${colors.Reset}Retrieving values from migration table in database...`
       );
-    } else if ((process.env.ENVIRONMENT = "test")) {
-      await updateJsonProperty(
-        "currentMigrationTest",
-        currentMigrationTest + migration
-      );
-    } else if ((process.env.ENVIRONMENT = "prod")) {
-      await updateJsonProperty(
-        "currentMigrationProd",
-        currentMigrationProd + migration
-      );
+      const currentMigration = await migrationsQueries.getValue("current");
+      await migrationsQueries.update("lastAdded", totalMigrationsInProject);
+      return { currentMigration, lastAddedMigration: totalMigrationsInProject };
     } else {
-      await updateJsonProperty(
-        "currentMigrationLocal",
-        currentMigrationLocal + migration
+      // Create migration table.
+      console.log(
+        `${colors.Yellow}DB Migrations: ${colors.Reset}Creating migration table in database...`
       );
+      await migrationsQueries.createTable();
+      await migrationsQueries.insert("current", 0);
+      await migrationsQueries.insert("lastAdded", totalMigrationsInProject);
+      return {
+        currentMigration: 0,
+        lastAddedMigration: totalMigrationsInProject,
+      };
     }
+  } catch (error) {
+    console.error(
+      `${colors.Yellow}DB Migrations: ${colors.Pink}Error setting up migration table.${colors.Reset}`,
+      error
+    );
   }
 };
 
@@ -177,29 +183,50 @@ const readMigrationFiles = async (migration) => {
 };
 
 /**
- * Update a JSON Property in migrations.json.
+ * Counts the number of directories in the "./database/migrations/" directory.
  * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
- * @param {string} propertyName - The name of the JSON property.
- * @param {*} newValue - The new value for the property.
+ * @returns Count of migration directories in the project.
  */
-const updateJsonProperty = async (propertyName, newValue) => {
-  try {
-    // Read the file
-    const data = await readFile("./database/migrations.json", "utf8");
-    // Parse the JSON data
-    let jsonData = JSON.parse(data);
-    // Modify the property
-    jsonData[propertyName] = newValue;
-    // Write the data back to the file
-    await writeFile(
-      "./database/migrations.json",
-      JSON.stringify(jsonData, null, 2),
-      "utf8"
-    );
-  } catch (error) {
-    console.error(
-      `${colors.Yellow}DB Migrations: ${colors.Pink}Error updating JSON File${colors.Reset}`,
-      error
-    );
-  }
+const countTotalMigrationsInProject = async () => {
+  let directoryCount = 0;
+  const baseDirectory = "./database/migrations/";
+
+  return new Promise((resolve, reject) => {
+    fs.readdir(baseDirectory, (error, files) => {
+      if (error) {
+        console.error(`Error reading migrations directory: ${error}`);
+        reject(error);
+        return;
+      }
+
+      // Map each file in the directory to a Promise that resolves when its stat information is retrieved.
+      const promises = files.map((file) => {
+        const filePath = `${baseDirectory}${file}`;
+        return new Promise((resolve, reject) => {
+          fs.stat(filePath, (error, stat) => {
+            if (error) {
+              console.error(`Error getting file stat: ${error}`);
+              reject(error);
+              return;
+            }
+
+            if (stat.isDirectory()) {
+              directoryCount++; // Increment the count of directories.
+            }
+            resolve(); // Resolve the Promise.
+          });
+        });
+      });
+
+      // Wait for all of the file stat information to be retrieved.
+      Promise.all(promises)
+        .then(() => {
+          console.log("Migrations found in project", directoryCount);
+          resolve(directoryCount); // Resolve the Promise with the count of directories.
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  });
 };

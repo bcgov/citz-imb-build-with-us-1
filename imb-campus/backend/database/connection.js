@@ -1,12 +1,15 @@
-const { Pool } = require('pg');
-const { colors } = require('../utils');
+const { Pool } = require("pg");
+const { colors } = require("../utils");
 const pool = new Pool();
 
 const connect = async () => {
   try {
     await pool.connect();
   } catch (error) {
-    console.error(`${colors.LBlue}PG: ${colors.Pink}Error in pool connection${colors.Reset}`, error);
+    console.error(
+      `${colors.LBlue}PG: ${colors.Pink}Error in pool connection${colors.Reset}`,
+      error
+    );
   }
 };
 connect();
@@ -23,7 +26,11 @@ exports.query = async (queryString, params) => {
     const { rows } = await pool.query(queryString, params);
     return rows;
   } catch (error) {
-    console.error(`${colors.LBlue}PG: ${colors.Pink}Error in query${colors.Reset}`, {queryString}, error);
+    console.error(
+      `${colors.LBlue}PG: ${colors.Pink}Error in query${colors.Reset}`,
+      { queryString },
+      error
+    );
   }
 };
 
@@ -32,27 +39,46 @@ exports.query = async (queryString, params) => {
  * @author Brady Mitchell <braden.mitchell@gov.bc.ca | braden.jr.mitch@gmail.com>
  * @param {string} sqlFileData - Data read from an sql file using fs module.
  */
-exports.querySQLScript = (sqlFileData) => {
-  let currentStatement = '';
-  let statements = sqlFileData.split("\n");
-  // Parse statements out of sql file.
-  const parsedStatements = statements.reduce((parsedStatements, statement) => {
-    // Ignore empty lines and comments.
-    if (statement.trim() === "" || statement.trim().startsWith("--")) return parsedStatements;
-    currentStatement += statement;
-    if (statement.endsWith(";")) {
-      parsedStatements.push(currentStatement);
-      currentStatement = '';
+exports.querySQLScript = async (sqlFileData) => {
+  try {
+    let currentStatement = "";
+    let statements = sqlFileData.split("\n");
+    // Parse statements out of sql file.
+    const parsedStatements = statements.reduce(
+      (parsedStatements, statement) => {
+        // Ignore empty lines and comments.
+        if (
+          statement.trim() === "" ||
+          statement.trim().startsWith("--") ||
+          statement.trim().toUpperCase().startsWith("BEGIN;") ||
+          statement.trim().toUpperCase().startsWith("END;")
+        )
+          return parsedStatements;
+        currentStatement += statement;
+        if (statement.endsWith(";")) {
+          parsedStatements.push(currentStatement);
+          currentStatement = "";
+        }
+        return parsedStatements;
+      },
+      []
+    );
+    // Execute statements.
+    for (let i = 0; i < parsedStatements.length; i++) {
+      try {
+        console.log(
+          `${colors.LBlue}PG: ${colors.Reset}Executing statement`,
+          parsedStatements[i]
+        );
+        exports.query(parsedStatements[i]);
+      } catch (error) {
+        console.error(
+          `${colors.LBlue}PG: ${colors.Pink}Error executing SQL statement: ${colors.Reset}${parsedStatements[i]}`,
+          error
+        );
+      }
     }
-    return parsedStatements;
-  }, []);
-  // Execute statements.
-  for (let i = 0; i < parsedStatements.length; i++) {
-    try {
-      console.log(`${colors.LBlue}PG: ${colors.Reset}Executing statement`, parsedStatements[i]);
-      pool.query(parsedStatements[i]);
-    } catch (error) {
-      console.error(`${colors.LBlue}PG: ${colors.Pink}Error executing SQL statement: ${colors.Reset}${parsedStatements[i]}`, error);
-    }
+  } catch (error) {
+    console.error(error);
   }
 };
