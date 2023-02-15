@@ -1,6 +1,5 @@
-const { keycloak } = require("./keycloak");
+const { getUserData } = require("./keycloak");
 const { usersQueries } = require("../queries");
-const { getUserData } = keycloak;
 
 /**
  * Adds user to database.
@@ -31,4 +30,3 @@ const activateUser = async (access_token) => {
 };
 
 module.exports = activateUser;
-
