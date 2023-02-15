@@ -1,9 +1,6 @@
 const { FRONTEND_URL } = require("../config");
-const {
-  getAccessToken,
-  getAuthorizationUrl,
-  getLogoutUrl,
-} = require("../utils/keycloak");
+const { keycloak, activateUser } = require("../utils");
+const { getAccessToken, getAuthorizationUrl, getLogoutUrl } = keycloak;
 
 /**
  * Prompts the user to login.
@@ -20,9 +17,9 @@ exports.login = async (req, res) => {
       const authUrl = await getAuthorizationUrl(baseURL);
       res.redirect(authUrl);
     }
-  } catch (err) {
-    console.error(err);
-    res.json({ success: false, error: err.message || err });
+  } catch (error) {
+    console.error("Controller: Error in login", error);
+    res.json({ success: false, error: error.message || error });
   }
 };
 
@@ -39,12 +36,13 @@ exports.callback = async (req, res) => {
     const tokens = await getAccessToken({ code, baseURL });
     const redirectUrl = new URL(FRONTEND_URL);
     redirectUrl.searchParams.set("token", tokens.access_token);
+    await activateUser(tokens.access_token);
     res
       .cookie("refresh_token", tokens.refresh_token, { httpOnly: true })
       .redirect(redirectUrl);
-  } catch (err) {
-    console.error(err);
-    res.json({ success: false, error: err.message || err });
+  } catch (error) {
+    console.error("Controller: Error in login callback", error);
+    res.json({ success: false, error: error.message || error });
   }
 };
 
@@ -59,9 +57,9 @@ exports.logout = (req, res) => {
     const baseURL = `${req.protocol}://${req.get("host")}`;
     const logoutUrl = getLogoutUrl(baseURL);
     res.redirect(logoutUrl);
-  } catch (err) {
-    console.error(err);
-    res.json({ success: false, error: err.message || err });
+  } catch (error) {
+    console.error("Controller: Error in logout", error);
+    res.json({ success: false, error: error.message || error });
   }
 };
 
