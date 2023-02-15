@@ -13,6 +13,7 @@ const {
   OIDC_RESPONSE_TYPE,
   OIDC_SCOPE,
   OIDC_LOGOUT_REDIRECT_URL,
+  OIDC_INTROSPECT_URL,
 } = require("../config");
 
 const btoa = (string) => Buffer.from(string).toString("base64");
@@ -110,9 +111,9 @@ const isJWTValid = async (jwt) => {
     "Content-Type": "application/x-www-form-urlencoded",
   };
 
-  let bodyContent = `client_id=${config.SSO_CLIENT_ID}&client_secret=${config.SSO_CLIENT_SECRET}&token=${jwt}`;
+  let bodyContent = `client_id=${SSO_CLIENT_ID}&client_secret=${SSO_CLIENT_SECRET}&token=${jwt}`;
 
-  let response = await fetch(config.OIDC_INTROSPECT_URL, {
+  let response = await fetch(OIDC_INTROSPECT_URL, {
     method: "POST",
     body: bodyContent,
     headers: headersList,
@@ -122,10 +123,19 @@ const isJWTValid = async (jwt) => {
   return data.active;
 };
 
+const getUserData = (accessToken) => {
+  const data = decodingJWT(accessToken);
+  if (data) {
+    return data.payload;
+  }
+  return null;
+};
+
 module.exports = {
   getAuthorizationUrl,
   getAccessToken,
   getUserInfo,
   getLogoutUrl,
   isJWTValid,
+  getUserData,
 };

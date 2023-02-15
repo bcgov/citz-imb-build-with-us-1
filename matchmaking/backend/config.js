@@ -7,7 +7,7 @@ here.
 */
 
 const frontendRef =
-  process.env.NODE_ENV === "production"
+  process.env.NODE_ENV === "production" && process.env.ENVIRONMENT !== "local"
     ? process.env.FRONTEND_REF
     : `http://${process.env.FRONTEND_REF}:${process.env.FRONTEND_PORT}`;
 
