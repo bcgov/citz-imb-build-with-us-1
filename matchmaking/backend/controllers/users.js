@@ -25,11 +25,14 @@ exports.get_all_users = async (req, res) => {
  */
 exports.get_discovered_users = async (req, res) => {
   try {
-    const user_guid = req.session.passport.user.idir_user_guid; // User who made the request.
-    const users = await usersQueries.getDiscoveredUsers(user_guid);
+    const user = req.user; // User who made the request.
+    if (!user) res.status(404).send("User not found.");
+    else {
+      const users = await usersQueries.getDiscoveredUsers(user.idir_user_guid);
 
-    if (users) res.status(200).json(users); // Success, return users.
-    else res.status(404).send("Users not found."); // Users not found.
+      if (users) res.status(200).json(users); // Success, return users.
+      else res.status(404).send("Users not found."); // Users not found.
+    }
   } catch (error) {
     console.error("Controller: Error in get_discovered_users", error);
   }
@@ -43,11 +46,16 @@ exports.get_discovered_users = async (req, res) => {
  */
 exports.get_undiscovered_users = async (req, res) => {
   try {
-    const user_guid = req.session.passport.user.idir_user_guid; // User who made the request.
-    const users = await usersQueries.getUndiscoveredUsers(user_guid);
+    const user = req.user; // User who made the request.
+    if (!user) res.status(404).send("User not found.");
+    else {
+      const users = await usersQueries.getUndiscoveredUsers(
+        user.idir_user_guid
+      );
 
-    if (users) res.status(200).json(users); // Success, return users.
-    else res.status(404).send("Users not found."); // Users not found.
+      if (users) res.status(200).json(users); // Success, return users.
+      else res.status(404).send("Users not found."); // Users not found.
+    }
   } catch (error) {
     console.error("Controller: Error in get_undiscovered_users", error);
   }
@@ -61,12 +69,18 @@ exports.get_undiscovered_users = async (req, res) => {
  */
 exports.add_discovered_user = async (req, res) => {
   try {
-    const user_guid = req.session.passport.user.idir_user_guid; // User who made the request.
-    const user = await usersQueries.addDiscoveredUser(user_guid, req.params.id);
+    const user = req.user; // User who made the request.
+    if (!user) res.status(404).send("User not found.");
+    else {
+      const dbUser = await usersQueries.addDiscoveredUser(
+        user.idir_user_guid,
+        req.params.id
+      );
 
-    if (user)
-      res.status(204).send("User added to discovered_user table."); // Success.
-    else res.status(404).send("User could not be added."); // Users not found.
+      if (dbUser) res.status(204).send("User added to discovered_user table.");
+      // Success.
+      else res.status(404).send("User could not be added."); // Users not found.
+    }
   } catch (error) {
     console.error("Controller: Error in add_discovered_user", error);
   }

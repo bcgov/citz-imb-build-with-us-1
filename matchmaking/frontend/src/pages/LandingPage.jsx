@@ -47,12 +47,20 @@ const LandingPage = () => {
                 <Typography variant="body1">
                   Interactive IMB Onboarding Platform
                 </Typography>
-                <button
+                <a
                   className="btn btn__primary"
                   style={{ maxWidth: "150px" }}
+                  href="http://localhost:5005/oauth/login"
                 >
                   Login with IDIR
-                </button>
+                </a>
+                <a
+                  className="btn btn__primary"
+                  style={{ maxWidth: "150px" }}
+                  href="http://localhost:5005/oauth/logout"
+                >
+                  Logout
+                </a>
               </Stack>
             </Grid>
             <Grid item xs={12} sm={5}>
