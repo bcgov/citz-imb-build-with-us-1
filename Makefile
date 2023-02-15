@@ -3,18 +3,32 @@ RESET=\033[0m
 
 imbc-up: # Spin up the imbc services.
 	@echo -e "$(CYAN)Starting imbc services...$(RESET)"
-	@docker compose up -d imbc-frontend imbc-backend imbc-database
+	@docker-compose up -d imbc-frontend imbc-backend imbc-database
 	@echo -e "$(CYAN)Done.$(RESET)"
 
 imbc-down: # Stop and remove all containers, images, and volumes.
 	@echo -e "$(CYAN)Stopping imbc services...$(RESET)"
-	@docker compose down
+	@docker-compose down
+	@echo -e "$(CYAN)Done.$(RESET)"
+
+imbc-rebuild-frontend: # Rebuild imbc frontend image.
+	@echo -e "$(CYAN)Rebuilding imbc frontend...$(RESET)"
+	@docker-compose down imbc-frontend
+	@docker rmi -f citz-imb-build-with-us-1_imbc-frontend
+	@docker-compose up -d imbc-frontend
+	@echo -e "$(CYAN)Done.$(RESET)"
+
+imbc-rebuild-backend: # Rebuild imbc backend image.
+	@echo -e "$(CYAN)Rebuilding imbc backend...$(RESET)"
+	@docker-compose down imbc-backend
+	@docker rmi -f citz-imb-build-with-us-1_imbc-backend
+	@docker-compose up -d imbc-backend
 	@echo -e "$(CYAN)Done.$(RESET)"
 
 imbc-down-all: # Stop and remove all containers, images, and volumes.
 	@echo -e "$(CYAN)Stopping imbc services...$(RESET)"
-	@docker compose down --rmi all
-	@docker compose rm -f -v -s
+	@docker-compose down --rmi all imbc-frontend imbc-backend imbc-database
+	@docker-compose rm -f -v -s
 	@docker volume rm -f citz-imb-build-with-us-1_imbc-database-data
 	@echo -e "$(CYAN)Done.$(RESET)"
 	
