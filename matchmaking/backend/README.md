@@ -8,6 +8,7 @@
 - [Directory Structure](#directory-structure)
 - [Keycloak Authentication](#keycloak-authentication)
 - [Authenticating an Endpoint](#authenticating-an-endpoint)
+- [Authorization on an Endpoint](#authorization-on-an-endpoint)
 - [Making a Request to the API](#making-a-request-to-the-api)
 
 ## General Information
@@ -37,15 +38,20 @@ backend/
 |  └─ migrations.json // Keeps track of database migrations.
 |  └─ migrations/ // Where migration scripts are located.
 |
+|─ middleware/
+|  └─ index.js // Allows all functions to be exported from the middleware directory.
+|  └─ protect.js // Exports middleware for protecting an endpoint with keycloak sso authentication.
+|
 |─ utils/
 |  └─ index.js // Allows all functions to be exported from the utils directory.
 |  └─ colors.js // Exports ANSI color codes as variables for use in console log statements.
+|  └─ keycloak.js // Exports functions used in keycloak sso authentication.
 |
 |─ Dockerfile // Configuration for the Backend container.
 |
 |─ express.js // Where the API is created and configured. Controls middleware and routers.
 |
-|─ keycloak.js // Where the keycloak client instance is created. Allows for authentication.
+|─ config.js // Exports environment variables and other configuration values.
 |
 |─ index.js // Where the server is started from.
 ```
@@ -54,24 +60,57 @@ backend/
 
 ## Keycloak Authentication
 
-On initialization of the express app in `express.js`, there is a section called `Initialize Keycloak`.
-In here, there is an async function call that calls `initKeycloak()` and `initKeycloakStrategy()` from `keycloak.js`.
+The Keycloak Authentication system begins when the user visits the `/oauth/login` endpoint.
 
-`keycloak.js` also includes the middleware `checkAuthenticated` which is used to authenticate an endpoint.
-
-You will also find the auth controllers for `authenticate` and `logout` in `controllers/auth.js`.
+1. The user is redirected to the Keycloak Login Page for our application.
+2. Upon successful login, they are redirected back to our app's `/oauth/login/callback` endpoint with an "authentication code".
+3. Using this authentication code, our api reaches out to Keycloak on our user's behalf and retrieves them an [access token](https://auth0.com/docs/secure/tokens/access-tokens), and a [refresh token](https://developer.okta.com/docs/guides/refresh-tokens/main/).
+4. The user is redirected back to the frontend with an access token within the query parameters, and a refresh token as an httpOnly cookie.
 
 <br/>
 
 ## Authenticating an Endpoint
 
 Require keycloak authentication before using an endpoint.
-Import `checkAuthenticated` from `matchmaking/backend/keycloak.js` and add as middleware.
+Import `protect` from `matchmaking/backend/middleware` and add as middleware.
 
 Example from `matchmaking/backend/express.js`:
 
 ```JavaScript
-app.use("/users", checkAuthenticated, usersRouter);
+const { protect } = require("./middleware");
+
+app.use("/users", protect, usersRouter);
+```
+
+<br/>
+
+## Authorization on an Endpoint
+
+Get the keycloak user info in a protected endpoint.  
+`req.user` is either populated or null and the `client_roles` property is either a populated array or undefined.
+
+Example:
+
+```JavaScript
+const user = req.user;
+if (!user) res.status(404).send("User not found.");
+```
+
+Example req.user object:
+
+```JSON
+{
+  idir_user_guid: 'W7802F34D2390EFA9E7JK15923770279',
+  identity_provider: 'idir',
+  idir_username: 'JOHNDOE',
+  name: 'Doe, John CITZ:EX',
+  preferred_username: 'a7254c34i2755fea9e7ed15918356158@idir',
+  given_name: 'John',
+  display_name: 'Doe, John CITZ:EX',
+  family_name: 'Doe',
+  email: 'john.doe@gov.bc.ca',
+  client_roles: ['admin'],
+}
 ```
 
 <br/>
@@ -99,7 +138,8 @@ There are many ways to interact with the API, but one of the easiest is through 
 4. Change the address to `http://localhost:5005/`. **NOTE**: `5005` is the default port for the backend set in the `.env` file.
 5. Add the endpoint to the address that you are trying to reach, such as `users`, as in `http://localhost:5005/users`.
 6. If you are making a `POST` request that requires a request body, add the JSON object under the **Body** tab.
-7. Click **Send**. The response and status code will show up on the right side of the window.
+7. If the endpoint you are trying to reach is protected, you need to add the access token for keycloak under **Auth** > **Bearer**. You can find this in the url of the frontend once you have logged in. **Access token**: `/?token=<access-token>`.
+8. Click **Send**. The response and status code will show up on the right side of the window.
 
 <!-- Link References -->
 

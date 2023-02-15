@@ -1,6 +1,7 @@
-const { isJWTValid } = require("../utils");
+const { keycloak } = require("../utils");
+const { isJWTValid, getUserData } = keycloak;
 
-exports.protect = async (req, res, next) => {
+const protect = async (req, res, next) => {
   const header = req.headers["authorization"];
   if (!header) {
     return res.status(403).json({ error: "No authorization header found" });
@@ -12,6 +13,9 @@ exports.protect = async (req, res, next) => {
     return res.status(403).json({ error: "Invalid token" });
   }
   req.token = token;
+  req.user = getUserData(token);
 
   next();
 };
+
+module.exports = protect;

@@ -1,4 +1,4 @@
-const db = require('../database/connection');
+const db = require("../database/connection");
 
 /**
  * Get all users.
@@ -15,7 +15,8 @@ exports.getUsers = async () => db.query('SELECT * FROM "user"');
  * @param {string} id - User GUID, a unique identifier for a user.
  * @returns first row matching specified id to guid column in user table.
  */
-exports.getUserById = async (id) => db.query('SELECT * FROM "user" WHERE guid = $1', [id]);
+exports.getUserById = async (id) =>
+  db.query('SELECT * FROM "user" WHERE guid = $1', [id]);
 
 /**
  * Create user.
@@ -26,6 +27,8 @@ exports.getUserById = async (id) => db.query('SELECT * FROM "user" WHERE guid = 
  * @param {string} job_role - A user's job position.
  * @returns row of inserted user.
  */
-exports.createUser = async (guid, group_id, job_role) => 
-  db.query('INSERT INTO "user" (guid, group_id, job_role) VALUES ($1, $2, $3)', 
-    [guid, group_id, job_role]);
+exports.createUser = async (guid, group_id, job_role) =>
+  db.query(
+    'INSERT INTO "user" (guid, group_id, job_role) VALUES ($1, $2, $3)',
+    [guid, group_id, job_role]
+  );

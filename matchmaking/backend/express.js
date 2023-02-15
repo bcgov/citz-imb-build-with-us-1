@@ -9,7 +9,7 @@ const {
   healthRouter,
   authRouter,
 } = require("./routes");
-const { protect } = require("./middleware/protect");
+const { protect } = require("./middleware");
 const { FRONTEND_URL } = require("./config");
 
 // Define Express App
