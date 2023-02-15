@@ -27,7 +27,7 @@ imbc-rebuild-backend: # Rebuild imbc backend image.
 
 imbc-down-all: # Stop and remove all containers, images, and volumes.
 	@echo -e "$(CYAN)Stopping imbc services...$(RESET)"
-	@docker-compose down --rmi all imbc-frontend imbc-backend imbc-database
+	@docker-compose down --rmi all
 	@docker-compose rm -f -v -s
 	@docker volume rm -f citz-imb-build-with-us-1_imbc-database-data
 	@echo -e "$(CYAN)Done.$(RESET)"

@@ -132,3 +132,4 @@ ALTER TABLE IF EXISTS public.helped_user
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
+    
