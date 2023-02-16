@@ -1,6 +1,5 @@
-const { keycloak } = require("./keycloak");
+const { getUserInfo } = require("./keycloak");
 const { usersQueries } = require("../queries");
-const { getUserData } = keycloak;
 
 /**
  * Adds user to database.
@@ -8,7 +7,7 @@ const { getUserData } = keycloak;
  */
 const activateUser = async (access_token) => {
   try {
-    const user = getUserData(access_token);
+    const user = await getUserInfo(access_token);
     if (!user) console.error("Activate: User not found.");
     else {
       // Get user from database matching the user guid on the keycloak jwt.
@@ -31,4 +30,3 @@ const activateUser = async (access_token) => {
 };
 
 module.exports = activateUser;
-
