@@ -14,13 +14,13 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { Logout, Menu as MenuIcon } from "@mui/icons-material";
+import { Menu as MenuIcon } from "@mui/icons-material";
 import BCGovLogo from "../../public/BCGovLogo.png";
-import { useAuth } from "../providers/AuthProvider";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Avatar from "@mui/material/Avatar";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import LogoutIcon from "@mui/icons-material/Logout";
+import useAuthService from "../services/auth/useAuthService";
 
 function stringToColor(string) {
   let hash = 0;
@@ -57,8 +57,9 @@ const Header = (props) => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUserDropdown, setAnchorElUserDropdown] = useState(null);
+  const { state: authState, getLogoutURL } = useAuthService();
 
-  const user = useAuth();
+  const user = authState.userInfo;
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -275,7 +276,7 @@ const Header = (props) => {
                 <ListItemText>Profile</ListItemText>
               </MenuItem>
               <Divider />
-              <MenuItem onClick={handleLinkClick("/logout")}>
+              <MenuItem onClick={() => (window.location.href = getLogoutURL())}>
                 <ListItemIcon>
                   <LogoutIcon />
                 </ListItemIcon>
