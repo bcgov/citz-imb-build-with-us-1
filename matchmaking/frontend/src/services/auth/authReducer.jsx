@@ -1,5 +1,5 @@
 import decodeJWT from "../../utils/decodeJWT";
-import { LOGIN, LOGOUT, GET_TOKEN } from "./authActions";
+import { LOGIN, LOGOUT, SET_TOKEN } from "./authActions";
 
 export const initialState = {
   accessToken: "",
@@ -12,7 +12,7 @@ export function reducer(state, action) {
       return { ...state, ...action.payload };
     case LOGOUT:
       return initialState;
-    case GET_TOKEN:
+    case SET_TOKEN:
       return { ...state, ...action.payload };
     default:
       throw new Error();

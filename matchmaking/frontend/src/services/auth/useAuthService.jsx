@@ -1,6 +1,6 @@
 import { useContext, useMemo } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
-import { GET_TOKEN } from "./authActions";
+import { SET_TOKEN } from "./authActions";
 import decodeJWT from "../../utils/decodeJWT";
 import useUserService from "../users/useUserService";
 
@@ -15,7 +15,7 @@ export default function useAuthService() {
     const setUserInfo = (token) => {
       const decodedToken = decodeJWT(token);
       dispatch({
-        type: GET_TOKEN,
+        type: SET_TOKEN,
         payload: { accessToken: token, userInfo: decodedToken },
       });
     };
