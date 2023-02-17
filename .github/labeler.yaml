@@ -16,3 +16,12 @@
 
 'IMBC Frontend':
   - matchmaking/frontend/**/*
+
+'Build With Us':
+  - build-with-us/**/*
+
+'BWU API':
+  - build-with-us/backend/**/*
+
+'BWU Frontend':
+  - build-with-us/frontend/**/*
