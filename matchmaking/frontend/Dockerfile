@@ -51,5 +51,5 @@ RUN npm run build
 # Set the working directory to /app/dist
 WORKDIR /app/dist
 
-# Start the production server with "serve" on port 7000
-CMD ["serve", "-p", "7000"]
+# Start the production server with "serve" using SPA mode, and on port 7000
+CMD ["serve", "-s", "-p", "7000"]
