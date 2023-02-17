@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import MemoryCard from "./MemoryCard";
 import { Grid } from "@mui/material";
-import computer_man from "../assets/computer_man.svg";
 
 const MatchingGame = () => {
   const isClickedCardsAPair = () => {
@@ -12,9 +11,14 @@ const MatchingGame = () => {
     // TODO
   };
 
-  useEffect(() => {
-    // TODO
-  }, []);
+  useEffect(
+    () => {
+      // TODO
+    },
+    [
+      /* Need to add dependency(ies) */
+    ]
+  );
 
   const handleBoxClick = (x, y) => {
     // TODO
