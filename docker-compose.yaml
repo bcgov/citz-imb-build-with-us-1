@@ -23,8 +23,8 @@ services:
     ports:
       - ${FRONTEND_PORT:-8080}:8080
 
-  ##### MATCHMAKING SERVICE FRONTEND #####
-  matchmaking-frontend:
+  ##### IMB CAMPUS  SERVICE FRONTEND #####
+  imbc-frontend:
     container_name: imbc-frontend
     tty: true
     build:
@@ -38,7 +38,7 @@ services:
     ports:
       - ${MATCHMAKING_FRONTEND_PORT:-7000}:7000
 
-  ##### MATCHMAKING SERVICE BACKEND #####
+  ##### IMB CAMPUS SERVICE BACKEND #####
   imbc-backend:
     container_name: imbc-backend
     tty: true
@@ -67,11 +67,11 @@ services:
     ports:
       - ${MATCHMAKING_BACKEND_PORT:-5005}:5005
     depends_on:
-      matchmaking-database:
+      imbc-database:
         condition: service_healthy
 
   ##### MATCHMAKING SERVICE DATABASE #####
-  matchmaking-database:
+  imbc-database:
     container_name: imbc-database
     tty: true
     image: postgres:14.5-alpine
