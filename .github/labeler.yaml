@@ -1,0 +1,18 @@
+# Auto Label Git Action Config
+# 'label_name'
+#   - path_of_diff/where/code_lives/to_base_label_upon
+
+'Github Actions':
+  - .github/workflows/*
+
+'Openshift':
+  - openshift/templates/**/*
+
+'IMB Campus':
+  - matchmaking/**/*
+
+'IMBC API':
+  - matchmaking/backend/**/*
+
+'IMBC Frontend':
+  - matchmaking/frontend/**/*
