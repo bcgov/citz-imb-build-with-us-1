@@ -64,6 +64,54 @@ objects:
             ports:
               - containerPort: 8080
                 protocol: TCP
+            env:
+              - name: SSO_SESSION_SECRET
+                valueFrom:
+                  secretKeyRef:
+                    name: matchmaking-sso
+                    key: MATCHMAKING_SSO_SESSION_SECRET
+              - name: SSO_CLIENT_SECRET
+                valueFrom:
+                  secretKeyRef:
+                    name: matchmaking-sso
+                    key: MATCHMAKING_SSO_CLIENT_SECRET
+              - name: SSO_AUTH_SERVER_URL
+                value: 'https://dev.loginproxy.gov.bc.ca/auth'
+              - name: SSO_REALM
+                value: standard
+              - name: SSO_CLIENT_ID
+                value: im-boarding-4554
+              - name: PORT
+                value: '7000'
+              - name: FRONTEND_REF
+                value: ' match-making-frontend'
+              - name: ENVIRONMENT
+                value: dev
+              - name: PGPORT
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-config
+                    key: PGPORT
+              - name: PGUSER
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-config
+                    key: PGUSER
+              - name: PGPASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-config
+                    key: PGPASSWORD
+              - name: PGHOST
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-config
+                    key: PGHOST
+              - name: PGDATABASE
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-config
+                    key: PGDATABASE
             resources: {}
             terminationMessagePath: /dev/termination-log
             terminationMessagePolicy: File
@@ -79,7 +127,7 @@ parameters:
     displayName: AppName
     name: APPLICATION_NAME
     required: true
-    value: match-making-api
+    value: imbc-api
   - description: Environment
     displayName: Environment
     name: ENVIRONMENT
@@ -94,4 +142,4 @@ parameters:
     displayName: Imagestream
     name: IMAGESTREAM
     required: true
-    value: 'match-making-api'
+    value: 'imbc-api'

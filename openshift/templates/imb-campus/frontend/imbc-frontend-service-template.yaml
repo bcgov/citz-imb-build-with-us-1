@@ -38,7 +38,7 @@ parameters:
     displayName: AppName
     name: APPLICATION_NAME
     required: true
-    value: match-making-frontend
+    value: imbc-frontend
   - description: Environment
     displayName: Environment
     name: ENVIRONMENT
@@ -53,5 +53,5 @@ parameters:
     displayName: Imagestream
     name: IMAGESTREAM
     required: true
-    value: 'match-making-frontend'
+    value: 'imbc-frontend'
 
