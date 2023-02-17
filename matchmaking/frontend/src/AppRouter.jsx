@@ -4,8 +4,8 @@ import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import LandingPage from "./pages/LandingPage";
 import MemberList from "./pages/MemberList";
-import MemoryGame from "./pages/MemoryGame";
 import useAuthService from "./services/auth/useAuthService";
+import MatchingGamePage from "./pages/MatchingGamePage";
 
 const AppRouter = () => {
   const { setUserInfo } = useAuthService();
@@ -36,7 +36,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/members" element={<MemberList />} />
-        <Route path="/memory" element={<MemoryGame />} />
+        <Route path="/matching" element={<MatchingGamePage />} />
       </Routes>
       <Footer />
     </Router>
