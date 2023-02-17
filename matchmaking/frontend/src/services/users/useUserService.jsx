@@ -1,6 +1,7 @@
 import { useContext, useMemo } from "react";
 import { UserContext } from "../../providers/UserProvider";
 import { GET_USERS } from "./userActions";
+import useAuthService from "../auth/useAuthService";
 
 function useUserService() {
   const { state, dispatch } = useContext(UserContext);

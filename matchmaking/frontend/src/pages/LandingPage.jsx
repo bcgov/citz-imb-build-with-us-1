@@ -9,17 +9,17 @@ import ComputerMan from "../assets/computer_man.svg";
 import ComputerWoman from "../assets/computer_woman.svg";
 import React, { useEffect } from "react";
 import PageLayout from "../layout/PageLayout";
-import { useAuth, useKeycloak } from "../providers/AuthProvider";
 import useUserService from "../services/users/useUserService";
 import useJourneyService from "../services/journey/useJourneyService";
+import useAuthService from "../services/auth/useAuthService";
 
 const LandingPage = () => {
-  // Example of how to fetch users from the API
-  const { getUsers, state } = useUserService();
+  const { state: authState, getLoginURL } = useAuthService();
 
-  useEffect(() => {
-    getUsers();
-  }, []);
+  // Uncomment below to test
+  // useEffect(() => {
+  //   console.log(authState);
+  // }, [authState]);
 
   return (
     <Stack className="landing-page">
@@ -47,12 +47,13 @@ const LandingPage = () => {
                 <Typography variant="body1">
                   Interactive IMB Onboarding Platform
                 </Typography>
-                <button
+                <a
                   className="btn btn__primary"
                   style={{ maxWidth: "150px" }}
+                  href={getLoginURL()}
                 >
                   Login with IDIR
-                </button>
+                </a>
               </Stack>
             </Grid>
             <Grid item xs={12} sm={5}>
