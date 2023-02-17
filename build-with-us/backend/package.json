@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "build-with-us-api",
   "version": "1.0.0",
-  "description": "NestJS API",
+  "description": "Build With Us API",
   "author": "",
   "private": true,
   "license": "UNLICENSED",

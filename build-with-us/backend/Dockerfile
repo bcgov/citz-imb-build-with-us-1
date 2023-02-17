@@ -5,13 +5,13 @@ FROM node:18.9-alpine
 WORKDIR /app
 
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY backend/package.json .
+COPY build-with-us/backend/package.json .
 
 # Install app dependencies
 RUN npm install
 
 # Bundle app source
-COPY backend/. .
+COPY build-with-us/backend/. .
 
 # Creates a "dist" folder with the production build
 RUN npm run build

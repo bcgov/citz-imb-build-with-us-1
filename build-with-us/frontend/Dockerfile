@@ -4,14 +4,14 @@ WORKDIR /app
 
 # Copy in build artifacts, build project dependencies
 
-COPY frontend/package*.json ./
+COPY build-with-us/frontend/package*.json ./
 
 RUN npm install
 
 # Needed for serve to be available within the container
 RUN npm install -g serve
 
-COPY frontend/. .
+COPY build-with-us/frontend/. .
 
 RUN npm run build
 
