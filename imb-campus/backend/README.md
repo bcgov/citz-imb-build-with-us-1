@@ -17,7 +17,7 @@
 - [REST API] through the use of [Express] Framework.
 - Using [node-postgres] to interface the connection between the Backend and Postgres Database.
 - Using [nodemon] in local development to hot-reload (refresh the Backend when changes are made to the code).
-- Start the backend containers using `docker compose up matchmaking-database matchmaking-backend`.
+- Start the backend containers using `docker compose up imbc-database imbc-backend`.
 
 ## Directory Structure
 
@@ -72,9 +72,9 @@ The Keycloak Authentication system begins when the user visits the `/oauth/login
 ## Authenticating an Endpoint
 
 Require keycloak authentication before using an endpoint.
-Import `protect` from `matchmaking/backend/middleware` and add as middleware.
+Import `protect` from `imb-campus/backend/middleware` and add as middleware.
 
-Example from `matchmaking/backend/express.js`:
+Example from `imb-campus/backend/express.js`:
 
 ```JavaScript
 const { protect } = require("./middleware");

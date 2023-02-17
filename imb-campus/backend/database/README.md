@@ -1,4 +1,4 @@
-# Matchmaking Backend - Database Connection
+# IMB Campus Backend - Database Connection
 
 ## Table of Contents
 - [General Information](#general-information)
@@ -9,7 +9,7 @@
 
 ## General Information
 - Using [node-postgres] to interface the connection between the Backend and Postgres Database.
-- Connection options are set in the `docker-compose.yaml` under `matchmaking-backend` as environment variables.
+- Connection options are set in the `docker-compose.yaml` under `imbc-backend` as environment variables.
 
 ## Directory Structure
 

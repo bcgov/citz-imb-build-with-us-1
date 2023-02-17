@@ -9,9 +9,9 @@
 
 ## General Information
 - Running on docker image [postgres:14.5-alpine].
-- Locally configured within `./docker-compose.yaml` under service `matchmaking-database`.
-- Locally, data is persisted with docker volume `matchmaking-database-data`.
-- Locally, initialized with sql scripts found in `./matchmaking/database/init`.
+- Locally configured within `./docker-compose.yaml` under service `imbc-database`.
+- Locally, data is persisted with docker volume `imbc-database-data`.
+- Locally, initialized with sql scripts found in `./imbc-campus/database/init`.
 
 ## Schema
 
