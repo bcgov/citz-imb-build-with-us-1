@@ -39,7 +39,7 @@ services:
       - ${MATCHMAKING_FRONTEND_PORT:-7000}:7000
 
   ##### MATCHMAKING SERVICE BACKEND #####
-  matchmaking-backend:
+  imbc-backend:
     container_name: imbc-backend
     tty: true
     restart: on-failure
@@ -91,7 +91,7 @@ services:
     ports:
       - ${MATCHMAKING_DATABASE_PORT:-5009}:5432
     volumes:
-      - imbc-database-data:/var/lib/postgresql/data
+      - matchmaking-database-data:/var/lib/postgresql/data
       - ./imb-campus/database/init:/docker-entrypoint-initdb.d
 
 volumes:
