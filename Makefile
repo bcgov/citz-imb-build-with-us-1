@@ -1,5 +1,5 @@
-mm-up: ## Spin up the matchmaking services
-			docker-compose up --build -d matchmaking-frontend matchmaking-backend matchmaking-database 
+imbc-up: ## Spin up the imb campus services
+			docker-compose up --build -d imbc-frontend imbc-backend imbc-database 
 
-mm-up-b: ## Spin up the matchmaking backend services
-			docker-compose up --build -d matchmaking-backend matchmaking-database 
+imbc-up-b: ## Spin up the imb campus backend services
+			docker-compose up --build -d imbc-backend imbc-database 
