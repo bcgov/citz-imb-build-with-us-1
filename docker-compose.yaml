@@ -23,14 +23,14 @@ services:
     ports:
       - ${FRONTEND_PORT:-8080}:8080
 
-  ##### MATCHMAKING SERVICE FRONTEND #####
-  matchmaking-frontend:
-    container_name: matchmaking-frontend
+  ##### IMB CAMPUS SERVICE FRONTEND #####
+  imbc-frontend:
+    container_name: imbc-frontend
     tty: true
     build:
       context: .
       target: prod
-      dockerfile: ./matchmaking/frontend/Dockerfile
+      dockerfile: ./imb-campus/frontend/Dockerfile
       args:
         VITE_BASE_API_URL: ${VITE_BASE_API_URL}
     networks:
@@ -38,23 +38,23 @@ services:
     ports:
       - ${MATCHMAKING_FRONTEND_PORT:-7000}:7000
 
-  ##### MATCHMAKING SERVICE BACKEND #####
-  matchmaking-backend:
-    container_name: matchmaking-backend
+  ##### IMB CAMPUS SERVICE BACKEND #####
+  imbc-backend:
+    container_name: imbc-backend
     tty: true
     restart: on-failure
     build:
       context: .
       target: prod
-      dockerfile: ./matchmaking/backend/Dockerfile
+      dockerfile: ./imb-campus/backend/Dockerfile
     environment:
       - ENVIRONMENT=${MATCHMAKING_ENVIRONMENT:-local}
       - FRONTEND_REF=${MATCHMAKING_FRONTEND_REF:-localhost}
       - FRONTEND_PORT=${MATCHMAKING_FRONTEND_PORT:-7000}
-      - PGHOST=matchmaking-database
+      - PGHOST=imbc-database
       - PGUSER=${MATCHMAKING_DATABASE_USER:-postgres}
       - PGPASSWORD=${MATCHMAKING_DATABASE_PASSWORD:-postgres}
-      - PGDATABASE=matchmaking
+      - PGDATABASE=imbc
       - PGPORT=5432
       - PORT=${MATCHMAKING_BACKEND_PORT:-5005}
       - SSO_SESSION_SECRET=${MATCHMAKING_SSO_SESSION_SECRET}
@@ -67,12 +67,12 @@ services:
     ports:
       - ${MATCHMAKING_BACKEND_PORT:-5005}:5005
     depends_on:
-      matchmaking-database:
+      imbc-database:
         condition: service_healthy
 
-  ##### MATCHMAKING SERVICE DATABASE #####
-  matchmaking-database:
-    container_name: matchmaking-database
+  ##### IMB CAMPUS SERVICE DATABASE #####
+  imbc-database:
+    container_name: imbc-database
     tty: true
     image: postgres:14.5-alpine
     restart: always
@@ -85,14 +85,14 @@ services:
     environment:
       - POSTGRES_USER=${MATCHMAKING_DATABASE_USER:-postgres}
       - POSTGRES_PASSWORD=${MATCHMAKING_DATABASE_PASSWORD:-postgres}
-      - POSTGRES_DB=matchmaking
+      - POSTGRES_DB=imbc
     networks:
       - bwu-network
     ports:
       - ${MATCHMAKING_DATABASE_PORT:-5009}:5432
     volumes:
       - matchmaking-database-data:/var/lib/postgresql/data
-      - ./matchmaking/database/init:/docker-entrypoint-initdb.d
+      - ./imb-campus/database/init:/docker-entrypoint-initdb.d
 
 volumes:
   matchmaking-database-data:

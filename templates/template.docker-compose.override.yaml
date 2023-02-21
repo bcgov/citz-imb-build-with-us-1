@@ -6,12 +6,12 @@
 # Overrides default docker-compose configurations.
 
 services:
-  ##### MATCHMAKING SERVICE BACKEND #####
-  matchmaking-backend:
+  ##### IMB CAMPUS SERVICE BACKEND #####
+  imbc-backend:
     build:
       target: dev
-  ##### MATCHMAKING SERVICE FRONTEND #####
-  matchmaking-frontend:
+  ##### IMB CAMPUS SERVICE FRONTEND #####
+  imbc-frontend:
     build:
       target: dev
     volumes:

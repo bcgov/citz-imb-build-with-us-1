@@ -7,7 +7,7 @@ FROM node:18.12.1-bullseye-slim as base
 WORKDIR /app
 
 # Copy the frontend build artifacts into the container
-COPY matchmaking/frontend/ .
+COPY imb-campus/frontend/ .
 
 # Using ARG to retrieve env variables
 ARG VITE_BASE_API_URL
