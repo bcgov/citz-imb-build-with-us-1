@@ -1,10 +1,10 @@
-name: Matchmaking - API 
+name: IMB Campus - API 
 
 on:
   push:
     branches: [ main ]
     paths:
-      - "matchmaking/backend/**"
+      - "imb-campus/backend/**"
   workflow_dispatch:
   
 jobs:
@@ -37,7 +37,7 @@ jobs:
       # Build the MM API Application Image via docker-compose
       - name: Build the Docker image
         run: |
-          docker-compose build matchmaking-backend
+          docker-compose build imbc-backend
       
       # TROUBLESHOOTING - view images present in github action run
       - name: Docker List Images
@@ -47,11 +47,11 @@ jobs:
       # Tag Docker Image built with latest
       - name: Docker Tag Version
         run: |
-          docker tag citz-imb-build-with-us-1_matchmaking-backend image-registry.apps.silver.devops.gov.bc.ca/ec1236-tools/match-making-api:latest
+          docker tag citz-imb-build-with-us-1_imbc-backend image-registry.apps.silver.devops.gov.bc.ca/ec1236-tools/imbc-api:latest
       # Push docker image to BC Gov Repository  
       - name: Docker Push Version
         run: |
-          docker push image-registry.apps.silver.devops.gov.bc.ca/ec1236-tools/match-making-api:latest
+          docker push image-registry.apps.silver.devops.gov.bc.ca/ec1236-tools/imbc-api:latest
           
   DEV-deploy:
     runs-on: ubuntu-latest
@@ -82,11 +82,11 @@ jobs:
           APPLICATION_NAME: "${{ secrets.APPLICATION_NAME }}"
           LICENSE_PLATE: "${{ secrets.LICENSE_PLATE }}"
           ENVIRONMENT: "${{ secrets.ENVIRONMENT }}"
-          DC_TEMPLATE: "mm-api-dc-template.yaml"
-          SERVICE_TEMPLATE: "mm-api-service-template.yaml"
-          ROUTE_TEMPLATE: "mm-api-route-template.yaml"
-          DIR: "matchmaking/api"
-          IMAGESTREAM: "match-making-api"
+          DC_TEMPLATE: "imbc-api-dc-template.yaml"
+          SERVICE_TEMPLATE: "imbc-api-service-template.yaml"
+          ROUTE_TEMPLATE: "imbc-api-route-template.yaml"
+          DIR: "imb-campus/api"
+          IMAGESTREAM: "imbc-api"
         run: |
           ./.github/helpers/deploy.sh 
     
