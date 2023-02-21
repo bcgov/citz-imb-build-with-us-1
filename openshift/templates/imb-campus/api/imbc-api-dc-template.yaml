@@ -17,7 +17,7 @@ objects:
     namespace: ${LICENSE_PLATE}-${ENVIRONMENT}
     labels:
       app: ${APPLICATION_NAME}
-      app.kubernetes.io/part-of: match-making
+      app.kubernetes.io/part-of: imb-campus
   spec:
     strategy:
       type: Rolling
