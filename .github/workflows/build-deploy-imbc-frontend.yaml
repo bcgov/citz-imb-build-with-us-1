@@ -1,10 +1,10 @@
-name: Matchmaking - Frontend
+name: IMB Campus - Frontend
 
 on:
   push:
     branches: [ main ]
     paths:
-      - "matchmaking/frontend/**"
+      - "imb-campus/frontend/**"
   workflow_dispatch:
   
 jobs:
@@ -37,7 +37,7 @@ jobs:
       # Build the MM Frontend Application Image via docker-compose
       - name: Build the Docker image
         run: |
-          docker-compose build matchmaking-frontend
+          docker-compose build imbc-frontend
       
       # TROUBLESHOOTING - view images present in github action run
       - name: Docker List Images
@@ -47,11 +47,11 @@ jobs:
       # Tag Docker Image built with latest
       - name: Docker Tag Version
         run: |
-          docker tag citz-imb-build-with-us-1_matchmaking-frontend image-registry.apps.silver.devops.gov.bc.ca/ec1236-tools/match-making-frontend:latest
+          docker tag citz-imb-build-with-us-1_imbc-frontend image-registry.apps.silver.devops.gov.bc.ca/ec1236-tools/imbc-frontend:latest
       # Push docker image to BC Gov Repository  
       - name: Docker Push Version
         run: |
-          docker push image-registry.apps.silver.devops.gov.bc.ca/ec1236-tools/match-making-frontend:latest
+          docker push image-registry.apps.silver.devops.gov.bc.ca/ec1236-tools/imbc-frontend:latest
           
   DEV-deploy:
     runs-on: ubuntu-latest
@@ -82,11 +82,11 @@ jobs:
           APPLICATION_NAME: "${{ secrets.APPLICATION_NAME }}"
           LICENSE_PLATE: "${{ secrets.LICENSE_PLATE }}"
           ENVIRONMENT: "${{ secrets.ENVIRONMENT }}"
-          DC_TEMPLATE: "mm-frontend-dc-template.yaml"
-          SERVICE_TEMPLATE: "mm-frontend-service-template.yaml"
-          ROUTE_TEMPLATE: "mm-frontend-route-template.yaml"
-          DIR: "matchmaking/frontend"
-          IMAGESTREAM: "match-making-frontend"
+          DC_TEMPLATE: "imbc-frontend-dc-template.yaml"
+          SERVICE_TEMPLATE: "imbc-frontend-service-template.yaml"
+          ROUTE_TEMPLATE: "imbc-frontend-route-template.yaml"
+          DIR: "imb-campus/frontend"
+          IMAGESTREAM: "imbc-frontend"
         run: |
           ./.github/helpers/deploy.sh 
           
