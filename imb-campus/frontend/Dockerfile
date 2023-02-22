@@ -9,10 +9,6 @@ WORKDIR /app
 # Copy the frontend build artifacts into the container
 COPY imb-campus/frontend/ .
 
-# Using ARG to retrieve env variables
-ARG VITE_BASE_API_URL
-ENV VITE_BASE_API_URL=${VITE_BASE_API_URL}
-
 ###################################
 #           DEV BUILD             #
 ###################################

@@ -8,9 +8,9 @@ export default function useAuthService() {
   const { state, dispatch } = useContext(AuthContext);
 
   return useMemo(() => {
-    const getLoginURL = () => `${process.env.VITE_BASE_API_URL}/oauth/login`;
+    const getLoginURL = () => `${window.BASE_API_URL}/oauth/login`;
 
-    const getLogoutURL = () => `${process.env.VITE_BASE_API_URL}/oauth/logout`;
+    const getLogoutURL = () => `${window.BASE_API_URL}/oauth/logout`;
 
     const setUserInfo = (token) => {
       const decodedToken = decodeJWT(token);

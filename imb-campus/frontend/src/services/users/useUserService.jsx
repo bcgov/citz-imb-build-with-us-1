@@ -9,7 +9,7 @@ function useUserService() {
   return useMemo(() => {
     const getUsers = async () => {
       try {
-        const res = await fetch(`${process.env.VITE_BASE_API_URL}/users`);
+        const res = await fetch(`${window.BASE_API_URL}/users`);
         const data = await res.json();
         dispatch({ type: GET_USERS, payload: data });
       } catch (e) {

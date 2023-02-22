@@ -31,8 +31,6 @@ services:
       context: .
       target: prod
       dockerfile: ./imb-campus/frontend/Dockerfile
-      args:
-        VITE_BASE_API_URL: ${VITE_BASE_API_URL}
     networks:
       - bwu-network
     ports:
