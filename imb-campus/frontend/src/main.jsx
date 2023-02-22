@@ -7,6 +7,10 @@ import AuthProvider from "./providers/AuthProvider";
 import UserProvider from "./providers/UserProvider";
 import AppRouter from "./AppRouter";
 
+window.BASE_API_URL = window.location.href.includes("localhost")
+  ? "http://localhost:5005"
+  : "https://imbc-api-ec1236-dev.apps.silver.devops.gov.bc.ca";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <UserProvider>

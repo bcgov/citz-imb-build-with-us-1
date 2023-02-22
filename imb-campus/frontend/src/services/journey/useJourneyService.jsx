@@ -8,7 +8,7 @@ export default function useJourneyService() {
   return useMemo(() => {
     const getUsersJourneys = async () => {
       try {
-        const res = await fetch(`${process.env.VITE_BASE_API_URL}/journeys`);
+        const res = await fetch(`${window.BASE_API_URL}/journeys`);
         const data = await res.json();
         dispatch({ type: GET_USERS_JOURNEYS, payload: data });
       } catch (e) {
