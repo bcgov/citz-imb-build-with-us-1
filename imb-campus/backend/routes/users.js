@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const upload = require("../middleware");
 const { usersController } = require("../controllers");
 
 /**
@@ -42,5 +43,23 @@ router.put("/discovered/:id", usersController.add_discovered_user);
  * @param id - User GUID, a unique identifier for a user.
  */
 router.get("/:id", usersController.get_user);
+
+/**
+ * Get profile image for user.
+ * @author Grant Graham
+ * @method GET
+ * @route /users/profile-pic
+ * 
+ */
+router.get("/profile-pic", usersController.get_profile_pic);
+
+/**
+ * Set/update profile image for user.
+ * @author Grant Graham
+ * @method PUT
+ * @route /users/profile-pic
+ * 
+ */
+router.put("/profile-pic", upload.single("file"), usersController.upload_profile_pic);
 
 module.exports = router;

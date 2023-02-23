@@ -1,4 +1,5 @@
 const { usersQueries } = require("../queries");
+const path = require('path');
 
 /**
  * Get all users.
@@ -99,6 +100,34 @@ exports.get_user = async (req, res) => {
 
     if (users[0]) res.status(200).json(users[0]); // Success, return user.
     else res.status(404).send("User not found."); // User not found.
+  } catch (error) {
+    console.error("Controller: Error in get_user", error);
+  }
+};
+
+/**
+ * Get profile image
+ * @author Grant Graham
+ * @method GET
+ * @route /users/profile-pic
+ */
+exports.get_profile_pic = async (req, res) => {
+  try {
+    res.sendfile(path.join("images/", "example.png"));
+  } catch (error) {
+    console.error("Controller: Error in get_user", error);
+  }
+};
+
+/**
+ * PUT profile image
+ * @author Grant Graham
+ * @method PUT
+ * @route /users/profile-pic
+ */
+exports.update_profile_pic = async (req, res) => {
+  try {
+    res.status(204).send("Profile image uploaded");
   } catch (error) {
     console.error("Controller: Error in get_user", error);
   }
