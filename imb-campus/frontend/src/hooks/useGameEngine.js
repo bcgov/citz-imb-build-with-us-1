@@ -1,17 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useMemo } from "react";
 
 export const useGameEngine = (userList) => {
-  const [cardList, setCardList] = useState([]);
+  console.log({ userList });
 
-  const pickCard = (source, target) => {
-    if (source.id === target.id) {
-      newCardList[source.index].isFlipped = true;
-      newCardList[target.index].isFlipped = true;
-    }
-    return;
-  }
-  useEffect(() => {
-    const newCardList = userList.map((user) => {
+  const cardList = useMemo(() => {
+    let newCardList = [];
+    const newUserList = userList.map((user) => {
       return {
         id: user.id,
         name: user.name,
@@ -21,12 +15,20 @@ export const useGameEngine = (userList) => {
       };
     });
 
-    newCardList.push(...newCardList);
-
+    newCardList = [...newUserList, ...newUserList];
+    console.log({ newCardList });
     newCardList.sort(() => Math.random() - 0.5);
 
-    setCardList(newCardList);
+    return newCardList;
   }, []);
 
+  const pickCard = (source, target) => {
+    if (cardList[source].id === cardList[target].id) {
+      cardList[source].isFlipped = true;
+      cardList[target].isFlipped = true;
+    }
+    return;
+  };
+
   return { cardList, pickCard };
-}
+};
