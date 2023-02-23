@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import MemoryCard from "./MemoryCard";
 import { Grid } from "@mui/material";
+import { useUndiscoveredUsers } from "../hooks";
 
 const MatchingGame = () => {
   const isClickedCardsAPair = () => {
@@ -23,30 +24,23 @@ const MatchingGame = () => {
   const handleBoxClick = (x, y) => {
     // TODO
   };
-
+  const unDiscoveredUsers = useUndiscoveredUsers();
   return (
     <div className="matching-game">
       <Grid container spacing={1}>
-        {/* 
-            TODO
-        */}
         <Grid item xs={12} textAlign="center">
           <h2>Matching Game will go here</h2>
         </Grid>
-        <Grid item xs={4}>
-          <MemoryCard cardType="unrevealed" />
-        </Grid>
-        <Grid item xs={4}>
-          <MemoryCard
-            cardType="person"
-            name="John Doe"
-            position="Developer"
-            profilePicture="https://api.dicebear.com/5.x/micah/svg"
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <MemoryCard cardType="points" points={60} />
-        </Grid>
+        {unDiscoveredUsers.map((element) => (
+          <Grid item xs={3}>
+            <MemoryCard
+              cardType="person"
+              name={element.name}
+              position={element.position}
+              profilePicture={element.profilePicture}
+            />
+          </Grid>
+        ))}
       </Grid>
     </div>
   );
