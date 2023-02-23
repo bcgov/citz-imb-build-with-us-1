@@ -35,7 +35,6 @@ backend/
 |─ database/
 |  └─ connection.js // Where the API connects to the Postgres Database.
 |  └─ migrations.js // Controls database migrations.
-|  └─ migrations.json // Keeps track of database migrations.
 |  └─ migrations/ // Where migration scripts are located.
 |
 |─ middleware/
