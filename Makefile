@@ -35,9 +35,9 @@ imbc-down-all: # Stop and remove all containers, images, and volumes.
 imbc-npm-reset: # Remove and re-install npm packages.
 	@echo -e "$(CYAN)Resetting npm packages...$(RESET)"
 	@echo -e "$(CYAN)Frontend...$(RESET)"
-	@cd imbc/frontend; rm -rf node_modules; npm i
+	@cd imb-campus/frontend; rm -rf node_modules; npm i
 	@echo -e "$(CYAN)Backend...$(RESET)"
-	@cd imbc/backend; rm -rf node_modules; npm i
+	@cd imb-campus/backend; rm -rf node_modules; npm i
 	@echo -e "$(CYAN)Done.$(RESET)"
 
 imbc-reset: # Reset all containers, images, volumes. Reinstall npm packages. Then start up imbc services.
