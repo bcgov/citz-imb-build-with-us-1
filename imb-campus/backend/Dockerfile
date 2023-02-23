@@ -20,8 +20,6 @@ ENV NODE_ENV=development
 # Npm install
 RUN npm i
 
-USER 1001
-
 # Nodemon Entrypoint
 CMD ["npm", "run", "dev"]
 
@@ -33,8 +31,6 @@ ENV NODE_ENV=production
 
 # Npm install. Omits dev dependencies when NODE_ENV=production
 RUN npm i
-
-USER 1001
 
 # Node Entrypoint
 CMD ["npm", "run", "start"]
