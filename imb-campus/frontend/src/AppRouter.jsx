@@ -6,9 +6,12 @@ import LandingPage from "./pages/LandingPage";
 import MemberList from "./pages/MemberList";
 import useAuthService from "./services/auth/useAuthService";
 import MatchingGamePage from "./pages/MatchingGamePage";
+import {useUndiscoveredUsers} from "./hooks";
 
 const AppRouter = () => {
   const { setUserInfo } = useAuthService();
+
+  const data = useUndiscoveredUsers();
 
   useEffect(() => {
     // Get the current URL and its search parameters
