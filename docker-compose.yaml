@@ -1,23 +1,23 @@
 services:
-  ##### NEST API ######
-  nest-api:
-    container_name: nest-api
+  ##### BUILD WITH US NEST API ######
+  build-with-us-api:
+    container_name: build-with-us-api
     tty: true
     build:
       context: .
-      dockerfile: ./backend/Dockerfile
+      dockerfile: ./build-with-us/backend/Dockerfile
     networks:
       - bwu-network
     ports:
       - ${API_PORT:-3000}:${API_PORT:-3000}
 
-  ##### REACT FRONTEND #####
-  react-frontend:
-    container_name: react-frontend
+  ##### BUILD WITH US REACT FRONTEND #####
+  build-with-us-frontend:
+    container_name: build-with-us-frontend
     tty: true
     build:
       context: .
-      dockerfile: ./frontend/Dockerfile
+      dockerfile: ./build-with-us/frontend/Dockerfile
     networks:
       - bwu-network
     ports:
