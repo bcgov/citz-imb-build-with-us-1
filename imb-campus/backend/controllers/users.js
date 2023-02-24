@@ -1,5 +1,6 @@
 const { usersQueries } = require("../queries");
-const path = require('path');
+const { getImagePath } = require("../utils");
+const path = require("path");
 
 /**
  * Get all users.
@@ -27,7 +28,7 @@ exports.get_all_users = async (req, res) => {
 exports.get_discovered_users = async (req, res) => {
   try {
     const user = req.user; // User who made the request.
-    if (!user) res.status(404).send("User not found.");
+    if (user == null) res.status(404).send("User not found.");
     else {
       const users = await usersQueries.getDiscoveredUsers(user.idir_user_guid);
 
@@ -48,7 +49,7 @@ exports.get_discovered_users = async (req, res) => {
 exports.get_undiscovered_users = async (req, res) => {
   try {
     const user = req.user; // User who made the request.
-    if (!user) res.status(404).send("User not found.");
+    if (user == null) res.status(404).send("User not found.");
     else {
       const users = await usersQueries.getUndiscoveredUsers(
         user.idir_user_guid
@@ -71,7 +72,7 @@ exports.get_undiscovered_users = async (req, res) => {
 exports.add_discovered_user = async (req, res) => {
   try {
     const user = req.user; // User who made the request.
-    if (!user) res.status(404).send("User not found.");
+    if (user == null) res.status(404).send("User not found.");
     else {
       const dbUser = await usersQueries.addDiscoveredUser(
         user.idir_user_guid,
@@ -106,29 +107,36 @@ exports.get_user = async (req, res) => {
 };
 
 /**
- * Get profile image
+ * Get profile image for logged in user.
  * @author Grant Graham
  * @method GET
- * @route /users/profile-pic
+ * @route /users/profile/image
  */
 exports.get_profile_pic = async (req, res) => {
   try {
-    res.sendfile(path.join("images/", "example.png"));
+    const user = req.user;
+    if (user == null) res.status(404).send("User not found.");
+    else {
+      // Get image path given user's guid and response with the image.
+      const filePath = getImagePath(user.idir_user_guid);
+      if (!filePath) res.status(404).send("Image not found.");
+      else res.sendfile(path.join("images/", filePath));
+    }
   } catch (error) {
-    console.error("Controller: Error in get_user", error);
+    console.error("Controller: Error in get_profile_pic", error);
   }
 };
 
 /**
- * PUT profile image
+ * Upload profile image for logged in user.
  * @author Grant Graham
  * @method PUT
- * @route /users/profile-pic
+ * @route /users/profile/image
  */
-exports.update_profile_pic = async (req, res) => {
+exports.upload_profile_pic = async (req, res) => {
   try {
-    res.status(204).send("Profile image uploaded");
+    res.status(204).send("Profile image uploaded.");
   } catch (error) {
-    console.error("Controller: Error in get_user", error);
+    console.error("Controller: Error in upload_profile_pic", error);
   }
 };

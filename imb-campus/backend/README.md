@@ -92,7 +92,7 @@ Example:
 
 ```JavaScript
 const user = req.user;
-if (!user) res.status(404).send("User not found.");
+if (user == null) res.status(404).send("User not found.");
 ```
 
 Example req.user object:

@@ -8,7 +8,7 @@ const { usersQueries } = require("../queries");
 const activateUser = async (access_token) => {
   try {
     const user = await getUserData(access_token);
-    if (!user) console.error("Activate: User not found.");
+    if (user == null) console.error("Activate: User not found.");
     else {
       // Get user from database matching the user guid on the keycloak jwt.
       const dbUser = await usersQueries.getUserById(user.idir_user_guid)[0];

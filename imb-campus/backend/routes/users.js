@@ -48,18 +48,20 @@ router.get("/:id", usersController.get_user);
  * Get profile image for user.
  * @author Grant Graham
  * @method GET
- * @route /users/profile-pic
- * 
+ * @route /users/profile/image
  */
-router.get("/profile-pic", usersController.get_profile_pic);
+router.get("/profile/image", usersController.get_profile_pic);
 
 /**
  * Set/update profile image for user.
  * @author Grant Graham
  * @method PUT
- * @route /users/profile-pic
- * 
+ * @route /users/profile/image
  */
-router.put("/profile-pic", upload.single("file"), usersController.upload_profile_pic);
+router.put(
+  "/profile/image",
+  upload.single("file"),
+  usersController.upload_profile_pic
+);
 
 module.exports = router;
