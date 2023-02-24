@@ -21,6 +21,7 @@ import Avatar from "@mui/material/Avatar";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import LogoutIcon from "@mui/icons-material/Logout";
 import useAuthService from "../services/auth/useAuthService";
+import EditProfileDialog from "../components/EditProfileDialog";
 
 function stringToColor(string) {
   let hash = 0;
@@ -55,11 +56,20 @@ function stringAvatar(name) {
 
 const Header = (props) => {
   const navigate = useNavigate();
+  const [profilePhotoDialogOpen, setProfilePhotoDialogOpen] = useState(false);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUserDropdown, setAnchorElUserDropdown] = useState(null);
   const { state: authState, getLogoutURL } = useAuthService();
 
   const user = authState.userInfo;
+
+  const handleProfilePhotoClickOpen = () => {
+    setProfilePhotoDialogOpen(true);
+  };
+
+  const handleProfilePhotoClose = (value) => {
+    setProfilePhotoDialogOpen(false);
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -269,11 +279,11 @@ const Header = (props) => {
               }}
               anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
             >
-              <MenuItem onClick={handleLinkClick("/profile")}>
+              <MenuItem onClick={handleProfilePhotoClickOpen}>
                 <ListItemIcon>
                   <AccountBoxIcon />
                 </ListItemIcon>
-                <ListItemText>Profile</ListItemText>
+                <ListItemText>Edit Profile Picture</ListItemText>
               </MenuItem>
               <Divider />
               <MenuItem onClick={() => (window.location.href = getLogoutURL())}>
@@ -286,6 +296,10 @@ const Header = (props) => {
           </Box>
         </Toolbar>
       </AppBar>
+      <EditProfileDialog
+        open={profilePhotoDialogOpen}
+        onClose={handleProfilePhotoClose}
+      />
     </Box>
   );
 };
