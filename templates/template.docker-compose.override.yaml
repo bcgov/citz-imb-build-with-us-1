@@ -15,5 +15,4 @@ services:
     build:
       target: dev
     volumes:
-      - ./matchmaking/frontend/src:/app/src
-
+      - ./imb-campus/frontend/src:/app/src

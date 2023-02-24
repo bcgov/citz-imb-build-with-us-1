@@ -1,102 +1,84 @@
 import * as React from "react";
-import {
-  Dialog,
-  DialogTitle,
-  Avatar,
-  IconButton,
-  Typography,
-  Stack,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Box, Grid } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import useAuthService from "../services/auth/useAuthService";
-
-function stringToColor(string) {
-  let hash = 0;
-  let i;
-
-  /* eslint-disable no-bitwise */
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  let color = "#";
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
-  }
-  /* eslint-enable no-bitwise */
-
-  return color;
-}
-
-function stringAvatar(name) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-      height: "35px",
-      width: "35px",
-    },
-    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-  };
-}
+import ProfileAvatar from "./ProfileAvatar";
+import { CustomDialog, DialogButton } from "./CustomDialog";
 
 const EditProfileDialog = (props) => {
   const { state: authState } = useAuthService();
-  const { onClose, selectedValue, open } = props;
+  const { onClose, open } = props;
   const user = authState.userInfo;
 
   const handleClose = () => {
-    onClose(selectedValue);
+    onClose();
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>
-        <Typography>Profile Photo</Typography>
-        <IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <Avatar
-        sx={{ align: "center" }}
-        alt="Profile Photo"
-        {...stringAvatar(user?.given_name + " " + user?.family_name)}
-      />
-      <Stack spacing={2} sx={{ paddingRight: "10px", paddingLeft: "10px" }}>
-        <IconButton
-          color="primary"
-          aria-label="upload picture"
-          component="label"
-        >
-          <AddPhotoAlternateIcon />
-        </IconButton>
-        <Typography>Upload photo</Typography>
-      </Stack>
-      <Stack spacing={2} sx={{ paddingRight: "10px", paddingLeft: "10px" }}>
-        <IconButton
-          color="primary"
-          aria-label="delete picture"
-          component="label"
-        >
-          <DeleteIcon />
-        </IconButton>
-        <Typography>Delete</Typography>
-      </Stack>
-    </Dialog>
+    <CustomDialog
+      onClose={handleClose}
+      open={open}
+      maxHeight={500}
+      bodyMargin="10px"
+      width="300px"
+      title="Profile Photo"
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <ProfileAvatar size="large" />
+      </Box>
+      <Grid
+        container
+        spacing={1}
+        sx={{
+          marginTop: "20px",
+          marginBottom: "40px",
+          paddingRight: "15%",
+          paddingLeft: "15%",
+        }}
+      >
+        <Grid item xs={6}>
+          <DialogButton
+            color="primary"
+            label="Upload photo"
+            icon={
+              <AddPhotoAlternateIcon
+                sx={{
+                  color: "black",
+                  fontSize: "32px",
+                }}
+              />
+            }
+            onClick={() => {
+              // TODO: handle upload picture click
+            }}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <DialogButton
+            color="primary"
+            label="Remove photo"
+            icon={
+              <DeleteIcon
+                sx={{
+                  color: "black",
+                  fontSize: "32px",
+                }}
+              />
+            }
+            onClick={() => {
+              // TODO: handle delete picture click
+            }}
+          />
+        </Grid>
+      </Grid>
+    </CustomDialog>
   );
 };
 
 export default EditProfileDialog;
-
